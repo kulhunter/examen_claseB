@@ -1,7 +1,8 @@
 let preguntasActuales = [];
 let indiceActual = 0;
 let aciertos = 0;
-let totalPreguntasTest = 35; // Real exam standard
+let errores = []; // Para trackear preguntas fallidas
+let totalPreguntasTest = 35;
 let testActivo = 'teorico';
 
 const vistas = {
@@ -59,6 +60,7 @@ function iniciarTestSenales() {
 function prepararQuiz() {
     indiceActual = 0;
     aciertos = 0;
+    errores = [];
     cambiarVista('quiz');
     mostrarPregunta();
 }
@@ -104,6 +106,7 @@ function mostrarPregunta() {
 
 function evaluarRespuesta(btnSeleccionado, indiceSeleccionado, indiceCorrecto) {
     const todosLosBotones = document.querySelectorAll('.opcion');
+    const preguntaActual = preguntasActuales[indiceActual];
     todosLosBotones.forEach(btn => btn.disabled = true);
     
     if (indiceSeleccionado === indiceCorrecto) {
@@ -113,6 +116,12 @@ function evaluarRespuesta(btnSeleccionado, indiceSeleccionado, indiceCorrecto) {
     } else {
         btnSeleccionado.classList.add('wrong');
         todosLosBotones[indiceCorrecto].classList.add('correct');
+        // Guardamos el error para revisión
+        errores.push({
+            pregunta: preguntaActual.pregunta,
+            tuRespuesta: preguntaActual.opciones[indiceSeleccionado],
+            respuestaCorrecta: preguntaActual.opciones[indiceCorrecto]
+        });
     }
     
     document.getElementById('score-counter').innerText = `Aciertos: ${aciertos}`;
@@ -146,6 +155,28 @@ function mostrarResultados() {
         estadoElement.innerText = "REPROBADO";
         estadoElement.className = "score-label reprobado";
         mensajeElement.innerHTML = `No has alcanzado el 80% mínimo (Obtuviste <strong>${aciertos} de ${totalPreguntasTest}</strong>).<br><small>Te recomendamos repasar los contenidos y volver a intentarlo.</small>`;
+    }
+
+    // Mostrar revisión de errores si existen
+    const revisionContainer = document.getElementById('revision-errores');
+    revisionContainer.innerHTML = '';
+    if (errores.length > 0) {
+        const title = document.createElement('h3');
+        title.innerText = "Revisión de Errores:";
+        title.style.marginTop = "20px";
+        title.style.marginBottom = "10px";
+        revisionContainer.appendChild(title);
+
+        errores.forEach(err => {
+            const errCard = document.createElement('div');
+            errCard.className = 'error-card';
+            errCard.innerHTML = `
+                <p><strong>Pregunta:</strong> ${err.pregunta}</p>
+                <p class="text-wrong">✖ Tu respuesta: ${err.tuRespuesta}</p>
+                <p class="text-correct">✔ Correcta: ${err.respuestaCorrecta}</p>
+            `;
+            revisionContainer.appendChild(errCard);
+        });
     }
 }
 

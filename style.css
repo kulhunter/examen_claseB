@@ -292,3 +292,37 @@ h2 {
     width: 0%;
     transition: width 0.3s ease;
 }
+
+/* Error Review Cards */
+.error-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 10px;
+    text-align: left;
+    font-size: 0.9rem;
+}
+
+.error-card p {
+    margin-bottom: 5px;
+}
+
+.text-correct {
+    color: var(--accent-green);
+    font-weight: 600;
+}
+
+.text-wrong {
+    color: var(--accent-red);
+    font-weight: 600;
+}
+
+#revision-errores::-webkit-scrollbar {
+    width: 6px;
+}
+
+#revision-errores::-webkit-scrollbar-thumb {
+    background: var(--glass-border);
+    border-radius: 10px;
+}

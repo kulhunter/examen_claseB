@@ -1,0 +1,37 @@
+const bancoSenales = [
+    // === REGLAMENTARIAS ===
+    { id: 'S1', pregunta: "¿Qué significa esta señal?", imagen: "https://practicatest.cl/static/img/cl/temario/senales/RPI-1.svg", opciones: ["Pare", "Ceda el paso", "No entrar", "Dirección obligada"], correcta: 1 },
+    { id: 'S2', pregunta: "¿Qué indica esta señal reglamentaria?", imagen: "https://practicatest.cl/static/img/cl/temario/senales/RPI-2.svg", opciones: ["Pare", "Ceda el paso", "Silencio", "No bloquear cruce"], correcta: 0 },
+    { id: 'S3', pregunta: "Al ver esta señal, usted sabe que:", imagen: "https://practicatest.cl/static/img/cl/temario/senales/RPO-1.svg", opciones: ["Puede entrar con cuidado", "Es una vía de doble sentido", "No debe entrar o circular por esta vía", "Solo buses pueden entrar"], correcta: 2 },
+    { id: 'S4', pregunta: "¿Qué prohibición establece esta señal?", imagen: "https://practicatest.cl/static/img/cl/temario/senales/RPO-2a.svg", opciones: ["No virar derecha", "No adelantar", "No virar izquierda", "No virar en U"], correcta: 2 },
+    { id: 'S5', pregunta: "¿Qué maniobra prohíbe esta señal?", imagen: "https://practicatest.cl/static/img/cl/temario/senales/RPO-3.svg", opciones: ["No adelantar", "No cambiar de pista", "No estacionar", "No entrar"], correcta: 0 },
+    { id: 'S6', pregunta: "Esta señal indica una velocidad máxima de:", imagen: "https://practicatest.cl/static/img/cl/temario/senales/RR-1_(50).svg", opciones: ["30 km/h", "50 km/h", "60 km/h", "80 km/h"], correcta: 1 },
+    { id: 'S7', pregunta: "¿Qué indica esta señal?", imagen: "https://practicatest.cl/static/img/cl/temario/senales/RR-3.svg", opciones: ["Vía de un solo sentido", "Circulación en ambos sentidos", "Fin de prohibición", "Preferencia al sentido contrario"], correcta: 1 },
+    { id: 'S8', pregunta: "Esta señal obliga a:", imagen: "https://practicatest.cl/static/img/cl/temario/senales/RO-2.svg", opciones: ["Mantener su derecha", "Virar a la derecha", "Paso obligado izquierda", "Solo bicicletas"], correcta: 0 },
+    { id: 'S9', pregunta: "¿Para quién es exclusiva esta vía?", imagen: "https://practicatest.cl/static/img/cl/temario/senales/RO-9.svg", opciones: ["Motos", "Peatones", "Bicicletas", "Buses"], correcta: 2 },
+    { id: 'S10', pregunta: "¿Qué permite esta señal?", imagen: "https://practicatest.cl/static/img/cl/temario/senales/RA-1.svg", opciones: ["Estacionamiento permitido", "Parada de buses", "Solo carga y descarga", "No estacionar"], correcta: 0 },
+
+    // === ADVERTENCIA ===
+    { id: 'S11', pregunta: "¿De qué advierte esta señal?", imagen: "https://practicatest.cl/static/img/cl/temario/senales/PG-1a.svg", opciones: ["Curva a la izquierda", "Curva a la derecha", "Camino sinuoso", "Resalto"], correcta: 1 },
+    { id: 'S12', pregunta: "Esta señal de advertencia indica:", imagen: "https://practicatest.cl/static/img/cl/temario/senales/PG-2b.svg", opciones: ["Curva cerrada a la derecha", "Curva y contracurva", "Curva cerrada a la izquierda", "Pendiente fuerte"], correcta: 2 },
+    { id: 'S13', pregunta: "¿Qué peligro advierte esta señal?", imagen: "https://practicatest.cl/static/img/cl/temario/senales/PG-8.svg", opciones: ["Hoyo", "Badén", "Resalto (lomo de toro)", "Gravilla suelta"], correcta: 2 },
+    { id: 'S14', pregunta: "Esta señal indica que la vía:", imagen: "https://practicatest.cl/static/img/cl/temario/senales/PF-1a.svg", opciones: ["Se ensancha", "Se angosta a la derecha", "Se angosta a la izquierda", "Se angosta a ambos lados"], correcta: 3 },
+    { id: 'S15', pregunta: "¿Qué precaución debe tomar ante esta señal?", imagen: "https://practicatest.cl/static/img/cl/temario/senales/PF-2.svg", opciones: ["Aumentar velocidad", "Estar atento a puente angosto", "No adelantar en curva", "Cruce ferroviario"], correcta: 1 },
+    { id: 'S16', pregunta: "¿Qué indica esta señal de advertencia?", imagen: "https://practicatest.cl/static/img/cl/temario/senales/PI-1a.svg", opciones: ["Cruce ferroviario con barreras", "Cruce ferroviario sin barreras", "Cruce de tranvías", "Fin de vía férrea"], correcta: 1 },
+    { id: 'S17', pregunta: "Al ver esta señal, usted debe:", imagen: "https://practicatest.cl/static/img/cl/temario/senales/PO-9.svg", opciones: ["Acelerar para pasar rápido", "Tocar la bocina", "Bajar la velocidad por zona de escuela", "No detenerse"], correcta: 2 },
+    { id: 'S18', pregunta: "¿Qué advierte esta señal?", imagen: "https://practicatest.cl/static/img/cl/temario/senales/PO-11.svg", opciones: ["Cruce peligroso", "Proximidad de semáforo", "Falla en semáforo", "Solo luz verde"], correcta: 1 },
+    { id: 'S19', pregunta: "Esta señal advierte sobre:", imagen: "https://practicatest.cl/static/img/cl/temario/senales/PE-2.svg", opciones: ["Zanja en el camino", "Pavimento resbaladizo", "Proyección de gravilla", "Zona de derrumbes"], correcta: 1 },
+    { id: 'S20', pregunta: "¿Qué indica esta señal naranja?", imagen: "https://practicatest.cl/static/img/cl/temario/senales/PT-1.svg", opciones: ["Zona de juegos", "Trabajos en la vía", "Hombres descansando", "Fin de desvío"], correcta: 1 },
+
+    // === INFORMATIVAS ===
+    { id: 'S21', pregunta: "Esta señal informativa indica:", imagen: "https://practicatest.cl/static/img/cl/temario/senales/IP-1.svg", opciones: ["Ruta sin salida", "Ruta alternativa", "Solo residentes", "Estacionamiento"], correcta: 1 },
+    { id: 'S22', pregunta: "¿Qué indica esta señal?", imagen: "https://practicatest.cl/static/img/cl/temario/senales/ID-1a.svg", opciones: ["Salida inmediata", "Entrada a ciudad", "Peaje a 500m", "Retorno"], correcta: 0 },
+    { id: 'S23', pregunta: "Este símbolo indica el inicio de:", imagen: "https://practicatest.cl/static/img/cl/temario/senales/IAA-1.svg", opciones: ["Camino rural", "Autopista o autovía", "Zona urbana", "Paso bajo nivel"], correcta: 1 },
+    { id: 'S24', pregunta: "¿Qué significa esta señal?", imagen: "https://practicatest.cl/static/img/cl/temario/senales/IAA-2.svg", opciones: ["Inicio de autopista", "Fin de autopista", "Peaje cerrado", "No entrar a autopista"], correcta: 1 },
+    { id: 'S25', pregunta: "Esta señal informa sobre:", imagen: "https://practicatest.cl/static/img/cl/temario/senales/IAA-3.svg", opciones: ["Salida lateral derecha", "Salida lateral izquierda", "Curva pronunciada", "Bifurcación"], correcta: 0 },
+    { id: 'S26', pregunta: "¿Qué maniobra facilita esta señal?", imagen: "https://practicatest.cl/static/img/cl/temario/senales/IAA-5.svg", opciones: ["Adelantamiento", "Retorno en autopista", "Salida de emergencia", "Cambio de sentido"], correcta: 1 },
+    { id: 'S27', pregunta: "Esta señal indica la proximidad de:", imagen: "https://practicatest.cl/static/img/cl/temario/senales/IAA-6.svg", opciones: ["Gasolinera", "Lugar para estacionar", "Restaurante", "Hotel"], correcta: 1 },
+    { id: 'S28', pregunta: "¿Qué servicio indica esta señal?", imagen: "https://practicatest.cl/static/img/cl/temario/senales/IAA-7.svg", opciones: ["Radio local", "Teléfono de emergencia", "Llamadas nacionales", "Internet"], correcta: 1 },
+    { id: 'S29', pregunta: "Esta señal azul indica una:", imagen: "https://practicatest.cl/static/img/cl/temario/senales/NS6.zona_30.jpeg", opciones: ["Zona 30 (velocidad restringida)", "Velocidad mínima 30", "Distancia 30km", "Ruta 30"], correcta: 0 },
+    { id: 'S30', pregunta: "¿Qué advierte esta señal?", imagen: "https://practicatest.cl/static/img/cl/temario/senales/NS15.zona_compartida_peatones.jpeg", opciones: ["Solo peatones", "Solo ciclistas", "Zona compartida peatones y ciclistas", "Prohibido el paso"], correcta: 2 }
+];

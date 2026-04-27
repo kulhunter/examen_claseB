@@ -2,57 +2,86 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test de Conducción - Clase B Chile</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Premium Driving Test - Chile Clase B</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>🚗 Test Teórico Clase B</h1>
-            <p>Simulador Oficial - Preguntas Aleatorias</p>
+            <h1>🚗 SIMULADOR CLASE B</h1>
+            <p>Preparación Premium para el Examen Municipal</p>
         </header>
 
+        <!-- MENU PRINCIPAL -->
         <div id="menu-niveles" class="view active">
-            <h2>Selecciona un Nivel</h2>
-            <p>Se generará una prueba interactiva de 10 preguntas.</p>
-            <div class="grid-niveles">
-                <button class="btn-nivel" data-start="1" data-end="40">Nivel 1 (Preguntas 1 - 40)</button>
-                <button class="btn-nivel" data-start="41" data-end="80">Nivel 2 (Preguntas 41 - 80)</button>
-                <button class="btn-nivel" data-start="81" data-end="120">Nivel 3 (Preguntas 81 - 120)</button>
-                <button class="btn-nivel" data-start="121" data-end="160">Nivel 4 (Preguntas 121 - 160)</button>
-                <button class="btn-nivel" data-start="161" data-end="200">Nivel 5 (Preguntas 161 - 200)</button>
-                <button class="btn-nivel" data-start="201" data-end="240">Nivel 6 (Preguntas 201 - 240)</button>
+            
+            <div class="menu-section">
+                <h2>Señaléticas</h2>
+                <div class="grid-niveles">
+                    <button class="btn-nivel btn-sign-test" id="btn-start-signs">
+                        Test de Señales de Tránsito
+                    </button>
+                </div>
+            </div>
+
+            <div class="menu-section">
+                <h2>Examen Teórico (Por Niveles)</h2>
+                <div class="grid-niveles">
+                    <button class="btn-nivel" data-start="1" data-end="40">Test 1: Preguntas 1 - 40</button>
+                    <button class="btn-nivel" data-start="41" data-end="80">Test 2: Preguntas 41 - 80</button>
+                    <button class="btn-nivel" data-start="81" data-end="120">Test 3: Preguntas 81 - 120</button>
+                    <button class="btn-nivel" data-start="121" data-end="160">Test 4: Preguntas 121 - 160</button>
+                    <button class="btn-nivel" data-start="161" data-end="200">Test 5: Preguntas 161 - 200</button>
+                    <button class="btn-nivel" data-start="201" data-end="280">Test 6: Preguntas 201 - 280</button>
+                </div>
             </div>
         </div>
 
+        <!-- QUIZ CONTAINER -->
         <div id="quiz-container" class="view">
+            <div class="progress-container">
+                <div id="progress-bar"></div>
+            </div>
+            
             <div class="quiz-header">
-                <span id="pregunta-counter">Pregunta 1/10</span>
+                <span id="pregunta-counter">Pregunta 1/35</span>
                 <span id="score-counter">Aciertos: 0</span>
             </div>
             
             <div class="pregunta-box">
+                <div id="pregunta-image-container" class="hidden">
+                    <img id="pregunta-image" class="pregunta-image" src="" alt="Señal de tránsito">
+                </div>
                 <h3 id="pregunta-text">Cargando pregunta...</h3>
             </div>
 
             <div id="opciones-container">
-                </div>
+                <!-- Opciones se cargan aquí -->
+            </div>
             
-            <button id="btn-siguiente" class="hidden">Siguiente Pregunta ➔</button>
+            <button id="btn-siguiente" class="hidden">Continuar ➔</button>
         </div>
 
+        <!-- RESULTADOS -->
         <div id="resultados-container" class="view">
-            <h2>¡Test Completado! 🎉</h2>
+            <h2 style="text-align: center;">Resultado Final</h2>
+            
             <div class="score-circle">
-                <span id="resultado-final">0/10</span>
+                <span id="resultado-final">0%</span>
+                <span class="score-label" id="estado-final">Reprobado</span>
             </div>
+            
             <p id="mensaje-final"></p>
-            <button id="btn-volver">Volver al Menú Principal</button>
+            
+            <div style="display: flex; gap: 10px;">
+                <button id="btn-volver" class="btn-main">Volver al Menú</button>
+            </div>
         </div>
     </div>
 
     <script src="preguntas.js"></script>
+    <script src="senales_data.js"></script>
     <script src="app.js"></script>
 </body>
 </html>

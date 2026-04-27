@@ -278,7 +278,7 @@ const bancoSenales = [
     {
         "id": "RR-1",
         "pregunta": "¿Qué significa esta señal?",
-        "imagen": "./img/senales/RR_1.svg",
+        "imagen": "./img/senales/RR_1.jpg",
         "opciones": [
             "Ceda el paso",
             "Superficie segregada peatones - biciclos",
@@ -290,7 +290,7 @@ const bancoSenales = [
     {
         "id": "RR-2",
         "pregunta": "¿Qué significa esta señal?",
-        "imagen": "./img/senales/RR_2.svg",
+        "imagen": "./img/senales/RR_2.jpg",
         "opciones": [
             "Prohibida circulación de buses",
             "Preferencia ciclista al cambiar de pista",
@@ -398,7 +398,7 @@ const bancoSenales = [
     {
         "id": "NS6",
         "pregunta": "¿Qué significa esta señal?",
-        "imagen": "./img/senales/NS6.jpeg",
+        "imagen": "./img/senales/NS6.jpg",
         "opciones": [
             "Zona 30",
             "Zona de peatones",
@@ -626,7 +626,7 @@ const bancoSenales = [
     {
         "id": "NS1",
         "pregunta": "¿Qué significa esta señal?",
-        "imagen": "./img/senales/NS1.png",
+        "imagen": "./img/senales/NS1.jpg",
         "opciones": [
             "Preferencia ciclista al virar derecha",
             "Salida antes de ingresar a autopista",
@@ -638,7 +638,7 @@ const bancoSenales = [
     {
         "id": "NS2",
         "pregunta": "¿Qué significa esta señal?",
-        "imagen": "./img/senales/NS2.png",
+        "imagen": "./img/senales/NS2.jpg",
         "opciones": [
             "Paso vértice",
             "Zona de escuela",
@@ -650,7 +650,7 @@ const bancoSenales = [
     {
         "id": "NS3",
         "pregunta": "¿Qué significa esta señal?",
-        "imagen": "./img/senales/NS3.jpeg",
+        "imagen": "./img/senales/NS3.jpg",
         "opciones": [
             "Animales indómitos",
             "Dos sentidos de tránsito",
@@ -662,7 +662,7 @@ const bancoSenales = [
     {
         "id": "NS4",
         "pregunta": "¿Qué significa esta señal?",
-        "imagen": "./img/senales/NS4.jpeg",
+        "imagen": "./img/senales/NS4.jpg",
         "opciones": [
             "Desmonte de ciclistas",
             "Tránsito en sentido Izquierdo",
@@ -833,8 +833,8 @@ const bancoSenales = [
         "imagen": "./img/senales/PG_6b.svg",
         "opciones": [
             "Velocidad máxima",
-            "Curva muy cerrada a la izquierda",
-            "Solo tag o sistema habilitado",
+            "Curva muy cerrada a la izquierda (Retorno)",
+            "Viraje en U permitido",
             "Pare"
         ],
         "correcta": 1
@@ -1562,7 +1562,7 @@ const bancoSenales = [
     {
         "id": "NS7",
         "pregunta": "¿Qué significa esta señal?",
-        "imagen": "./img/senales/NS7.jpeg",
+        "imagen": "./img/senales/NS7.jpg",
         "opciones": [
             "Zona de espera adelantada de motos I",
             "Tránsito de maquinaria",
@@ -1574,7 +1574,7 @@ const bancoSenales = [
     {
         "id": "NS8",
         "pregunta": "¿Qué significa esta señal?",
-        "imagen": "./img/senales/NS8.jpeg",
+        "imagen": "./img/senales/NS8.jpg",
         "opciones": [
             "Pendiente fuerte de bajada (camiones)",
             "Proximidad de señal \"Pare\"",
@@ -1586,7 +1586,7 @@ const bancoSenales = [
     {
         "id": "NS9",
         "pregunta": "¿Qué significa esta señal?",
-        "imagen": "./img/senales/NS9.jpeg",
+        "imagen": "./img/senales/NS9.jpg",
         "opciones": [
             "Tránsito en sentido Izquierdo",
             "Zona de espera adelantada de motos III",
@@ -1598,7 +1598,7 @@ const bancoSenales = [
     {
         "id": "NS14",
         "pregunta": "¿Qué significa esta señal?",
-        "imagen": "./img/senales/NS14.jpeg",
+        "imagen": "./img/senales/NS14.jpg",
         "opciones": [
             "Ciclocalle",
             "Inicio de autopista / autovía",
@@ -1610,7 +1610,7 @@ const bancoSenales = [
     {
         "id": "NS15",
         "pregunta": "¿Qué significa esta señal?",
-        "imagen": "./img/senales/NS15.jpeg",
+        "imagen": "./img/senales/NS15.jpg",
         "opciones": [
             "Zona compartida peatones",
             "Prohibida circulación de bicicletas",

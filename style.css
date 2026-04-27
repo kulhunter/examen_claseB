@@ -209,6 +209,31 @@ h2 {
     color: var(--accent-red);
 }
 
+.opcion.selected {
+    background: rgba(255, 157, 0, 0.15);
+    border-color: var(--accent-amber);
+    box-shadow: 0 0 15px rgba(255, 157, 0, 0.1);
+}
+
+#btn-confirmar {
+    width: 100%;
+    padding: 16px;
+    border-radius: 16px;
+    background: var(--accent-amber);
+    border: none;
+    color: black;
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 15px;
+    box-shadow: 0 10px 20px rgba(255, 157, 0, 0.2);
+}
+
+#btn-confirmar.hidden {
+    display: none;
+}
+
 /* Siguiente Button */
 #btn-siguiente {
     margin-top: 25px;

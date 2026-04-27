@@ -1,68 +1,48 @@
 let preguntasActuales = [];
 let indiceActual = 0;
 let aciertos = 0;
-let errores = []; // Para trackear preguntas fallidas
-let totalPreguntasTest = 35;
-let testActivo = 'teorico';
+let totalPreguntasTest = 0;
+let errores = [];
+let seleccionesMultiples = [];
 
-const vistas = {
-    menu: document.getElementById('menu-niveles'),
-    quiz: document.getElementById('quiz-container'),
-    resultados: document.getElementById('resultados-container')
-};
+// Navegación
+function cambiarVista(vistaId) {
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    document.getElementById(`${vistaId}-container` || vistaId).classList.add('active');
+}
 
-// Event Listeners para el menú
-document.querySelectorAll('.btn-nivel[data-start]').forEach(btn => {
+// Iniciar Test Teórico
+document.querySelectorAll('.btn-nivel').forEach(btn => {
     btn.addEventListener('click', () => {
-        const inicio = parseInt(btn.dataset.start);
-        const fin = parseInt(btn.dataset.end);
-        iniciarTestTeorico(inicio, fin);
+        const start = parseInt(btn.dataset.start);
+        const end = parseInt(btn.dataset.end);
+        const pool = bancoPreguntas.filter(p => p.id >= start && p.id <= end);
+        iniciarTest(pool, Math.min(pool.length, 35));
     });
 });
 
+// Iniciar Test de Señales
 document.getElementById('btn-start-signs').addEventListener('click', () => {
-    iniciarTestSenales();
+    iniciarTest(bancoSenales, 30);
 });
 
-function iniciarTestTeorico(inicio, fin) {
-    testActivo = 'teorico';
-    if (typeof bancoPreguntas === 'undefined') {
-        alert("Error: Banco de preguntas no cargado.");
-        return;
-    }
-    const preguntasFiltradas = bancoPreguntas.filter(p => p.id >= inicio && p.id <= fin);
-    
-    if(preguntasFiltradas.length === 0) {
-        alert("Error al cargar preguntas de este rango.");
-        return;
-    }
-
-    // Seleccionamos un máximo de 35 preguntas aleatorias del rango
-    totalPreguntasTest = Math.min(35, preguntasFiltradas.length);
-    preguntasActuales = shuffleArray([...preguntasFiltradas]).slice(0, totalPreguntasTest);
-    
-    prepararQuiz();
-}
-
-function iniciarTestSenales() {
-    testActivo = 'senales';
-    if (typeof bancoSenales === 'undefined') {
-        alert("Error: Banco de señales no cargado.");
-        return;
-    }
-    // Usamos todas las señales disponibles o un máximo de 30
-    totalPreguntasTest = Math.min(30, bancoSenales.length);
-    preguntasActuales = shuffleArray([...bancoSenales]).slice(0, totalPreguntasTest);
-    
-    prepararQuiz();
-}
-
-function prepararQuiz() {
+function iniciarTest(pool, cantidad) {
+    preguntasActuales = shuffleArray([...pool]).slice(0, cantidad);
     indiceActual = 0;
     aciertos = 0;
     errores = [];
+    totalPreguntasTest = preguntasActuales.length;
+    
     cambiarVista('quiz');
     mostrarPregunta();
+}
+
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
 }
 
 function mostrarPregunta() {
@@ -92,16 +72,82 @@ function mostrarPregunta() {
     
     const contenedorOpciones = document.getElementById('opciones-container');
     contenedorOpciones.innerHTML = '';
+    seleccionesMultiples = [];
+    
+    const isMultiple = preguntaActual.type === 'multiple' || Array.isArray(preguntaActual.correcta);
     
     preguntaActual.opciones.forEach((opcionTexto, index) => {
         const btnOpcion = document.createElement('button');
         btnOpcion.className = 'opcion';
         btnOpcion.innerText = opcionTexto;
-        btnOpcion.onclick = () => evaluarRespuesta(btnOpcion, index, preguntaActual.correcta);
+        
+        btnOpcion.onclick = () => {
+            if (isMultiple) {
+                toggleSeleccion(btnOpcion, index);
+            } else {
+                evaluarRespuesta(btnOpcion, index, preguntaActual.correcta);
+            }
+        };
         contenedorOpciones.appendChild(btnOpcion);
     });
     
     document.getElementById('btn-siguiente').classList.add('hidden');
+    
+    if (isMultiple) {
+        document.getElementById('btn-confirmar').classList.remove('hidden');
+    } else {
+        document.getElementById('btn-confirmar').classList.add('hidden');
+    }
+}
+
+function toggleSeleccion(btn, index) {
+    if (seleccionesMultiples.includes(index)) {
+        seleccionesMultiples = seleccionesMultiples.filter(i => i !== index);
+        btn.classList.remove('selected');
+    } else {
+        seleccionesMultiples.push(index);
+        btn.classList.add('selected');
+    }
+}
+
+document.getElementById('btn-confirmar').onclick = () => {
+    if (seleccionesMultiples.length === 0) return;
+    const preguntaActual = preguntasActuales[indiceActual];
+    evaluarRespuestaMultiples(seleccionesMultiples, preguntaActual.correcta);
+};
+
+function evaluarRespuestaMultiples(seleccionados, correctos) {
+    document.getElementById('btn-confirmar').classList.add('hidden');
+    const todosLosBotones = document.querySelectorAll('.opcion');
+    const preguntaActual = preguntasActuales[indiceActual];
+    todosLosBotones.forEach(btn => btn.disabled = true);
+    
+    // Si correctos no es array (caso id 70 que vi), lo volvemos array
+    const correctosArr = Array.isArray(correctos) ? correctos : [correctos];
+    
+    const esCorrecto = seleccionados.length === correctosArr.length && 
+                       seleccionados.every(s => correctosArr.includes(s));
+    
+    if (esCorrecto) {
+        aciertos++;
+        seleccionados.forEach(idx => todosLosBotones[idx].classList.add('correct'));
+    } else {
+        // Mostrar marcados incorrectos en rojo
+        seleccionados.forEach(idx => {
+            if (!correctosArr.includes(idx)) todosLosBotones[idx].classList.add('wrong');
+        });
+        // Mostrar los que eran correctos en verde
+        correctosArr.forEach(idx => todosLosBotones[idx].classList.add('correct'));
+        
+        errores.push({
+            pregunta: preguntaActual.pregunta,
+            tuRespuesta: seleccionados.map(i => preguntaActual.opciones[i]).join(', '),
+            respuestaCorrecta: correctosArr.map(i => preguntaActual.opciones[i]).join(', ')
+        });
+    }
+    
+    document.getElementById('score-counter').innerText = `Aciertos: ${aciertos}`;
+    document.getElementById('btn-siguiente').classList.remove('hidden');
 }
 
 function evaluarRespuesta(btnSeleccionado, indiceSeleccionado, indiceCorrecto) {
@@ -112,11 +158,9 @@ function evaluarRespuesta(btnSeleccionado, indiceSeleccionado, indiceCorrecto) {
     if (indiceSeleccionado === indiceCorrecto) {
         btnSeleccionado.classList.add('correct');
         aciertos++;
-        btnSeleccionado.style.transform = 'scale(1.02)';
     } else {
         btnSeleccionado.classList.add('wrong');
         todosLosBotones[indiceCorrecto].classList.add('correct');
-        // Guardamos el error para revisión
         errores.push({
             pregunta: preguntaActual.pregunta,
             tuRespuesta: preguntaActual.opciones[indiceSeleccionado],
@@ -148,58 +192,30 @@ function mostrarResultados() {
     document.getElementById('progress-bar').style.width = `100%`;
 
     if (porcentaje >= 80) {
-        estadoElement.innerText = "APROBADO";
-        estadoElement.className = "score-label aprobado";
-        mensajeElement.innerHTML = `¡Felicidades! Has superado el test con <strong>${aciertos} de ${totalPreguntasTest}</strong> respuestas correctas.<br><small>Estás listo para el examen municipal.</small>`;
+        estadoElement.innerText = 'APROBADO';
+        estadoElement.className = 'score-label aprobado';
+        mensajeElement.innerText = `¡Felicidades! Has superado el test con ${aciertos} de ${totalPreguntasTest} respuestas correctas. Estás listo para el examen municipal.`;
     } else {
-        estadoElement.innerText = "REPROBADO";
-        estadoElement.className = "score-label reprobado";
-        mensajeElement.innerHTML = `No has alcanzado el 80% mínimo (Obtuviste <strong>${aciertos} de ${totalPreguntasTest}</strong>).<br><small>Te recomendamos repasar los contenidos y volver a intentarlo.</small>`;
+        estadoElement.innerText = 'REPROBADO';
+        estadoElement.className = 'score-label reprobado';
+        mensajeElement.innerText = `Has obtenido un ${porcentaje}%. Necesitas al menos un 80% para aprobar. ¡Sigue practicando!`;
     }
 
-    // Mostrar revisión de errores si existen
-    const revisionContainer = document.getElementById('revision-errores');
-    revisionContainer.innerHTML = '';
-    if (errores.length > 0) {
-        const title = document.createElement('h3');
-        title.innerText = "Revisión de Errores:";
-        title.style.marginTop = "20px";
-        title.style.marginBottom = "10px";
-        revisionContainer.appendChild(title);
-
-        errores.forEach(err => {
-            const errCard = document.createElement('div');
-            errCard.className = 'error-card';
-            errCard.innerHTML = `
-                <p><strong>Pregunta:</strong> ${err.pregunta}</p>
-                <p class="text-wrong">✖ Tu respuesta: ${err.tuRespuesta}</p>
-                <p class="text-correct">✔ Correcta: ${err.respuestaCorrecta}</p>
-            `;
-            revisionContainer.appendChild(errCard);
-        });
-    }
-}
-
-document.getElementById('btn-volver').addEventListener('click', () => {
-    cambiarVista('menu');
-});
-
-// Helpers
-function cambiarVista(vistaActiva) {
-    Object.values(vistas).forEach(v => {
-        v.classList.remove('active');
-        v.style.display = 'none';
+    // Mostrar errores
+    const divErrores = document.getElementById('revision-errores');
+    divErrores.innerHTML = errores.length > 0 ? '<h3>Revisión de Errores:</h3>' : '';
+    errores.forEach(err => {
+        const card = document.createElement('div');
+        card.className = 'error-card';
+        card.innerHTML = `
+            <p><strong>Pregunta:</strong> ${err.pregunta}</p>
+            <p class="text-wrong">✖ Tu respuesta: ${err.tuRespuesta}</p>
+            <p class="text-correct">✔ Correcta: ${err.respuestaCorrecta}</p>
+        `;
+        divErrores.appendChild(card);
     });
-    const activeView = vistas[vistaActiva];
-    activeView.style.display = 'block';
-    void activeView.offsetWidth;
-    activeView.classList.add('active');
 }
 
-function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-}
+document.getElementById('btn-volver').onclick = () => {
+    cambiarVista('menu-niveles');
+};

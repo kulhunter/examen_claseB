@@ -75,6 +75,14 @@ function mostrarPregunta() {
     seleccionesMultiples = [];
     
     const isMultiple = preguntaActual.type === 'multiple' || Array.isArray(preguntaActual.correcta);
+    const instructionEl = document.getElementById('pregunta-instruction');
+    if (isMultiple) {
+        const numRespuestas = Array.isArray(preguntaActual.correcta) ? preguntaActual.correcta.length : 2;
+        instructionEl.innerText = `(Marque ${numRespuestas} respuestas)`;
+        instructionEl.classList.remove('hidden');
+    } else {
+        instructionEl.classList.add('hidden');
+    }
     
     preguntaActual.opciones.forEach((opcionTexto, index) => {
         const btnOpcion = document.createElement('button');

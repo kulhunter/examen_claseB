@@ -351,3 +351,7 @@ h2 {
     background: var(--glass-border);
     border-radius: 10px;
 }
+
+.hidden {
+    display: none !important;
+}

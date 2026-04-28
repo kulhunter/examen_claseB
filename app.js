@@ -80,8 +80,11 @@ function mostrarPregunta() {
         const numRespuestas = Array.isArray(preguntaActual.correcta) ? preguntaActual.correcta.length : 2;
         instructionEl.innerText = `(Marque ${numRespuestas} respuestas)`;
         instructionEl.classList.remove('hidden');
+        instructionEl.style.display = 'block';
     } else {
+        instructionEl.innerText = '';
         instructionEl.classList.add('hidden');
+        instructionEl.style.display = 'none';
     }
     
     preguntaActual.opciones.forEach((opcionTexto, index) => {

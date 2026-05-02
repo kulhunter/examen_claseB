@@ -2,90 +2,52 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Premium Driving Test - Chile Clase B</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DRIVE // Evaluación Clase B</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@900&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+
+    <!-- WhatsApp & Social Media OG Tags -->
+    <meta property="og:title" content="DRIVE // Simulador Oficial Clase B">
+    <meta property="og:description" content="Practica con el simulador 100% exacto enfocado en los 8 puntos críticos de fallo. Fricción cero, sin registro.">
+    <meta property="og:image" content="https://www.munimacul.cl/portalnv/wp-content/uploads/2026/02/Recurso-44.png">
+    <meta property="og:url" content="https://examenconducir.cl">
+    <meta property="og:type" content="website">
 </head>
-<body>
-    <div class="container">
-        <header>
-            <h1>🚗 SIMULADOR CLASE B</h1>
-            <p>Preparación Premium para el Examen Municipal</p>
-        </header>
+<body class="brutalist-theme">
+    
+    <header class="brutal-header">
+        <div class="brand-text">MACUL // EVALUACIÓN</div>
+        <h1 class="massive-title">CLASE B.</h1>
+    </header>
 
-        <!-- MENU PRINCIPAL -->
-        <div id="menu-niveles" class="view active">
-            
-            <div class="menu-section">
-                <h2>Señaléticas</h2>
-                <div class="grid-niveles">
-                    <button class="btn-nivel btn-sign-test" id="btn-start-signs">
-                        Test de Señales de Tránsito
-                    </button>
-                </div>
-            </div>
+    <nav class="brutal-nav">
+        <a href="teorico.html" class="brutal-link">
+            <span class="link-number">01</span>
+            <span class="link-text">EXAMEN TEÓRICO</span>
+            <span class="link-meta">ENSAYO MUNICIPAL</span>
+        </a>
+        
+        <a href="practico.html" class="brutal-link">
+            <span class="link-number">02</span>
+            <span class="link-text">PRUEBA PRÁCTICA</span>
+            <span class="link-meta">SIMULADOR EN RUTA</span>
+        </a>
 
-            <div class="menu-section">
-                <h2>Examen Teórico (Por Niveles)</h2>
-                <div class="grid-niveles">
-                    <button class="btn-nivel" data-start="1" data-end="40">Test 1: Preguntas 1 - 40</button>
-                    <button class="btn-nivel" data-start="41" data-end="80">Test 2: Preguntas 41 - 80</button>
-                    <button class="btn-nivel" data-start="81" data-end="120">Test 3: Preguntas 81 - 120</button>
-                    <button class="btn-nivel" data-start="121" data-end="160">Test 4: Preguntas 121 - 160</button>
-                    <button class="btn-nivel" data-start="161" data-end="200">Test 5: Preguntas 161 - 200</button>
-                    <button class="btn-nivel" data-start="201" data-end="280">Test 6: Preguntas 201 - 280</button>
-                </div>
-            </div>
+        <a href="psicometrico.html" class="brutal-link">
+            <span class="link-number">03</span>
+            <span class="link-text">GABINETE PSICOTÉCNICO</span>
+            <span class="link-meta">TEST DE REACCIÓN</span>
+        </a>
+    </nav>
+
+    <footer class="brutal-footer">
+        <div class="footer-links">
+            <a href="https://www.conaset.cl/" target="_blank">CONASET OFICIAL</a>
+            <a href="https://www.munimacul.cl/" target="_blank">MUNICIPALIDAD DE MACUL</a>
         </div>
+        <div class="footer-credit">DEV: DANTAGLE.CL</div>
+    </footer>
 
-        <!-- QUIZ CONTAINER -->
-        <div id="quiz-container" class="view">
-            <div class="progress-container">
-                <div id="progress-bar"></div>
-            </div>
-            
-            <div class="quiz-header">
-                <span id="pregunta-counter">Pregunta 1/35</span>
-                <span id="score-counter">Aciertos: 0</span>
-            </div>
-            
-            <div class="pregunta-box">
-                <div id="pregunta-image-container" class="hidden">
-                    <img id="pregunta-image" class="pregunta-image" src="" alt="Señal de tránsito">
-                </div>
-                <h3 id="pregunta-text">Cargando pregunta...</h3>
-                <p id="pregunta-instruction" class="hidden" style="color: var(--accent-amber); font-weight: 600; margin-top: 10px;"></p>
-            </div>
-
-            <div id="opciones-container">
-                <!-- Opciones se cargan aquí -->
-            </div>
-            
-            <button id="btn-confirmar" class="hidden" style="background: var(--accent-amber); color: #000; margin-bottom: 10px;">Confirmar Respuestas</button>
-            <button id="btn-siguiente" class="hidden">Continuar ➔</button>
-        </div>
-
-        <!-- RESULTADOS -->
-        <div id="resultados-container" class="view">
-            <h2 style="text-align: center;">Resultado Final</h2>
-            
-            <div class="score-circle">
-                <span id="resultado-final">0%</span>
-                <span class="score-label" id="estado-final">Reprobado</span>
-            </div>
-            
-            <p id="mensaje-final"></p>
-            
-            <div id="revision-errores" style="max-height: 300px; overflow-y: auto; margin-bottom: 20px; padding: 0 10px;"></div>
-
-            <div style="display: flex; gap: 10px;">
-                <button id="btn-volver" class="btn-main">Volver al Menú</button>
-            </div>
-        </div>
-    </div>
-
-    <script src="preguntas.js"></script>
-    <script src="senales_data.js"></script>
-    <script src="app.js"></script>
 </body>
 </html>

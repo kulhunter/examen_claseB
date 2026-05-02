@@ -453,18 +453,15 @@ const bancoPreguntas = [
     },
     {
         "id": 36,
-        "pregunta": "Suponga que en una ocasión,",
+        "pregunta": "Suponga que circulando a cierta velocidad su distancia de reacción es de 10 metros y su distancia de frenado es de 8 metros (distancia de detención total = 18 metros). Si usted duplica su velocidad, ¿cuál será aproximadamente su nueva distancia de detención total?",
         "opciones": [
-            "su distancia de reacción es de 10 metros",
-            "su distancia de frenado es de 8 metros",
-            "su distancia de detención (distancia de reacción más distancia de frenado) es de 18 metros",
+            "36 metros",
             "46 metros",
             "52 metros",
-            "64 metros",
             "78 metros"
         ],
         "type": "single",
-        "correcta": 1
+        "correcta": 2
     },
     {
         "id": 37,
@@ -1445,8 +1442,8 @@ const bancoPreguntas = [
         "pregunta": "La forma más segura de viajar en un automóvil para un niño menor de 2 años es:",
         "opciones": [
             "En brazos de un adulto.",
-            "Solo en el asiento delantero and con cinturón de seguridad.",
-            "Solo en el asiento trasero and con cinturón de seguridad.",
+            "Solo en el asiento delantero y con cinturón de seguridad.",
+            "Solo en el asiento trasero y con cinturón de seguridad.",
             "En un asiento de seguridad mirando hacia atrás."
         ],
         "type": "single",
@@ -1481,22 +1478,6 @@ const bancoPreguntas = [
         "imagen": "./img/preguntas/138.png"
     },
     {
-        "id": 139,
-        "pregunta": "¿En cuál o cuáles de las siguientes situaciones puede usted virar a la izquierda sin que siempre deba detenerse antes?",
-        "opciones": [],
-        "type": "multiple",
-        "correcta": 0,
-        "imagen": "./img/preguntas/139.png"
-    },
-    {
-        "id": 140,
-        "pregunta": "¿Frente a cuál o cuáles de las siguientes señales e indicaciones del semáforo debe usted detenerse siempre?",
-        "opciones": [],
-        "type": "multiple",
-        "correcta": 0,
-        "imagen": "./img/preguntas/140.png"
-    },
-    {
         "id": 141,
         "pregunta": "Usted va por una calle de doble sentido de tránsito. Para virar a la izquierda, ¿dónde debería ubicarse?",
         "opciones": [
@@ -1519,22 +1500,6 @@ const bancoPreguntas = [
         "type": "single",
         "correcta": 3,
         "imagen": "./img/preguntas/142.png"
-    },
-    {
-        "id": 143,
-        "pregunta": "¿Cómo señaliza usted con el brazo cuando va a virar hacia la derecha?",
-        "opciones": [],
-        "type": "single",
-        "correcta": 0,
-        "imagen": "./img/preguntas/143.png"
-    },
-    {
-        "id": 144,
-        "pregunta": "¿Cuál señalización con el brazo del conductor de un vehículo que va adelante le indica que va a virar a la izquierda?",
-        "opciones": [],
-        "type": "single",
-        "correcta": 0,
-        "imagen": "./img/preguntas/144.png"
     },
     {
         "id": 145,
@@ -1682,22 +1647,6 @@ const bancoPreguntas = [
         ],
         "type": "single",
         "correcta": 3
-    },
-    {
-        "id": 156,
-        "pregunta": "¿En cuál o cuáles situaciones el vehículo está mal estacionado?",
-        "opciones": [],
-        "type": "multiple",
-        "correcta": 0,
-        "imagen": "./img/preguntas/156.png"
-    },
-    {
-        "id": 157,
-        "pregunta": "¿En cuál o cuáles de las siguientes situaciones el conductor se ha detenido correctamente para recoger un pasajero?",
-        "opciones": [],
-        "type": "multiple",
-        "correcta": 0,
-        "imagen": "./img/preguntas/157.png"
     },
     {
         "id": 158,
@@ -2567,7 +2516,7 @@ const bancoPreguntas = [
         "pregunta": "En una ocasión de mucha neblina usted va detrás de otros vehículos y lleva encendidas sus luces bajas. ¿De qué otra forma puede reducir las probabilidades de verse involucrado en un accidente?",
         "opciones": [
             "Usando sus luces altas en vez de bajas.",
-            "Circulando a baja velocidad and aumentando la distancia al vehículo que va adelante.",
+            "Circulando a baja velocidad y aumentando la distancia al vehículo que va adelante.",
             "Manteniéndose cerca del vehículo que va delante suyo.",
             "Encendiendo sus luces de advertencia de peligro."
         ],
@@ -2581,7 +2530,7 @@ const bancoPreguntas = [
             "Encender y apagar sus luces en señal de advertencia.",
             "Tratar de adelantar tan pronto pueda hacerlo en forma segura.",
             "Disminuir su velocidad hasta recuperar una distancia segura respecto del que va adelante.",
-            "Mantener su velocidad and esperar a que el vehículo se aleje."
+            "Mantener su velocidad y esperar a que el vehículo se aleje."
         ],
         "type": "single",
         "correcta": 2
@@ -2590,9 +2539,9 @@ const bancoPreguntas = [
         "id": 228,
         "pregunta": "¿Cómo puede usted controlar mejor su vehículo al conducir con nieve?",
         "opciones": [
-            "Conduciendo en un cambio bajo and sujetando el volante muy firmemente.",
+            "Conduciendo en un cambio bajo y sujetando el volante muy firmemente.",
             "Conduciendo en primera.",
-            "Manteniendo el motor acelerado and presionando el pedal de embrague.",
+            "Manteniendo el motor acelerado y presionando el pedal de embrague.",
             "Conduciendo lentamente en el cambio más alto posible."
         ],
         "type": "single",
@@ -2614,8 +2563,8 @@ const bancoPreguntas = [
         "id": 230,
         "pregunta": "¿Cómo debería conducir usted en una curva cuando hay hielo en la calzada?",
         "opciones": [
-            "Usando el embrague and el freno al mismo tiempo.",
-            "Lenta and suavemente.",
+            "Usando el embrague y el freno al mismo tiempo.",
+            "Lenta y suavemente.",
             "En primera.",
             "Frenando a medida que va tomando la curva."
         ],
@@ -2624,11 +2573,11 @@ const bancoPreguntas = [
     },
     {
         "id": 231,
-        "pregunta": "Hay mucha neblina and el auto que viene detrás suyo parece estar muy cerca. ¿Qué debería hacer usted?",
+        "pregunta": "Hay mucha neblina y el auto que viene detrás suyo parece estar muy cerca. ¿Qué debería hacer usted?",
         "opciones": [
             "Encender sus luces de advertencia de peligro.",
-            "Desplazarse hacia el costado derecho and detenerse de inmediato.",
-            "Acelerar and alejarse de él.",
+            "Desplazarse hacia el costado derecho y detenerse de inmediato.",
+            "Acelerar y alejarse de él.",
             "Continuar con mucho cuidado."
         ],
         "type": "single",
@@ -2674,9 +2623,9 @@ const bancoPreguntas = [
         "id": 235,
         "pregunta": "Usted va circulando por la pista de la derecha de una carretera de doble calzada muy transitada. Una señal le indica que a 800 m su pista se encuentra cerrada. ¿Qué debería hacer usted?",
         "opciones": [
-            "Señalizar a la izquierda, luego detenerse and esperar a que alguien le dé la pasada.",
-            "Encender sus luces de advertencia de peligro and desplazarse hacia la pista de su izquierda.",
-            "Continuar hasta llegar a la obstrucción and luego se cambia hacia la pista de la izquierda.",
+            "Señalizar a la izquierda, luego detenerse y esperar a que alguien le dé la pasada.",
+            "Encender sus luces de advertencia de peligro y desplazarse hacia la pista de su izquierda.",
+            "Continuar hasta llegar a la obstrucción y luego se cambia hacia la pista de la izquierda.",
             "Desplazarse hacia la pista de su izquierda tan pronto pueda hacerlo en forma segura."
         ],
         "type": "single",
@@ -2700,10 +2649,10 @@ const bancoPreguntas = [
         "id": 237,
         "pregunta": "Usted va tirando un remolque pequeño que comienza a zigzaguear.¿Qué hace usted?",
         "opciones": [
-            "Frena a fondo and mantiene la presión sobre el pedal de freno.",
+            "Frena a fondo y mantiene la presión sobre el pedal de freno.",
             "Aumenta su velocidad tan pronto sea posible.",
-            "Suelta ligeramente el volante and espera que el problema se corrija solo.",
-            "Retira suavemente el pie del acelerador and disminuye la velocidad."
+            "Suelta ligeramente el volante y espera que el problema se corrija solo.",
+            "Retira suavemente el pie del acelerador y disminuye la velocidad."
         ],
         "type": "single",
         "correcta": 3
@@ -2746,9 +2695,9 @@ const bancoPreguntas = [
     },
     {
         "id": 241,
-        "pregunta": "En una carretera de doble calzada and de mucho tránsito, usted está siendo seguido muy de cerca por un vehículo que viene atrás.\n¿Qué hace usted para disminuir el riesgo de accidente?",
+        "pregunta": "En una carretera de doble calzada y de mucho tránsito, usted está siendo seguido muy de cerca por un vehículo que viene atrás.\n¿Qué hace usted para disminuir el riesgo de accidente?",
         "opciones": [
-            "Sale a la berma and se detiene.",
+            "Sale a la berma y se detiene.",
             "Enciende sus luces de advertencia de peligro.",
             "Frena.",
             "Aumenta su distancia al vehículo que va adelante."
@@ -2776,7 +2725,7 @@ const bancoPreguntas = [
     },
     {
         "id": 243,
-        "pregunta": "Usted va circulando por una carretera de doble calzada con tres pistas por sentido. Las demarcaciones de pistas and de eje central están reforzadas con tachas reflectantes. Si a su izquierda las tachas son rojas and a su derecha éstas son blancas, ¿por cuál pista va usted?",
+        "pregunta": "Usted va circulando por una carretera de doble calzada con tres pistas por sentido. Las demarcaciones de pistas y de eje central están reforzadas con tachas reflectantes. Si a su izquierda las tachas son rojas y a su derecha éstas son blancas, ¿por cuál pista va usted?",
         "opciones": [
             "Por la pista del medio.",
             "Por la pista de la izquierda.",
@@ -2851,14 +2800,6 @@ const bancoPreguntas = [
         "imagen": "./img/preguntas/248.png"
     },
     {
-        "id": 249,
-        "pregunta": "¿Cuál de los siguientes tipos de señales le indica que no haga algo?",
-        "opciones": [],
-        "type": "single",
-        "correcta": 0,
-        "imagen": "./img/preguntas/249.png"
-    },
-    {
         "id": 250,
         "pregunta": "¿Qué debe hacer usted cuando enfrenta esta señal?",
         "opciones": [
@@ -2889,7 +2830,7 @@ const bancoPreguntas = [
         "pregunta": "¿Qué significa un semáforo en rojo?",
         "opciones": [
             "Que usted puede seguir su camino si no vienen vehículos por la otra vía.",
-            "Que usted debe disminuir su velocidad and estar preparado para detenerse.",
+            "Que usted debe disminuir su velocidad y estar preparado para detenerse.",
             "Que usted debe detenerse antes de la línea de detención de vehículos.",
             "Que usted debe detenerse sobre el paso de peatones."
         ],
@@ -2948,14 +2889,6 @@ const bancoPreguntas = [
         "imagen": "./img/preguntas/256.png"
     },
     {
-        "id": 257,
-        "pregunta": "¿Cuál de estas señales le previene que más adelante hay una serie de curvas?",
-        "opciones": [],
-        "type": "single",
-        "correcta": 0,
-        "imagen": "./img/preguntas/257.png"
-    },
-    {
         "id": 258,
         "pregunta": "¿Qué significa esta señal?",
         "opciones": [
@@ -2967,14 +2900,6 @@ const bancoPreguntas = [
         "type": "single",
         "correcta": 3,
         "imagen": "./img/preguntas/258.png"
-    },
-    {
-        "id": 259,
-        "pregunta": "¿Cuál de estas señales le advierte la proximidad de un cruce de peatones?",
-        "opciones": [],
-        "type": "single",
-        "correcta": 0,
-        "imagen": "./img/preguntas/259.png"
     },
     {
         "id": 260,
@@ -2999,10 +2924,10 @@ const bancoPreguntas = [
         "id": 261,
         "pregunta": "Usted está enfrentando un semáforo en amarillo. ¿Qué luces se encenderán después?",
         "opciones": [
-            "Primero la roja and luego la amarilla nuevamente.",
-            "Primero la roja and luego la verde.",
-            "Primero la verde and luego la roja.",
-            "Primero la verde and luego la amarilla nuevamente."
+            "Primero la roja y luego la amarilla nuevamente.",
+            "Primero la roja y luego la verde.",
+            "Primero la verde y luego la roja.",
+            "Primero la verde y luego la amarilla nuevamente."
         ],
         "type": "single",
         "correcta": 1
@@ -3088,10 +3013,10 @@ const bancoPreguntas = [
         "id": 268,
         "pregunta": "Usted se encuentra en el lugar de un accidente. ¿Qué hace para ayudar de mejor forma a una persona herida que está con una fuerte hemorragia en la parte inferior de una pierna?",
         "opciones": [
-            "La sienta and le da a beber algo caliente para tranquilizarla.",
+            "La sienta y le da a beber algo caliente para tranquilizarla.",
             "La mantiene tendida con la pierna herida en alto.",
-            "Aplica presión manual firme sobre la herida con un paño limpio and luego la venda.",
-            "La sienta and espera a que llegue una ambulancia.",
+            "Aplica presión manual firme sobre la herida con un paño limpio y luego la venda.",
+            "La sienta y espera a que llegue una ambulancia.",
             "Le conversa tranquilamente ayudándola a mantenerse de pie."
         ],
         "type": "multiple",
@@ -3134,7 +3059,7 @@ const bancoPreguntas = [
         "opciones": [
             "Mantener a las personas lesionadas en movimiento haciéndolas caminar.",
             "Dar a las personas heridas algo caliente para beber.",
-            "Mantener abrigadas and cómodas a las personas heridas.",
+            "Mantener abrigadas y cómodas a las personas heridas.",
             "Mantener tranquilas a las personas heridas hablándoles alentadoramente.",
             "Asegurarse de que no queden solos los heridos."
         ],
@@ -3182,7 +3107,7 @@ const bancoPreguntas = [
         "opciones": [
             "Tratar de mover el camión.",
             "Tratar de diluir los productos químicos con agua.",
-            "Averiguar de qué clase de producto químico se trata mirando los rótulos and letreros que tiene el camión.",
+            "Averiguar de qué clase de producto químico se trata mirando los rótulos y letreros que tiene el camión.",
             "Tratar de evitar que los productos químicos se sigan derramando."
         ],
         "type": "single",
@@ -3204,9 +3129,9 @@ const bancoPreguntas = [
         "id": 276,
         "pregunta": "Usted va por una autopista. De un camión cargado que va delante suyo cae una caja sin que su conductor se dé cuenta.\n¿Qué hace usted?",
         "opciones": [
-            "Trata de alcanzar al camión and de llamar la atención de su conductor.",
-            "Se detiene junto a la caja and enciende sus luces de emergencia hasta que llegue la policía.",
-            "Se desplaza hacia la berma and luego intenta recoger la caja.",
+            "Trata de alcanzar al camión y de llamar la atención de su conductor.",
+            "Se detiene junto a la caja y enciende sus luces de emergencia hasta que llegue la policía.",
+            "Se desplaza hacia la berma y luego intenta recoger la caja.",
             "Continúa hasta donde haya un teléfono para avisar a la policía o a los servicios de emergencia."
         ],
         "type": "single",
@@ -3218,8 +3143,8 @@ const bancoPreguntas = [
         "opciones": [
             "Sólo el conductor del vehículo asegurado.",
             "Sólo los pasajeros del vehículo asegurado.",
-            "Sólo los pasajeros and el conductor del vehículo asegurado.",
-            "El conductor, los pasajeros and cualquier tercero afectado en un accidente de tránsito en que participe el vehículo asegurado."
+            "Sólo los pasajeros y el conductor del vehículo asegurado.",
+            "El conductor, los pasajeros y cualquier tercero afectado en un accidente de tránsito en que participe el vehículo asegurado."
         ],
         "type": "single",
         "correcta": 3
@@ -3244,7 +3169,7 @@ const bancoPreguntas = [
             "Conducir un vehículo bajo los efectos del alcohol es una infracción gravísima.",
             "No respetar una señal PARE es una infracción gravísima.",
             "La comisión de una infracción gravísima es sancionada no sólo con una multa, sino que también con la suspensión de la licencia de conducir del infractor.",
-            "Solamente son infracciones gravísimas el no respetar la luz roja de un semáforo and el exceso de velocidad.",
+            "Solamente son infracciones gravísimas el no respetar la luz roja de un semáforo y el exceso de velocidad.",
             "En ningún caso una licencia de conducir puede ser cancelada por el Juez."
         ],
         "type": "multiple",
@@ -3258,12 +3183,11 @@ const bancoPreguntas = [
         "id": 280,
         "pregunta": "¿Cuál o cuáles de las siguientes afirmaciones es(son) verdadera(s)?",
         "opciones": [
-            "Las únicas infracciones gravísimas son el conducir bajo los efectos del alcohol and el exceso de velocidad.",
+            "Las únicas infracciones gravísimas son el conducir bajo los efectos del alcohol y el exceso de velocidad.",
             "Las infracciones gravísimas son sancionadas con multas and, además, con la suspensión de la licencia de conducir del infractor.",
             "Dos infracciones graves cometidas en un período de 12 meses dan origen a una suspensión de la licencia de conducir del infractor.",
             "No respetar el derecho preferente de paso de un peatón es una infracción leve.",
-            "No respetar una señal Ceda el Paso es una infracción gravísima si a consecuencia de la infracción se produce un accidente.",
-            "d)"
+            "No respetar una señal Ceda el Paso es una infracción gravísima si a consecuencia de la infracción se produce un accidente."
         ],
         "type": "multiple",
         "correcta": [

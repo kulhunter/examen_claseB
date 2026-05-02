@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Examen Teórico // DRIVE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@900&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
+    <!-- WhatsApp & Social Media OG Tags -->
+    <meta property="og:title" content="DRIVE // Simulador Oficial Clase B">
+    <meta property="og:description" content="Practica con el simulador 100% exacto enfocado en los 8 puntos críticos de fallo. Fricción cero, sin registro.">
+    <meta property="og:image" content="https://www.munimacul.cl/portalnv/wp-content/uploads/2026/02/Recurso-44.png">
+    <meta property="og:url" content="https://examenconducir.cl">
+    <meta property="og:type" content="website">
+</head>
+<body class="brutalist-theme">
+    
+    <header class="brutal-header" style="padding-bottom: 0;">
+        <div class="brand-text"><a href="index.html" style="color: inherit; text-decoration: none;">← VOLVER AL MENÚ</a></div>
+        <h1 class="massive-title" style="font-size: clamp(3rem, 8vw, 6rem);">EXAMEN TEÓRICO</h1>
+    </header>
+
+    <div class="container">
+        <!-- VISTA: QUIZ -->
+        <main id="quiz-container" class="view active">
+            <div class="card">
+                <div class="quiz-header">
+                    <span id="pregunta-counter">Pregunta 1 de 35</span>
+                    <span id="timer-counter" style="color: var(--danger); font-weight: 900; letter-spacing: 0.1em; font-variant-numeric: tabular-nums;">⏱ 45:00</span>
+                    <span id="score-counter">Aciertos: 0</span>
+                </div>
+                <div class="progress-container">
+                    <div id="progress-bar" class="progress-bar"></div>
+                </div>
+                
+                <h2 id="pregunta-text" class="pregunta-title">Haz clic en Iniciar para comenzar...</h2>
+                <p id="pregunta-instruction" class="hidden text-muted"></p>
+
+                <div id="pregunta-image-container" class="hidden">
+                    <img id="pregunta-image" src="" alt="Imagen de la pregunta" style="max-width: 100%; border-radius: 8px;">
+                </div>
+
+                <div id="opciones-container" class="opciones-grid">
+                    <button id="btn-iniciar-simulacro" class="btn-primary-large" style="width: 100%; text-align: center; padding: 30px;">INICIAR SIMULACRO OFICIAL (35 PREGUNTAS)</button>
+                </div>
+
+                <div class="quiz-footer">
+                    <button id="btn-confirmar" class="btn btn-primary hidden">Confirmar Respuestas</button>
+                    <button id="btn-siguiente" class="btn btn-primary hidden">Siguiente Pregunta</button>
+                </div>
+            </div>
+        </main>
+
+        <!-- RESULTADOS TEÓRICO -->
+        <div id="resultados-container" class="view hidden">
+            <div class="card text-center">
+                <h2 style="font-size: 3rem; margin-bottom: 20px;">Resultado Final</h2>
+                <div id="score-circle" class="score-circle">
+                    <span id="resultado-final">0%</span>
+                </div>
+                <div id="estado-final" class="score-label" style="font-size: 2rem; font-weight: 900;">REPROBADO</div>
+                <div id="mensaje-final" class="margin-v-20" style="margin: 20px 0; font-size: 1.2rem;"></div>
+                <div id="revision-errores" class="revision-container" style="text-align: left; margin-top: 40px;"></div>
+                <div style="display: flex; gap: 20px; justify-content: center; margin-top: 30px;">
+                    <button id="btn-whatsapp-share" class="btn-primary-large" style="background: #25D366; color: white; border: none;"><span style="font-size: 1.2rem; margin-right: 10px;">💬</span>Desafiar por WhatsApp</button>
+                    <button onclick="window.location.href='index.html'" class="btn-primary-large" style="background: var(--gray-dark); color: white;">Volver al Menú</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="preguntas.js"></script>
+    <script src="senales_data.js"></script>
+    <script src="app.js"></script>
+    <script>
+        // Start quiz button logic
+        document.getElementById('btn-iniciar-simulacro').onclick = function() {
+            if(typeof iniciarTest === 'function' && typeof bancoPreguntas !== 'undefined') {
+                iniciarTest(bancoPreguntas, 35);
+            } else {
+                alert("Error cargando base de datos.");
+            }
+        };
+    </script>
+</body>
+</html>

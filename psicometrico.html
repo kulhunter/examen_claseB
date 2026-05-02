@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gabinete Psicotécnico // DRIVE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@900&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
+    <!-- WhatsApp & Social Media OG Tags -->
+    <meta property="og:title" content="DRIVE // Simulador Oficial Clase B">
+    <meta property="og:description" content="Practica con el simulador 100% exacto enfocado en los 8 puntos críticos de fallo. Fricción cero, sin registro.">
+    <meta property="og:image" content="https://www.munimacul.cl/portalnv/wp-content/uploads/2026/02/Recurso-44.png">
+    <meta property="og:url" content="https://examenconducir.cl">
+    <meta property="og:type" content="website">
+</head>
+<body class="brutalist-theme">
+    
+    <header class="brutal-header" style="padding-bottom: 0;">
+        <div class="brand-text"><a href="index.html" style="color: inherit; text-decoration: none;">← VOLVER AL MENÚ</a></div>
+        <h1 class="massive-title" style="font-size: clamp(3rem, 8vw, 6rem); color: var(--neon);">GABINETE PSICOTÉCNICO</h1>
+    </header>
+
+    <div class="container">
+        <!-- MÓDULO: TEST PSICOMÉTRICO (HUD AWWWARDS) -->
+        <div id="psico-test-view" class="view active">
+            <div class="hud-container">
+                <div class="hud-header">
+                    <div class="hud-target">TEST DE REACCIÓN SIMPLE</div>
+                    <div class="hud-stats">
+                        <span id="psico-attempt-counter">INTENTO 1/3</span>
+                        <span id="psico-time-last">ÚLTIMO: -- ms</span>
+                    </div>
+                </div>
+
+                <div class="hud-screen">
+                    <div id="psico-instructions" class="psico-overlay">
+                        <h3 style="font-size: 2rem; margin-bottom: 20px;">Prueba de Reacción Visual</h3>
+                        <p style="margin-bottom: 30px;">Cuando el indicador se encienda en <strong class="text-neon-red">ROJO</strong>, presiona el pedal lo más rápido que puedas.</p>
+                        <button id="btn-start-psico-sequence" class="btn-primary-large" style="background: var(--neon); color: black;">Comenzar Secuencia</button>
+                    </div>
+
+                    <div id="psico-traffic-light" class="traffic-hud">
+                        <div class="hud-light hud-red"></div>
+                    </div>
+                    
+                    <div id="psico-feedback-msg" class="hud-message hidden">¡MUY RÁPIDO!</div>
+                </div>
+
+                <div class="hud-controls">
+                    <button id="btn-psico-pedal" class="pedal-giant" disabled>
+                        <span>PISAR FRENO</span>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Resultados Psico -->
+            <div id="psico-results" class="hud-container hidden" style="margin-top: 20px;">
+                <div class="report-card card dark-report">
+                    <div class="report-header" style="border: none;">
+                        <h2 style="font-size: 2.5rem; margin-bottom: 10px;">Reporte Psicotécnico</h2>
+                        <p style="color: #888;">Evaluación de Reacción Motriz</p>
+                    </div>
+                    <div class="report-body">
+                        <div class="score-widget">
+                            <h3 id="psico-final-status" class="final-verdict" style="font-size: 3rem;">APTO</h3>
+                            <p id="psico-avg-time" class="time-readout" style="margin-top: 20px;">Promedio: 0.00s</p>
+                        </div>
+                    </div>
+                    <div class="report-footer" style="border: none;">
+                        <button onclick="window.location.href='index.html'" class="btn-primary-large" style="width: 100%;">Volver al Menú</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        if(typeof resetPsicoTest === 'function') resetPsicoTest();
+    </script>
+</body>
+</html>

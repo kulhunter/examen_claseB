@@ -7,11 +7,15 @@ let seleccionesMultiples = [];
 
 // Navegación
 function cambiarVista(vistaId) {
-    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    document.querySelectorAll('.view').forEach(v => {
+        v.classList.remove('active');
+        v.classList.add('hidden'); // Ocultar totalmente
+    });
     document.querySelectorAll('.modal-overlay').forEach(m => m.classList.add('hidden'));
     
     const el = document.getElementById(`${vistaId}-container`) || document.getElementById(vistaId);
     if (el) {
+        el.classList.remove('hidden'); // Remover el candado de visibilidad
         el.classList.add('active');
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }

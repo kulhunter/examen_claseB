@@ -647,183 +647,205 @@ if(document.getElementById('btn-start-psico-sequence')) document.getElementById(
     iniciarIntentoPsico();
 };
 
+/* =========================================================
+   GABINETE PSICOTÉCNICO (LÓGICA MODULAR V4)
+   ========================================================= */
+let psicoState = {
+    attempts: 0,
+    maxAttempts: 3,
+    startTime: 0,
+    waitingForGreen: false,
+    times: [],
+    timeoutId: null
+};
+
+let punteadoState = {
+    hits: 0,
+    needed: 35,
+    timeLeft: 45,
+    timerId: null,
+    active: false,
+    startTime: 0
+};
+
+function cambiarPruebaPsico(prueba) {
+    document.getElementById('psico-menu').classList.add('hidden');
+    document.querySelectorAll('.view').forEach(v => v.classList.add('hidden'));
+    
+    if (prueba === 'reaccion') {
+        document.getElementById('psico-reaccion-view').classList.remove('hidden');
+        resetPsicoReaccion();
+    } else {
+        document.getElementById('psico-punteado-view').classList.remove('hidden');
+        resetPunteado();
+    }
+}
+
+// --- TEST REACCIÓN ---
+function resetPsicoReaccion() {
+    psicoState = { attempts: 0, maxAttempts: 3, startTime: 0, waitingForGreen: false, times: [], timeoutId: null };
+    document.getElementById('psico-instructions').classList.remove('hidden');
+    document.getElementById('psico-results').classList.add('hidden');
+    document.getElementById('btn-psico-pedal').disabled = true;
+}
+
+if(document.getElementById('btn-start-psico-sequence')) {
+    document.getElementById('btn-start-psico-sequence').onclick = () => {
+        document.getElementById('psico-instructions').classList.add('hidden');
+        document.getElementById('btn-psico-pedal').disabled = false;
+        iniciarIntentoPsico();
+    };
+}
+
 function iniciarIntentoPsico() {
     psicoState.waitingForGreen = false;
     document.querySelector('.hud-light').classList.remove('active');
     document.getElementById('psico-feedback-msg').classList.add('hidden');
     
-    // Tiempo aleatorio entre 2 y 5 segundos para encender la luz
     const randomDelay = Math.random() * 3000 + 2000;
-    
     psicoState.timeoutId = setTimeout(() => {
         psicoState.waitingForGreen = true;
-        document.querySelector('.hud-light').classList.add('active'); // Enciende ROJO
+        document.querySelector('.hud-light').classList.add('active');
         psicoState.startTime = performance.now();
     }, randomDelay);
 }
 
-if(document.getElementById('btn-psico-pedal')) document.getElementById('btn-psico-pedal').onmousedown = manejarClickPedal;
-if(document.getElementById('btn-psico-pedal')) document.getElementById('btn-psico-pedal').ontouchstart = (e) => {
-    e.preventDefault(); // Evitar doble fire en móviles
-    manejarClickPedal();
-};
+const pedalReaccion = document.getElementById('btn-psico-pedal');
+if(pedalReaccion) {
+    const fn = (e) => {
+        if(e) e.preventDefault();
+        if (psicoState.attempts >= psicoState.maxAttempts) return;
+        
+        const msg = document.getElementById('psico-feedback-msg');
+        msg.classList.remove('hidden');
 
-function manejarClickPedal() {
-    if (psicoState.attempts >= psicoState.maxAttempts) return;
-    
-    const msg = document.getElementById('psico-feedback-msg');
-    msg.classList.remove('hidden');
+        if (!psicoState.waitingForGreen) {
+            clearTimeout(psicoState.timeoutId);
+            msg.innerText = "¡FALSO ARRANQUE!";
+            msg.style.color = "var(--danger)";
+            setTimeout(iniciarIntentoPsico, 1500);
+            return;
+        }
 
-    if (!psicoState.waitingForGreen) {
-        // Hizo clic ANTES de que se encienda la luz roja
-        clearTimeout(psicoState.timeoutId);
-        msg.innerText = "¡FALSO ARRANQUE! Espera la luz.";
-        msg.style.color = "var(--danger)";
-        setTimeout(iniciarIntentoPsico, 1500);
-        return;
-    }
-
-    // Clic correcto
-    const reactionTime = performance.now() - psicoState.startTime;
-    psicoState.waitingForGreen = false;
-    document.querySelector('.hud-light').classList.remove('active');
-    
-    psicoState.times.push(reactionTime);
-    psicoState.attempts++;
-    
-    document.getElementById('psico-time-last').innerText = `ÚLTIMO: ${reactionTime.toFixed(0)} ms`;
-    msg.innerText = `${(reactionTime / 1000).toFixed(3)}s`;
-    msg.style.color = "var(--success)";
-    
-    if (psicoState.attempts < psicoState.maxAttempts) {
-        document.getElementById('psico-attempt-counter').innerText = `INTENTO ${psicoState.attempts + 1}/3`;
-        setTimeout(iniciarIntentoPsico, 1500);
-    } else {
-        setTimeout(finalizarTestPsico, 1000);
-    }
+        const reactionTime = performance.now() - psicoState.startTime;
+        psicoState.waitingForGreen = false;
+        document.querySelector('.hud-light').classList.remove('active');
+        psicoState.times.push(reactionTime);
+        psicoState.attempts++;
+        
+        document.getElementById('psico-time-last').innerText = `ÚLTIMO: ${reactionTime.toFixed(0)} ms`;
+        msg.innerText = `${(reactionTime / 1000).toFixed(3)}s`;
+        msg.style.color = "var(--success)";
+        
+        if (psicoState.attempts < psicoState.maxAttempts) {
+            document.getElementById('psico-attempt-counter').innerText = `INTENTO ${psicoState.attempts + 1}/3`;
+            setTimeout(iniciarIntentoPsico, 1500);
+        } else {
+            setTimeout(() => finalizarTestGabinete('reaccion'), 1000);
+        }
+    };
+    pedalReaccion.onmousedown = fn;
+    pedalReaccion.ontouchstart = fn;
 }
 
-let punteadoState = { hits: 0, active: false, startTime: 0, endTime: 0 };
+// --- TEST PUNTEADO ---
+function resetPunteado() {
+    punteadoState = { hits: 0, needed: 35, timeLeft: 45, timerId: null, active: false, startTime: 0 };
+    document.getElementById('punteado-instructions').classList.remove('hidden');
+    document.getElementById('psico-punteado-box').classList.add('hidden');
+    document.getElementById('btn-punteado-pedal').disabled = true;
+    document.getElementById('punteado-hits').innerText = "ACIERTOS: 0/35";
+    document.getElementById('punteado-timer').innerText = "TIEMPO: 45s";
+}
 
-function finalizarTestPsico() {
-    // Ocultar luces de reacción
-    document.getElementById('psico-traffic-light').classList.add('hidden');
-    document.getElementById('psico-feedback-msg').classList.add('hidden');
-    
-    // Cambiar a la prueba de Punteado
-    const instructions = document.getElementById('psico-instructions');
-    instructions.innerHTML = `
-        <h3 style="font-size: 2rem; margin-bottom: 20px;">Prueba de Coordinación Bimanual</h3>
-        <p style="margin-bottom: 30px;">El disco rotará. Haz clic en los orificios o usa el pedal cuando pasen por la <strong class="text-neon-cyan">zona objetivo superior</strong>.</p>
-        <button id="btn-start-punteado" class="btn-primary-large" style="background: var(--neon-cyan); color: black;">Iniciar Rotación</button>
-    `;
-    instructions.classList.remove('hidden');
-    
-    // Preparar pedal para punteado
-    const pedal = document.getElementById('btn-psico-pedal');
-    pedal.innerHTML = `<span>MARCAR PUNTO</span>`;
-    pedal.disabled = true;
-    pedal.onmousedown = null;
-    pedal.ontouchstart = null;
-    
+if(document.getElementById('btn-start-punteado')) {
     document.getElementById('btn-start-punteado').onclick = () => {
-        instructions.classList.add('hidden');
-        document.getElementById('psico-punteado').classList.remove('hidden');
-        pedal.disabled = false;
+        document.getElementById('punteado-instructions').classList.add('hidden');
+        document.getElementById('psico-punteado-box').classList.remove('hidden');
+        document.getElementById('btn-punteado-pedal').disabled = false;
         
         punteadoState.active = true;
         punteadoState.startTime = performance.now();
-        punteadoState.hits = 0;
         
-        const clickHandler = (e) => {
-            if(e) e.preventDefault();
-            if(!punteadoState.active) return;
-            
-            const target = document.querySelector('.target-zone');
-            const rect = target.getBoundingClientRect();
-            const centerX = rect.left + rect.width / 2;
-            const centerY = rect.top + rect.height / 2;
-            
-            // Detectar si hay un hoyo exactamente debajo del target
-            const elements = document.elementsFromPoint(centerX, centerY);
-            const hole = elements.find(el => el.classList.contains('hole'));
-            
-            const msg = document.getElementById('psico-feedback-msg');
-            msg.classList.remove('hidden');
-            
-            if (hole && !hole.classList.contains('hit')) {
-                hole.classList.add('hit');
-                punteadoState.hits++;
-                msg.innerText = `¡ACIERTO! (${punteadoState.hits}/3)`;
-                msg.style.color = "var(--success)";
-                
-                if (punteadoState.hits >= 3) {
-                    punteadoState.active = false;
-                    punteadoState.endTime = performance.now();
-                    msg.innerText = "¡PRUEBA COMPLETADA!";
-                    setTimeout(mostrarResultadosGlobalesPsico, 1500);
-                }
-            } else {
-                msg.innerText = "FALLO";
-                msg.style.color = "var(--danger)";
-            }
-        };
-        
-        pedal.onmousedown = clickHandler;
-        pedal.ontouchstart = clickHandler;
-        
-        // Permitir hacer clic directo en los orificios para escritorio
-        document.querySelectorAll('.hole').forEach(h => {
-            h.onmousedown = (e) => {
-                if(!punteadoState.active) return;
-                if (!h.classList.contains('hit')) {
-                    h.classList.add('hit');
-                    punteadoState.hits++;
-                    const msg = document.getElementById('psico-feedback-msg');
-                    msg.classList.remove('hidden');
-                    msg.innerText = `¡ACIERTO! (${punteadoState.hits}/3)`;
-                    msg.style.color = "var(--success)";
-                    if (punteadoState.hits >= 3) {
-                        punteadoState.active = false;
-                        punteadoState.endTime = performance.now();
-                        msg.innerText = "¡PRUEBA COMPLETADA!";
-                        setTimeout(mostrarResultadosGlobalesPsico, 1500);
-                    }
-                }
-            };
-        });
+        punteadoState.timerId = setInterval(() => {
+            punteadoState.timeLeft--;
+            document.getElementById('punteado-timer').innerText = `TIEMPO: ${punteadoState.timeLeft}s`;
+            if (punteadoState.timeLeft <= 0) finalizarPunteado(false);
+        }, 1000);
     };
 }
 
-function mostrarResultadosGlobalesPsico() {
+const pedalPunteado = document.getElementById('btn-punteado-pedal');
+if(pedalPunteado) {
+    const fn = (e) => {
+        if(e) e.preventDefault();
+        manejarAccionPunteado();
+    };
+    pedalPunteado.onmousedown = fn;
+    pedalPunteado.ontouchstart = fn;
+}
+
+function manejarAccionPunteado() {
+    if (!punteadoState.active) return;
+    
+    const target = document.querySelector('.target-zone');
+    const rect = target.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    
+    const elements = document.elementsFromPoint(cx, cy);
+    const hole = elements.find(el => el.classList.contains('hole'));
+    
+    const msg = document.getElementById('punteado-msg');
+    msg.classList.remove('hidden');
+    
+    if (hole) {
+        punteadoState.hits++;
+        document.getElementById('punteado-hits').innerText = `ACIERTOS: ${punteadoState.hits}/35`;
+        msg.innerText = "¡ACIERTO!";
+        msg.style.color = "var(--success)";
+        if (punteadoState.hits >= punteadoState.needed) {
+            finalizarPunteado(true);
+        }
+    } else {
+        msg.innerText = "FALLO";
+        msg.style.color = "var(--danger)";
+    }
+}
+
+function finalizarPunteado(exito) {
+    punteadoState.active = false;
+    clearInterval(punteadoState.timerId);
+    document.getElementById('btn-punteado-pedal').disabled = true;
+    
+    const msg = document.getElementById('punteado-msg');
+    msg.innerText = exito ? "¡META ALCANZADA!" : "TIEMPO AGOTADO";
+    msg.style.color = exito ? "var(--success)" : "var(--danger)";
+    
+    setTimeout(() => finalizarTestGabinete('punteado'), 1500);
+}
+
+function finalizarTestGabinete(tipo) {
+    document.querySelectorAll('.view').forEach(v => v.classList.add('hidden'));
     document.getElementById('psico-results').classList.remove('hidden');
-    document.getElementById('psico-main-hud').classList.add('hidden');
-    document.getElementById('btn-psico-pedal').disabled = true;
-    
-    // Resultados Reacción
-    const avgTime = psicoState.times.reduce((a, b) => a + b, 0) / psicoState.times.length;
-    const avgSeconds = (avgTime / 1000).toFixed(3);
-    document.getElementById('psico-avg-time').innerText = `Reacción: ${avgSeconds}s`;
-    
-    // Resultados Punteado
-    const punteadoTime = (punteadoState.endTime - punteadoState.startTime) / 1000;
-    const punteadoEl = document.createElement('p');
-    punteadoEl.style.fontSize = '1.2rem';
-    punteadoEl.style.marginBottom = '20px';
-    punteadoEl.innerText = `Coordinación: Completado en ${punteadoTime.toFixed(1)}s`;
-    document.getElementById('psico-avg-time').parentNode.insertBefore(punteadoEl, document.getElementById('psico-final-status'));
     
     const statusEl = document.getElementById('psico-final-status');
-    // Para ser Óptimo: Reacción <= 0.45 y Coordinación <= 10s
-    if (avgSeconds <= 0.45 && punteadoTime <= 10) {
-        statusEl.innerText = "ÓPTIMO";
-        statusEl.style.color = "var(--neon-cyan)";
-    } else if (avgSeconds <= 0.60 && punteadoTime <= 20) {
-        statusEl.innerText = "NORMAL";
-        statusEl.style.color = "var(--success)";
+    const timeEl = document.getElementById('psico-avg-time');
+    const nameEl = document.getElementById('psico-test-name');
+
+    if (tipo === 'reaccion') {
+        nameEl.innerText = "Prueba de Reacción";
+        const avg = psicoState.times.reduce((a, b) => a + b, 0) / 3 / 1000;
+        timeEl.innerText = `Promedio: ${avg.toFixed(3)}s`;
+        if (avg <= 0.45) { statusEl.innerText = "ÓPTIMO"; statusEl.style.color = "var(--neon-cyan)"; }
+        else if (avg <= 0.60) { statusEl.innerText = "NORMAL"; statusEl.style.color = "var(--success)"; }
+        else { statusEl.innerText = "DEFICIENTE"; statusEl.style.color = "var(--danger)"; }
     } else {
-        statusEl.innerText = "DEFICIENTE";
-        statusEl.style.color = "var(--danger)";
+        nameEl.innerText = "Prueba de Punteado";
+        timeEl.innerText = `Aciertos: ${punteadoState.hits}/35`;
+        if (punteadoState.hits >= 35) { statusEl.innerText = "ÓPTIMO"; statusEl.style.color = "var(--neon-cyan)"; }
+        else if (punteadoState.hits >= 25) { statusEl.innerText = "NORMAL"; statusEl.style.color = "var(--success)"; }
+        else { statusEl.innerText = "DEFICIENTE"; statusEl.style.color = "var(--danger)"; }
     }
 }
 

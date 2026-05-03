@@ -22,9 +22,25 @@
     </header>
 
     <div class="container">
-        <!-- MÓDULO: TEST PSICOMÉTRICO (HUD AWWWARDS) -->
-        <div id="psico-test-view" class="view active">
-            <div id="psico-main-hud" class="hud-container">
+        <!-- MÓDULO: MENÚ DE PRUEBAS -->
+        <div id="psico-menu" class="view active">
+            <div class="brutal-nav" style="margin-top: 20px;">
+                <a href="#" onclick="cambiarPruebaPsico('reaccion')" class="brutal-link">
+                    <span class="link-number">01</span>
+                    <span class="link-text">REACCIÓN</span>
+                    <span class="link-meta" style="opacity: 1;">SISTEMA DE FRENADO</span>
+                </a>
+                <a href="#" onclick="cambiarPruebaPsico('punteado')" class="brutal-link">
+                    <span class="link-number">02</span>
+                    <span class="link-text">PUNTEADO</span>
+                    <span class="link-meta" style="opacity: 1;">COORDINACIÓN BIMANUAL</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- MÓDULO: TEST REACCIÓN -->
+        <div id="psico-reaccion-view" class="view hidden">
+            <div class="hud-container">
                 <div class="hud-header">
                     <div class="hud-target">TEST DE REACCIÓN SIMPLE</div>
                     <div class="hud-stats">
@@ -32,54 +48,77 @@
                         <span id="psico-time-last">ÚLTIMO: -- ms</span>
                     </div>
                 </div>
-
                 <div class="hud-screen">
                     <div id="psico-instructions" class="psico-overlay">
                         <h3 style="font-size: 2rem; margin-bottom: 20px;">Prueba de Reacción Visual</h3>
-                        <p style="margin-bottom: 30px;">Cuando el indicador se encienda en <strong class="text-neon-red">ROJO</strong>, presiona el pedal lo más rápido que puedas.</p>
-                        <button id="btn-start-psico-sequence" class="btn-primary-large" style="background: var(--neon); color: black;">Comenzar Secuencia</button>
+                        <p style="margin-bottom: 30px;">Cuando el indicador se encienda en <strong class="text-neon-red">ROJO</strong>, presiona el pedal lo más rápido posible.</p>
+                        <button id="btn-start-psico-sequence" class="btn-primary-large" style="background: var(--neon); color: black;">Comenzar</button>
                     </div>
-
                     <div id="psico-traffic-light" class="traffic-hud">
                         <div class="hud-light hud-red"></div>
                     </div>
-
-                    <!-- TEST DE PUNTEADO -->
-                    <div id="psico-punteado" class="hidden">
-                        <div class="punteado-disc">
-                            <div class="hole" data-id="1"></div>
-                            <div class="hole" data-id="2"></div>
-                            <div class="hole" data-id="3"></div>
-                        </div>
-                        <div class="target-zone"></div>
-                    </div>
-                    
-                    <div id="psico-feedback-msg" class="hud-message hidden">¡MUY RÁPIDO!</div>
+                    <div id="psico-feedback-msg" class="hud-message hidden"></div>
                 </div>
-
                 <div class="hud-controls">
                     <button id="btn-psico-pedal" class="pedal-giant" disabled>
                         <span>PISAR FRENO</span>
                     </button>
                 </div>
             </div>
-            
-            <!-- Resultados Psico -->
-            <div id="psico-results" class="hud-container hidden" style="margin-top: 20px;">
-                <div class="report-card card dark-report">
-                    <div class="report-header" style="border: none;">
-                        <h2 style="font-size: 2.5rem; margin-bottom: 10px;">Reporte Psicotécnico</h2>
-                        <p style="color: #888;">Evaluación de Reacción Motriz</p>
+        </div>
+
+        <!-- MÓDULO: TEST PUNTEADO -->
+        <div id="psico-punteado-view" class="view hidden">
+            <div class="hud-container">
+                <div class="hud-header">
+                    <div class="hud-target">COORDINACIÓN (PUNTEADO)</div>
+                    <div class="hud-stats">
+                        <span id="punteado-timer">TIEMPO: 45s</span>
+                        <span id="punteado-hits">ACIERTOS: 0/35</span>
                     </div>
-                    <div class="report-body">
-                        <div class="score-widget">
-                            <h3 id="psico-final-status" class="final-verdict" style="font-size: 3rem;">APTO</h3>
-                            <p id="psico-avg-time" class="time-readout" style="margin-top: 20px;">Promedio: 0.00s</p>
+                </div>
+                <div class="hud-screen">
+                    <div id="punteado-instructions" class="psico-overlay">
+                        <h3 style="font-size: 2rem; margin-bottom: 20px;">Punteado de Lahy</h3>
+                        <p style="margin-bottom: 30px;">Acierte 35 puntos en los orificios mientras el disco gira. Use el botón o haga clic en los hoyos.</p>
+                        <button id="btn-start-punteado" class="btn-primary-large" style="background: var(--neon-cyan); color: black;">Iniciar Prueba</button>
+                    </div>
+                    <div id="psico-punteado-box" class="hidden" style="margin-top: 20px;">
+                        <div id="psico-punteado" style="margin: 0 auto;">
+                            <div class="punteado-disc">
+                                <div class="hole" data-id="1"></div>
+                                <div class="hole" data-id="2"></div>
+                                <div class="hole" data-id="3"></div>
+                            </div>
+                            <div class="target-zone"></div>
                         </div>
                     </div>
-                    <div class="report-footer" style="border: none;">
-                        <button onclick="window.location.href='index.html'" class="btn-primary-large" style="width: 100%;">Volver al Menú</button>
+                    <div id="punteado-msg" class="hud-message hidden"></div>
+                </div>
+                <div class="hud-controls">
+                    <button id="btn-punteado-pedal" class="pedal-giant" disabled>
+                        <span>MARCAR PUNTO</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Resultados Finales -->
+        <div id="psico-results" class="hud-container hidden" style="margin-top: 20px;">
+            <div class="report-card card dark-report">
+                <div class="report-header" style="border: none;">
+                    <h2 style="font-size: 2.5rem; margin-bottom: 10px;">Reporte Psicotécnico</h2>
+                    <p id="psico-test-name" style="color: #888;">Evaluación de Reacción Motriz</p>
+                </div>
+                <div class="report-body">
+                    <div class="score-widget">
+                        <h3 id="psico-final-status" class="final-verdict" style="font-size: 3rem;">APTO</h3>
+                        <p id="psico-avg-time" class="time-readout" style="margin-top: 20px;">Promedio: 0.00s</p>
                     </div>
+                </div>
+                <div class="report-footer" style="border: none; display: flex; gap: 10px;">
+                    <button onclick="location.reload()" class="btn-primary-large" style="flex: 1; background: #222; color: white;">Repetir</button>
+                    <button onclick="window.location.href='index.html'" class="btn-primary-large" style="flex: 1;">Menú Principal</button>
                 </div>
             </div>
         </div>

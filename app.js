@@ -445,7 +445,7 @@ function avanzarSimulacion() {
         return;
     }
     
-    document.querySelector('.road-line').classList.remove('paused');
+    document.querySelector('.animated-markings').classList.remove('paused');
     driveState.carPos += 100;
     
     // Eliminado: car.style.bottom para evitar que el volante flote hacia arriba.
@@ -460,7 +460,7 @@ function avanzarSimulacion() {
 
 function ejecutarEscenario(s) {
     document.getElementById('btn-drive-continue').classList.add('hidden');
-    document.querySelector('.road-line').classList.add('paused'); // Pausar animación de vía
+    document.querySelector('.animated-markings').classList.add('paused'); // Pausar animación de vía
     
     // Activar gráficos de entorno (Cruce o Paso de cebra)
     if (s.q && s.q.includes('cruce') || s.action === 'Detenerse' || s.action === 'Frenar totalmente' || s.action === 'Ceder el paso') {
@@ -573,10 +573,10 @@ function finalizarExamenVirtual() {
 
 function resetMap() {
     document.getElementById('virtual-car').style.bottom = '20px';
-    document.querySelector('.road-line').classList.add('paused');
+    document.querySelector('.animated-markings').classList.add('paused');
     document.getElementById('env-crosswalk').classList.add('hidden');
     document.getElementById('env-intersection').classList.add('hidden');
-    document.querySelectorAll('.map-view > div.map-object').forEach(el => el.classList.add('hidden'));
+    document.querySelectorAll('.top-down-road > div.td-map-object').forEach(el => el.classList.add('hidden'));
     document.getElementById('drive-question-box').classList.add('hidden');
     document.getElementById('btn-drive-continue').classList.add('hidden');
     document.getElementById('btn-drive-action').classList.add('hidden');
@@ -678,8 +678,8 @@ function finalizarTestPsico() {
     document.getElementById('psico-avg-time').innerText = `Promedio: ${avgSeconds}s`;
     
     const statusEl = document.getElementById('psico-final-status');
-    // Menos de 0.43s es excelente. Hasta 0.6s es normal. Más es deficiente.
-    if (avgSeconds <= 0.43) {
+    // Menos de 0.45s es óptimo.
+    if (avgSeconds <= 0.45) {
         statusEl.innerText = "ÓPTIMO";
         statusEl.style.color = "var(--neon-cyan)";
     } else if (avgSeconds <= 0.60) {

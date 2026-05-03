@@ -122,41 +122,51 @@
                         </div>
                     </div>
 
-                    <!-- PANEL DERECHO: PARABRISAS (MAPA) -->
-                    <div class="windshield-view pro-windshield">
-                        <div class="sky-layer"></div>
-                        <div class="map-view perspective-road">
-                            <div class="road-surface">
-                                <div class="road-line paused"></div>
-                            </div>
+                    <!-- PANEL DERECHO: VISTA AÉREA (TOP-DOWN MAP) -->
+                    <div class="top-down-map-view glass-panel">
+                        <div class="top-down-road">
+                            <div class="road-markings animated-markings paused"></div>
                             
+                            <!-- Vehículo del usuario -->
+                            <div id="virtual-car" class="top-down-car">
+                                <svg viewBox="0 0 100 200" xmlns="http://www.w3.org/2000/svg">
+                                    <!-- Sombra -->
+                                    <rect x="15" y="10" width="70" height="180" rx="20" fill="rgba(0,0,0,0.5)" filter="blur(5px)"/>
+                                    <!-- Chasis -->
+                                    <rect x="20" y="5" width="60" height="180" rx="15" fill="#1e3a8a"/>
+                                    <!-- Techo -->
+                                    <rect x="25" y="60" width="50" height="60" rx="10" fill="#0f172a"/>
+                                    <!-- Parabrisas -->
+                                    <path d="M25 60 Q 50 45 75 60 L 70 80 L 30 80 Z" fill="#38bdf8"/>
+                                    <!-- Ventana trasera -->
+                                    <path d="M25 120 Q 50 130 75 120 L 70 100 L 30 100 Z" fill="#0ea5e9"/>
+                                    <!-- Focos traseros (frenos) -->
+                                    <rect class="brake-lights" x="22" y="180" width="15" height="5" rx="2" fill="#991b1b"/>
+                                    <rect class="brake-lights" x="63" y="180" width="15" height="5" rx="2" fill="#991b1b"/>
+                                    <!-- Focos delanteros -->
+                                    <rect x="22" y="5" width="15" height="8" rx="3" fill="#fef08a"/>
+                                    <rect x="63" y="5" width="15" height="8" rx="3" fill="#fef08a"/>
+                                    <!-- Espejos -->
+                                    <rect x="15" y="70" width="5" height="15" rx="2" fill="#0f172a"/>
+                                    <rect x="80" y="70" width="5" height="15" rx="2" fill="#0f172a"/>
+                                </svg>
+                            </div>
+
                             <!-- Gráficos Dinámicos del Entorno -->
-                            <div id="env-crosswalk" class="environment-layer hidden">
-                                <div class="zebra-lines"></div>
+                            <div id="env-crosswalk" class="td-env-layer hidden">
+                                <div class="td-zebra"></div>
                             </div>
-                            <div id="env-intersection" class="environment-layer hidden">
-                                <div class="cross-road"></div>
+                            <div id="env-intersection" class="td-env-layer hidden">
+                                <div class="td-crossroad"></div>
                             </div>
                             
-                            <div id="inter-stop" class="map-object stop-sign hidden">PARE</div>
-                            <div id="inter-yield" class="map-object yield-sign hidden">CEDA</div>
-                            <div id="inter-light" class="map-object traffic-light hidden">
+                            <div id="inter-stop" class="td-map-object td-stop hidden">PARE</div>
+                            <div id="inter-yield" class="td-map-object td-yield hidden">CEDA</div>
+                            <div id="inter-light" class="td-map-object td-traffic-light hidden">
                                 <div class="light red active"></div>
                                 <div class="light yellow"></div>
                                 <div class="light green"></div>
                             </div>
-                        </div>
-
-                        <!-- TABLERO EN PRIMERA PERSONA (VOLANTE) -->
-                        <div id="virtual-car" class="pro-dashboard">
-                            <svg class="steering-wheel" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                                <circle cx="50" cy="50" r="45" fill="none" stroke="#ccc" stroke-width="10"/>
-                                <circle cx="50" cy="50" r="40" fill="none" stroke="#999" stroke-width="4"/>
-                                <path d="M5 50 Q 50 80 95 50" fill="none" stroke="#aaa" stroke-width="8"/>
-                                <circle cx="50" cy="65" r="15" fill="#555"/>
-                                <circle cx="50" cy="65" r="5" fill="#fff"/>
-                            </svg>
-                            <div class="dashboard-panel-base" style="border-top: 6px solid #888; background: #333;"></div>
                         </div>
                     </div>
                 </div>

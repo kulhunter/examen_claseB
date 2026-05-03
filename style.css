@@ -244,13 +244,35 @@ body {
 }
 
 /* ==========================================
-   LEGACY STYLES FIX (DARK OVERRIDE)
+   PREMIUM GLASSMORPHISM & NEON OVERRIDE
    ========================================== */
-.card { background: #050505; border: 1px solid #333; color: white; }
-.pregunta-title { color: white; }
-.opcion { background: #111; color: white; border: 1px solid #333; }
-.opcion:hover:not(:disabled) { background: #222; border-color: var(--white); color: white; box-shadow: none; }
-.opcion.selected { background: var(--neon) !important; color: black !important; border-color: var(--neon) !important; font-weight: 900 !important; }
+.card { 
+    background: rgba(15, 23, 42, 0.7) !important; 
+    backdrop-filter: blur(20px) !important; 
+    -webkit-backdrop-filter: blur(20px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important; 
+    color: white !important; 
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255,255,255,0.1) !important;
+}
+.pregunta-title { color: white; text-shadow: 0 2px 10px rgba(255,255,255,0.2); }
+.opcion { 
+    background: rgba(30, 41, 59, 0.5) !important; 
+    color: white !important; 
+    border: 1px solid rgba(255,255,255,0.05) !important; 
+    box-shadow: inset 0 2px 10px rgba(255,255,255,0.02) !important;
+}
+.opcion:hover:not(:disabled) { 
+    background: rgba(56, 189, 248, 0.1) !important; 
+    border-color: rgba(56, 189, 248, 0.5) !important; 
+    box-shadow: 0 0 20px rgba(56, 189, 248, 0.2) !important; 
+}
+.opcion.selected { 
+    background: rgba(56, 189, 248, 0.2) !important; 
+    color: #38bdf8 !important; 
+    border-color: #38bdf8 !important; 
+    font-weight: 900 !important; 
+    box-shadow: 0 0 30px rgba(56, 189, 248, 0.4), inset 0 0 10px rgba(56, 189, 248, 0.2) !important;
+}
 .progress-container { background: #222; }
 .quiz-header { color: #888; border-color: #222; }
 .quiz-footer { border-color: #222; }
@@ -397,107 +419,110 @@ body {
     flex: 1; padding: 18px; border-radius: 12px; font-weight: 800; text-transform: uppercase;
     letter-spacing: 0.05em; cursor: pointer; border: none; transition: 0.3s;
 }
-.btn-pedal.gas { background: white; color: var(--primary-dark); }
-.btn-pedal.gas:hover { background: #e2e8f0; transform: scale(1.02); }
+.btn-pedal.gas { background: var(--success); color: var(--black); font-weight: 900; }
+.btn-pedal.gas:hover { background: #00e050; transform: scale(1.02); }
 .btn-pedal.brake { background: var(--danger); color: white; }
 .btn-pedal.brake:hover { background: #dc2626; transform: scale(1.02); }
 
-/* Panel Derecho: Mapa / Parabrisas (PRO V2) */
-.windshield-view {
+/* Panel Derecho: Mapa Aéreo (Top-Down V3 Premium) */
+.top-down-map-view {
     border-radius: var(--radius-xl);
     overflow: hidden;
-    box-shadow: var(--shadow-soft);
     position: relative;
-    background: linear-gradient(to bottom, #1e293b 0%, #0f172a 40%, #020617 100%);
+    background: #4ade80; /* Pasto brillante */
     height: 100%;
     min-height: 500px;
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+    box-shadow: inset 0 0 50px rgba(0,0,0,0.5);
 }
 
-.sky-layer {
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 50%;
-    background: radial-gradient(circle at 50% 100%, rgba(56, 189, 248, 0.6) 0%, transparent 80%);
-    z-index: 1;
-}
-
-.perspective-road {
-    width: 100%; height: 200%; position: absolute; top: -50%;
-    transform-style: preserve-3d;
-    transform: perspective(600px) rotateX(70deg) translateY(-100px);
-    transform-origin: bottom center;
-    z-index: 2;
-}
-
-.road-surface {
-    position: absolute; left: 50%; transform: translateX(-50%);
-    width: 300px; height: 100%; background: #444;
-    box-shadow: 0 0 30px rgba(0,0,0,0.5) inset;
-    display: flex; justify-content: center;
-}
-
-.road-line {
-    width: 10px; height: 100%;
-    background: repeating-linear-gradient(to bottom, transparent, transparent 80px, #cbd5e1 80px, #cbd5e1 160px);
-    animation: moveRoad 0.6s linear infinite;
-}
-.road-line.paused { animation-play-state: paused; }
-
-@keyframes moveRoad { from { background-position: 0 0; } to { background-position: 0 240px; } }
-
-/* Graphic Layers (Intersecciones) */
-.environment-layer { position: absolute; top: 60%; left: 0; width: 100%; height: 200px; z-index: 3; }
-
-.zebra-lines {
-    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-    width: 300px; height: 60px;
-    background: repeating-linear-gradient(to right, #cbd5e1, #cbd5e1 30px, transparent 30px, transparent 60px);
-}
-
-.cross-road {
-    position: absolute; top: 50%; left: 0; transform: translateY(-50%);
-    width: 100%; height: 150px; background: #222;
-}
-
-/* 3D Dashboard */
-.pro-dashboard {
-    position: absolute;
-    bottom: -50px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100%;
-    height: 250px;
-    z-index: 10;
+.top-down-road {
+    width: 60%;
+    max-width: 300px;
+    height: 100%;
+    background: #334155; /* Asfalto premium */
+    position: relative;
+    border-left: 8px solid #94a3b8; /* Cuneta izquierda */
+    border-right: 8px solid #94a3b8; /* Cuneta derecha */
+    box-shadow: 0 0 20px rgba(0,0,0,0.8);
     display: flex;
     justify-content: center;
-    align-items: flex-end;
 }
 
-.dashboard-panel-base {
+.road-markings {
+    width: 10px;
+    height: 200%; /* El doble de alto para animación infinita */
     position: absolute;
-    bottom: 0;
-    width: 120%;
+    top: -100%;
+    background: repeating-linear-gradient(to bottom, #f8fafc, #f8fafc 40px, transparent 40px, transparent 80px);
+}
+
+.animated-markings {
+    animation: moveRoadTopDown 1s linear infinite;
+}
+
+.animated-markings.paused {
+    animation-play-state: paused;
+}
+
+@keyframes moveRoadTopDown {
+    from { transform: translateY(0); }
+    to { transform: translateY(50%); }
+}
+
+.top-down-car {
+    position: absolute;
+    bottom: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 160px;
+    z-index: 10;
+    transition: all 0.3s ease;
+}
+
+/* Graphic Layers (Intersecciones Top Down) */
+.td-env-layer {
+    position: absolute;
+    top: -200px; /* Inicia fuera de pantalla arriba */
+    left: 0;
+    width: 100%;
+    z-index: 3;
+}
+
+.td-zebra {
+    width: 100%;
+    height: 120px;
+    background: repeating-linear-gradient(to bottom, #f8fafc, #f8fafc 15px, transparent 15px, transparent 30px);
+}
+
+.td-crossroad {
+    width: 200vw;
     height: 150px;
-    background: #050505;
-    border-top: 4px solid #333;
-    border-radius: 50% 50% 0 0;
-    box-shadow: 0 -20px 50px rgba(0,0,0,0.9);
-}
-
-.steering-wheel {
-    width: 350px;
-    height: 350px;
+    background: #334155;
     position: relative;
-    z-index: 2;
-    filter: drop-shadow(0 20px 20px rgba(0,0,0,0.8));
-    animation: wheelIdle 4s ease-in-out infinite alternate;
+    left: -100vw;
 }
 
-@keyframes wheelIdle {
-    0% { transform: rotate(-2deg); }
-    100% { transform: rotate(2deg); }
+.td-map-object {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-weight: 900;
+    padding: 10px;
+    border-radius: 8px;
+    z-index: 15;
+    color: white;
 }
+
+.td-stop { background: var(--danger); right: -60px; border: 2px solid white; }
+.td-yield { background: #f59e0b; right: -60px; color: black; border: 2px solid white; border-radius: 50%; }
+.td-traffic-light { background: #111; right: -60px; border: 2px solid #333; display: flex; flex-direction: column; gap: 5px; }
+.td-traffic-light .light { width: 15px; height: 15px; border-radius: 50%; background: #333; }
+.td-traffic-light .light.red.active { background: var(--danger); box-shadow: 0 0 10px var(--danger); }
+.td-traffic-light .light.yellow.active { background: #f59e0b; box-shadow: 0 0 10px #f59e0b; }
+.td-traffic-light .light.green.active { background: var(--success); box-shadow: 0 0 10px var(--success); }
 
 .map-object { position: absolute; z-index: 5; font-weight: 900; transform: rotateX(-70deg) translateY(-50px); transform-origin: bottom center; }
 .stop-sign {

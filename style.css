@@ -20,6 +20,18 @@ body {
 
 .container { width: 100%; max-width: 1400px; margin: 0 auto; padding: 40px; }
 
+.massive-title {
+    font-size: clamp(3rem, 8vw, 6rem);
+    line-height: 0.9;
+    letter-spacing: -0.05em;
+}
+
+.setup-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
 /* ==========================================
    BRUTALIST INDEX (ANTI-AI)
    ========================================== */
@@ -949,9 +961,10 @@ body {
     }
 
     .massive-title {
-        font-size: 3.5rem !important;
+        font-size: 3rem !important;
         line-height: 1;
         margin-bottom: 20px;
+        word-wrap: break-word;
     }
 
     /* Index */
@@ -971,6 +984,10 @@ body {
     .cockpit-container {
         grid-template-columns: 1fr;
         gap: 20px;
+    }
+
+    .setup-grid {
+        grid-template-columns: 1fr;
     }
 
     .top-down-map-view {
@@ -1017,7 +1034,7 @@ body {
 }
 
 @media (max-width: 480px) {
-    .massive-title { font-size: 2.5rem !important; }
+    .massive-title { font-size: 2.2rem !important; }
     
     .punteado-disc {
         width: 200px;
@@ -1032,5 +1049,9 @@ body {
     .pedal-giant {
         font-size: 1.2rem;
         padding: 20px;
+    }
+
+    .brutal-header {
+        padding: 20px 15px;
     }
 }

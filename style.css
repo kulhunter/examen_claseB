@@ -251,7 +251,6 @@ body {
 .opcion { background: #111; color: white; border: 1px solid #333; }
 .opcion:hover:not(:disabled) { background: #222; border-color: var(--white); color: white; box-shadow: none; }
 .opcion.selected { background: var(--neon) !important; color: black !important; border-color: var(--neon) !important; font-weight: 900 !important; }
-.opcion.selected { background: #fff; color: #000; }
 .progress-container { background: #222; }
 .quiz-header { color: #888; border-color: #222; }
 .quiz-footer { border-color: #222; }

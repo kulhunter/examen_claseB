@@ -936,3 +936,101 @@ body {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
 }
+/* =========================================================
+   RESPONSIVE OVERHAUL (MOBILE OPTIMIZATION)
+   ========================================================= */
+@media (max-width: 768px) {
+    :root {
+        --container-padding: 20px;
+    }
+
+    .container {
+        padding: 15px;
+    }
+
+    .massive-title {
+        font-size: 3.5rem !important;
+        line-height: 1;
+        margin-bottom: 20px;
+    }
+
+    /* Index */
+    .brutal-link {
+        padding: 25px 15px;
+    }
+    .link-text { font-size: 1.5rem; }
+
+    /* Examen Teórico */
+    .quiz-container {
+        padding: 20px;
+    }
+    .pregunta-card h2 { font-size: 1.4rem; }
+    .opcion { padding: 15px 18px; font-size: 1rem; }
+
+    /* Examen Práctico */
+    .cockpit-container {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .top-down-map-view {
+        height: 300px;
+        order: -1; /* Mapa arriba en mobile */
+    }
+
+    .cockpit-panel {
+        padding: 20px;
+    }
+
+    .pedal-giant {
+        padding: 30px;
+        font-size: 1.5rem;
+    }
+
+    .btn-pedal {
+        font-size: 1rem;
+        padding: 15px;
+    }
+
+    /* Gabinete Psicotécnico */
+    #psico-punteado {
+        width: 280px;
+        height: 280px;
+    }
+
+    .punteado-disc {
+        width: 240px;
+        height: 240px;
+    }
+
+    .hud-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .hud-target { font-size: 1.2rem; }
+    
+    .report-card {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .massive-title { font-size: 2.5rem !important; }
+    
+    .punteado-disc {
+        width: 200px;
+        height: 200px;
+    }
+    
+    #psico-punteado {
+        width: 240px;
+        height: 240px;
+    }
+
+    .pedal-giant {
+        font-size: 1.2rem;
+        padding: 20px;
+    }
+}

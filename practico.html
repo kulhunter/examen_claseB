@@ -37,20 +37,20 @@
                         <div class="check-group hidden" id="group-docs">
                             <p class="small-text" style="margin-bottom: 15px;">Identifique:</p>
                             <div class="docs-btns" style="display: flex; gap: 10px;">
-                                <button class="btn-check-doc btn-primary-large" style="padding: 15px;" data-doc="permiso">Permiso Circulación</button>
-                                <button class="btn-check-doc btn-primary-large" style="padding: 15px;" data-doc="soap">SOAP</button>
+                                <button class="btn-check-doc btn-primary-large" style="padding: 15px; background: #222; color: white;" data-doc="permiso">Permiso Circulación</button>
+                                <button class="btn-check-doc btn-primary-large" style="padding: 15px; background: #222; color: white;" data-doc="soap">SOAP</button>
                             </div>
                         </div>
 
                         <div class="check-group hidden" id="group-controls">
                             <p class="small-text" style="margin-bottom: 15px;">Demuestre uso de mandos:</p>
                             <div class="docs-btns" style="display: flex; gap: 10px;">
-                                <button class="btn-check-ctrl btn-primary-large" style="padding: 15px;" data-ctrl="luces">Luces</button>
-                                <button class="btn-check-ctrl btn-primary-large" style="padding: 15px;" data-ctrl="limpia">Limpiaparabrisas</button>
+                                <button class="btn-check-ctrl btn-primary-large" style="padding: 15px; background: #222; color: white;" data-ctrl="luces">Luces</button>
+                                <button class="btn-check-ctrl btn-primary-large" style="padding: 15px; background: #222; color: white;" data-ctrl="limpia">Limpiaparabrisas</button>
                             </div>
                         </div>
 
-                        <button id="btn-start-drive" class="btn-primary-large hidden" style="width: 100%; margin-top: 20px; background: var(--success); color: black;">Subir al Vehículo ➔</button>
+                        <button id="btn-start-drive" class="btn-primary-large hidden" style="width: 100%; margin-top: 20px; background: var(--success); color: #000; border: 2px solid #000;">Subir al Vehículo ➔</button>
                     </div>
                     <div class="setup-visual">
                         <div class="protocol-status" style="background: #111; padding: 40px; border-radius: 20px; border: 1px solid #333;">
@@ -150,13 +150,13 @@
                         <!-- TABLERO EN PRIMERA PERSONA (VOLANTE) -->
                         <div id="virtual-car" class="pro-dashboard">
                             <svg class="steering-wheel" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                                <circle cx="50" cy="50" r="45" fill="none" stroke="#111" stroke-width="10"/>
-                                <circle cx="50" cy="50" r="40" fill="none" stroke="#222" stroke-width="4"/>
-                                <path d="M5 50 Q 50 80 95 50" fill="none" stroke="#111" stroke-width="8"/>
-                                <circle cx="50" cy="65" r="15" fill="#1a1a1a"/>
-                                <circle cx="50" cy="65" r="5" fill="#333"/>
+                                <circle cx="50" cy="50" r="45" fill="none" stroke="#555" stroke-width="10"/>
+                                <circle cx="50" cy="50" r="40" fill="none" stroke="#666" stroke-width="4"/>
+                                <path d="M5 50 Q 50 80 95 50" fill="none" stroke="#444" stroke-width="8"/>
+                                <circle cx="50" cy="65" r="15" fill="#333"/>
+                                <circle cx="50" cy="65" r="5" fill="#555"/>
                             </svg>
-                            <div class="dashboard-panel-base"></div>
+                            <div class="dashboard-panel-base" style="border-top: 6px solid #555; background: #111;"></div>
                         </div>
                     </div>
                 </div>

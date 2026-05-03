@@ -519,7 +519,40 @@ body {
 }
 
 .td-stop { background: var(--danger); right: -60px; border: 2px solid white; }
-.td-yield { background: #f59e0b; right: -60px; color: black; border: 2px solid white; border-radius: 50%; }
+.td-yield { 
+    right: -70px; 
+    width: 50px; 
+    height: 50px; 
+    background: transparent;
+}
+.td-cross-street {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 140px;
+    background: #334155;
+    transform: translateY(-50%);
+    z-index: 1;
+}
+.td-stop-line {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    height: 10px;
+    background: white;
+}
+.td-crosswalk {
+    position: absolute;
+    top: calc(50% + 100px);
+    left: 0;
+    width: 100%;
+    height: 60px;
+    background: repeating-linear-gradient(to right, white, white 20px, transparent 20px, transparent 40px);
+    z-index: 1;
+}
 .td-traffic-light { background: #111; right: -60px; border: 2px solid #333; display: flex; flex-direction: column; gap: 5px; }
 .td-traffic-light .light { width: 15px; height: 15px; border-radius: 50%; background: #333; }
 .td-traffic-light .light.red.active { background: var(--danger); box-shadow: 0 0 10px var(--danger); }
@@ -529,7 +562,7 @@ body {
 /* Dynamic Vehicles */
 .td-ambulance {
     position: absolute;
-    bottom: -200px;
+    bottom: -300px;
     left: 50%;
     transform: translateX(-50%);
     width: 80px;
@@ -537,7 +570,7 @@ body {
     z-index: 9;
     transition: all 2s cubic-bezier(0.1, 0.9, 0.2, 1);
 }
-.td-ambulance.enter { bottom: 10px; }
+.td-ambulance.enter { bottom: -20px; } /* Detrás del auto azul (que está en bottom: 50px) */
 
 .siren-lights { animation: flashSiren 0.3s infinite alternate; }
 @keyframes flashSiren {
@@ -555,7 +588,7 @@ body {
     transform: translateY(-50%) rotate(-90deg);
     transition: all 1.5s ease-out;
 }
-.td-other-car.enter { right: 20%; }
+.td-other-car.enter { right: 35%; } /* Posición antes del cruce central */
 
 .td-curve-road {
     position: absolute;

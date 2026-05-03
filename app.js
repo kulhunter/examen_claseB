@@ -21,6 +21,12 @@ function cambiarVista(vistaId) {
     }
 }
 
+// Helper para evitar errores de DOM
+function safeAccess(id, fn) {
+    const el = document.getElementById(id);
+    if (el) fn(el);
+}
+
 // Intro Modal Logic
 function mostrarIntroSenales(callback) {
     const modal = document.getElementById('intro-signals-modal');
@@ -501,18 +507,25 @@ function ejecutarEscenario(s) {
         updateDriveUI(s.msg);
         
         actionBtn.onclick = () => {
-            if (el) el.classList.add('hidden');
-            document.getElementById('env-intersection').classList.add('hidden');
-            document.getElementById('env-crosswalk').classList.add('hidden');
-            document.getElementById('td-other-car').classList.add('hidden');
-            document.getElementById('td-other-car').classList.remove('enter');
-            document.getElementById('td-ambulance').classList.add('hidden');
-            document.getElementById('td-ambulance').classList.remove('enter');
-            document.getElementById('td-curve-road').classList.add('hidden');
-            document.getElementById('td-curve-road').classList.remove('enter');
-            document.getElementById('inter-yield').classList.add('hidden');
+            safeAccess(s.id, el => el.classList.add('hidden'));
+            safeAccess('env-intersection', el => el.classList.add('hidden'));
+            safeAccess('env-crosswalk', el => el.classList.add('hidden'));
+            safeAccess('td-other-car', el => {
+                el.classList.add('hidden');
+                el.classList.remove('enter');
+            });
+            safeAccess('td-ambulance', el => {
+                el.classList.add('hidden');
+                el.classList.remove('enter');
+            });
+            safeAccess('td-curve-road', el => {
+                el.classList.add('hidden');
+                el.classList.remove('enter');
+            });
+            safeAccess('inter-yield', el => el.classList.add('hidden'));
+            
             actionBtn.classList.add('hidden');
-            document.getElementById('btn-drive-continue').classList.remove('hidden');
+            safeAccess('btn-drive-continue', el => el.classList.remove('hidden'));
             updateDriveUI("Correcto. Prosiga.");
         };
     } else if (s.type === 'question') {

@@ -969,9 +969,13 @@ body {
 
     /* Index */
     .brutal-link {
-        padding: 25px 15px;
+        grid-template-columns: 40px 1fr;
+        padding: 20px 10px;
+        gap: 15px;
     }
-    .link-text { font-size: 1.5rem; }
+    .link-text { font-size: 1.4rem; }
+    .link-meta { display: none; }
+    .brutal-nav { padding: 0 15px; }
 
     /* Examen Teórico */
     .quiz-container {
@@ -1005,8 +1009,21 @@ body {
     }
 
     .btn-pedal {
-        font-size: 1rem;
-        padding: 15px;
+        font-size: 0.95rem;
+        padding: 18px;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .hud-container {
+        padding: 25px 15px;
+        margin: 10px auto;
+    }
+
+    .check-group {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
     }
 
     /* Gabinete Psicotécnico */

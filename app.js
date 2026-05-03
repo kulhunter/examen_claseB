@@ -618,34 +618,7 @@ function resetMap() {
     document.getElementById('btn-drive-action').classList.add('hidden');
 }
 
-/* ==========================================
-   MOTOR PSICOMÉTRICO (TEST DE REACCIÓN)
-   ========================================== */
-let psicoState = {
-    attempts: 0,
-    maxAttempts: 3,
-    times: [],
-    startTime: 0,
-    waitingForGreen: false,
-    timeoutId: null
-};
 
-function resetPsicoTest() {
-    psicoState = { attempts: 0, maxAttempts: 3, times: [], startTime: 0, waitingForGreen: false, timeoutId: null };
-    document.getElementById('psico-results').classList.add('hidden');
-    document.getElementById('psico-instructions').classList.remove('hidden');
-    document.getElementById('psico-attempt-counter').innerText = `INTENTO 1/3`;
-    document.getElementById('psico-time-last').innerText = `ÚLTIMO: -- ms`;
-    document.querySelector('.hud-light').classList.remove('active');
-    document.getElementById('btn-psico-pedal').disabled = true;
-    document.getElementById('psico-feedback-msg').classList.add('hidden');
-}
-
-if(document.getElementById('btn-start-psico-sequence')) document.getElementById('btn-start-psico-sequence').onclick = () => {
-    document.getElementById('psico-instructions').classList.add('hidden');
-    document.getElementById('btn-psico-pedal').disabled = false;
-    iniciarIntentoPsico();
-};
 
 /* =========================================================
    GABINETE PSICOTÉCNICO (LÓGICA MODULAR V4)

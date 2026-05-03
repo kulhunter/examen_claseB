@@ -160,6 +160,29 @@
                                 <div class="td-crossroad"></div>
                             </div>
                             
+                            <div id="td-curve-road" class="td-curve-road hidden"></div>
+                            
+                            <!-- Dynamic Vehicles -->
+                            <div id="td-other-car" class="td-other-car hidden">
+                                <svg viewBox="0 0 100 200" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="20" y="5" width="60" height="180" rx="15" fill="#eab308"/>
+                                    <rect x="25" y="60" width="50" height="60" rx="10" fill="#0f172a"/>
+                                    <path d="M25 60 Q 50 45 75 60 L 70 80 L 30 80 Z" fill="#38bdf8"/>
+                                    <path d="M25 120 Q 50 130 75 120 L 70 100 L 30 100 Z" fill="#0ea5e9"/>
+                                </svg>
+                            </div>
+                            
+                            <div id="td-ambulance" class="td-ambulance hidden">
+                                <svg viewBox="0 0 100 220" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="15" y="5" width="70" height="200" rx="10" fill="#f8fafc"/>
+                                    <rect x="20" y="50" width="60" height="40" fill="#0f172a"/>
+                                    <rect x="40" y="100" width="20" height="60" fill="#ef4444"/>
+                                    <rect x="20" y="120" width="60" height="20" fill="#ef4444"/>
+                                    <circle cx="30" cy="20" r="8" class="siren-lights"/>
+                                    <circle cx="70" cy="20" r="8" class="siren-lights" style="animation-delay: 0.2s"/>
+                                </svg>
+                            </div>
+
                             <div id="inter-stop" class="td-map-object td-stop hidden">PARE</div>
                             <div id="inter-yield" class="td-map-object td-yield hidden">CEDA</div>
                             <div id="inter-light" class="td-map-object td-traffic-light hidden">

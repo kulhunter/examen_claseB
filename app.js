@@ -466,12 +466,30 @@ function ejecutarEscenario(s) {
     document.getElementById('btn-drive-continue').classList.add('hidden');
     document.querySelector('.animated-markings').classList.add('paused'); // Pausar animación de vía
     
-    // Activar gráficos de entorno (Cruce o Paso de cebra)
+    // Activar gráficos de entorno y dinámicos
     if (s.q && s.q.includes('cruce') || s.action === 'Detenerse' || s.action === 'Frenar totalmente' || s.action === 'Ceder el paso') {
         document.getElementById('env-intersection').classList.remove('hidden');
+        if (s.pos === 200) {
+            const otherCar = document.getElementById('td-other-car');
+            otherCar.classList.remove('hidden');
+            setTimeout(() => otherCar.classList.add('enter'), 100);
+        }
     }
     if (s.q && s.q.includes('peatón') || s.action === 'Dar preferencia') {
         document.getElementById('env-crosswalk').classList.remove('hidden');
+    }
+    if (s.pos === 500) { // Ambulancia
+        const amb = document.getElementById('td-ambulance');
+        amb.classList.remove('hidden');
+        setTimeout(() => amb.classList.add('enter'), 100);
+    }
+    if (s.pos === 600) { // Curva
+        const curve = document.getElementById('td-curve-road');
+        curve.classList.remove('hidden');
+        setTimeout(() => curve.classList.add('enter'), 100);
+    }
+    if (s.pos === 300) { // Ceda el paso
+        document.getElementById('inter-yield').classList.remove('hidden');
     }
     
     if (s.type === 'action') {
@@ -486,6 +504,13 @@ function ejecutarEscenario(s) {
             if (el) el.classList.add('hidden');
             document.getElementById('env-intersection').classList.add('hidden');
             document.getElementById('env-crosswalk').classList.add('hidden');
+            document.getElementById('td-other-car').classList.add('hidden');
+            document.getElementById('td-other-car').classList.remove('enter');
+            document.getElementById('td-ambulance').classList.add('hidden');
+            document.getElementById('td-ambulance').classList.remove('enter');
+            document.getElementById('td-curve-road').classList.add('hidden');
+            document.getElementById('td-curve-road').classList.remove('enter');
+            document.getElementById('inter-yield').classList.add('hidden');
             actionBtn.classList.add('hidden');
             document.getElementById('btn-drive-continue').classList.remove('hidden');
             updateDriveUI("Correcto. Prosiga.");
@@ -515,6 +540,13 @@ function ejecutarEscenario(s) {
                 qBox.classList.add('hidden');
                 document.getElementById('env-intersection').classList.add('hidden');
                 document.getElementById('env-crosswalk').classList.add('hidden');
+                document.getElementById('td-other-car').classList.add('hidden');
+                document.getElementById('td-other-car').classList.remove('enter');
+                document.getElementById('td-ambulance').classList.add('hidden');
+                document.getElementById('td-ambulance').classList.remove('enter');
+                document.getElementById('td-curve-road').classList.add('hidden');
+                document.getElementById('td-curve-road').classList.remove('enter');
+                document.getElementById('inter-yield').classList.add('hidden');
                 document.getElementById('btn-drive-continue').classList.remove('hidden');
             };
             qOptions.appendChild(btn);
@@ -671,22 +703,122 @@ function manejarClickPedal() {
     }
 }
 
+let punteadoState = { hits: 0, active: false, startTime: 0, endTime: 0 };
+
 function finalizarTestPsico() {
+    // Ocultar luces de reacción
+    document.getElementById('psico-traffic-light').classList.add('hidden');
+    document.getElementById('psico-feedback-msg').classList.add('hidden');
+    
+    // Cambiar a la prueba de Punteado
+    const instructions = document.getElementById('psico-instructions');
+    instructions.innerHTML = `
+        <h3 style="font-size: 2rem; margin-bottom: 20px;">Prueba de Coordinación Bimanual</h3>
+        <p style="margin-bottom: 30px;">El disco rotará. Haz clic en los orificios o usa el pedal cuando pasen por la <strong class="text-neon-cyan">zona objetivo superior</strong>.</p>
+        <button id="btn-start-punteado" class="btn-primary-large" style="background: var(--neon-cyan); color: black;">Iniciar Rotación</button>
+    `;
+    instructions.classList.remove('hidden');
+    
+    // Preparar pedal para punteado
+    const pedal = document.getElementById('btn-psico-pedal');
+    pedal.innerHTML = `<span>MARCAR PUNTO</span>`;
+    pedal.disabled = true;
+    pedal.onmousedown = null;
+    pedal.ontouchstart = null;
+    
+    document.getElementById('btn-start-punteado').onclick = () => {
+        instructions.classList.add('hidden');
+        document.getElementById('psico-punteado').classList.remove('hidden');
+        pedal.disabled = false;
+        
+        punteadoState.active = true;
+        punteadoState.startTime = performance.now();
+        punteadoState.hits = 0;
+        
+        const clickHandler = (e) => {
+            if(e) e.preventDefault();
+            if(!punteadoState.active) return;
+            
+            const target = document.querySelector('.target-zone');
+            const rect = target.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            
+            // Detectar si hay un hoyo exactamente debajo del target
+            const elements = document.elementsFromPoint(centerX, centerY);
+            const hole = elements.find(el => el.classList.contains('hole'));
+            
+            const msg = document.getElementById('psico-feedback-msg');
+            msg.classList.remove('hidden');
+            
+            if (hole && !hole.classList.contains('hit')) {
+                hole.classList.add('hit');
+                punteadoState.hits++;
+                msg.innerText = `¡ACIERTO! (${punteadoState.hits}/3)`;
+                msg.style.color = "var(--success)";
+                
+                if (punteadoState.hits >= 3) {
+                    punteadoState.active = false;
+                    punteadoState.endTime = performance.now();
+                    msg.innerText = "¡PRUEBA COMPLETADA!";
+                    setTimeout(mostrarResultadosGlobalesPsico, 1500);
+                }
+            } else {
+                msg.innerText = "FALLO";
+                msg.style.color = "var(--danger)";
+            }
+        };
+        
+        pedal.onmousedown = clickHandler;
+        pedal.ontouchstart = clickHandler;
+        
+        // Permitir hacer clic directo en los orificios para escritorio
+        document.querySelectorAll('.hole').forEach(h => {
+            h.onmousedown = (e) => {
+                if(!punteadoState.active) return;
+                if (!h.classList.contains('hit')) {
+                    h.classList.add('hit');
+                    punteadoState.hits++;
+                    const msg = document.getElementById('psico-feedback-msg');
+                    msg.classList.remove('hidden');
+                    msg.innerText = `¡ACIERTO! (${punteadoState.hits}/3)`;
+                    msg.style.color = "var(--success)";
+                    if (punteadoState.hits >= 3) {
+                        punteadoState.active = false;
+                        punteadoState.endTime = performance.now();
+                        msg.innerText = "¡PRUEBA COMPLETADA!";
+                        setTimeout(mostrarResultadosGlobalesPsico, 1500);
+                    }
+                }
+            };
+        });
+    };
+}
+
+function mostrarResultadosGlobalesPsico() {
     document.getElementById('psico-results').classList.remove('hidden');
     document.getElementById('psico-main-hud').classList.add('hidden');
     document.getElementById('btn-psico-pedal').disabled = true;
     
+    // Resultados Reacción
     const avgTime = psicoState.times.reduce((a, b) => a + b, 0) / psicoState.times.length;
     const avgSeconds = (avgTime / 1000).toFixed(3);
+    document.getElementById('psico-avg-time').innerText = `Reacción: ${avgSeconds}s`;
     
-    document.getElementById('psico-avg-time').innerText = `Promedio: ${avgSeconds}s`;
+    // Resultados Punteado
+    const punteadoTime = (punteadoState.endTime - punteadoState.startTime) / 1000;
+    const punteadoEl = document.createElement('p');
+    punteadoEl.style.fontSize = '1.2rem';
+    punteadoEl.style.marginBottom = '20px';
+    punteadoEl.innerText = `Coordinación: Completado en ${punteadoTime.toFixed(1)}s`;
+    document.getElementById('psico-avg-time').parentNode.insertBefore(punteadoEl, document.getElementById('psico-final-status'));
     
     const statusEl = document.getElementById('psico-final-status');
-    // Menos de 0.45s es óptimo.
-    if (avgSeconds <= 0.45) {
+    // Para ser Óptimo: Reacción <= 0.45 y Coordinación <= 10s
+    if (avgSeconds <= 0.45 && punteadoTime <= 10) {
         statusEl.innerText = "ÓPTIMO";
         statusEl.style.color = "var(--neon-cyan)";
-    } else if (avgSeconds <= 0.60) {
+    } else if (avgSeconds <= 0.60 && punteadoTime <= 20) {
         statusEl.innerText = "NORMAL";
         statusEl.style.color = "var(--success)";
     } else {

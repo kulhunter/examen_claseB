@@ -526,6 +526,54 @@ body {
 .td-traffic-light .light.yellow.active { background: #f59e0b; box-shadow: 0 0 10px #f59e0b; }
 .td-traffic-light .light.green.active { background: var(--success); box-shadow: 0 0 10px var(--success); }
 
+/* Dynamic Vehicles */
+.td-ambulance {
+    position: absolute;
+    bottom: -200px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 180px;
+    z-index: 9;
+    transition: all 2s cubic-bezier(0.1, 0.9, 0.2, 1);
+}
+.td-ambulance.enter { bottom: 10px; }
+
+.siren-lights { animation: flashSiren 0.3s infinite alternate; }
+@keyframes flashSiren {
+    0% { fill: #ef4444; filter: drop-shadow(0 0 15px #ef4444); }
+    100% { fill: #3b82f6; filter: drop-shadow(0 0 15px #3b82f6); }
+}
+
+.td-other-car {
+    position: absolute;
+    top: 50%;
+    right: -200px;
+    width: 70px;
+    height: 140px;
+    z-index: 12;
+    transform: translateY(-50%) rotate(-90deg);
+    transition: all 1.5s ease-out;
+}
+.td-other-car.enter { right: 20%; }
+
+.td-curve-road {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: #334155;
+    z-index: 5;
+    border-radius: 50% 0 0 0;
+    transform: scaleX(0);
+    transform-origin: right center;
+    transition: transform 1s ease-in-out;
+}
+.td-curve-road.enter { transform: scaleX(1); }
+.td-curve-road::after {
+    content: ''; position: absolute; top: 0; right: 50%; width: 10px; height: 100%;
+    background: repeating-linear-gradient(to bottom, #f8fafc, #f8fafc 40px, transparent 40px, transparent 80px);
+    border-radius: 50% 0 0 0;
+}
+
 .map-object { position: absolute; z-index: 5; font-weight: 900; transform: rotateX(-70deg) translateY(-50px); transform-origin: bottom center; }
 .stop-sign {
     top: 25%; left: calc(50% + 120px);
@@ -695,8 +743,8 @@ body {
 .opcion.correct {
     background: var(--success) !important;
     border-color: var(--success) !important;
-    color: white !important;
-    font-weight: 800;
+    color: #050505 !important;
+    font-weight: 900 !important;
 }
 
 .opcion.wrong {
@@ -783,3 +831,64 @@ body {
 
 .text-correct { color: #166534; font-weight: 600; }
 .text-wrong { color: #991b1b; font-weight: 600; text-decoration: line-through; }
+
+/* =========================================================
+   TEST DE PUNTEADO (COORDINACIÓN BIMANUAL / ROTATIVO)
+   ========================================================= */
+#psico-punteado {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    margin: 20px auto;
+    border-radius: 50%;
+    background: #020617;
+    box-shadow: 0 0 30px rgba(0,0,0,0.8), inset 0 0 20px rgba(0,0,0,0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.punteado-disc {
+    width: 260px;
+    height: 260px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #e2e8f0, #64748b);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+    position: relative;
+    animation: spinDisc 3s linear infinite;
+}
+
+.hole {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background: #020617;
+    border-radius: 50%;
+    box-shadow: inset 0 5px 10px rgba(0,0,0,0.8);
+    cursor: crosshair;
+    transition: background 0.1s;
+}
+.hole:hover { background: #1e293b; }
+.hole.hit { background: var(--success); box-shadow: 0 0 20px var(--success); }
+
+.hole[data-id="1"] { top: 20px; left: 110px; }
+.hole[data-id="2"] { bottom: 60px; left: 30px; }
+.hole[data-id="3"] { bottom: 60px; right: 30px; }
+
+.target-zone {
+    position: absolute;
+    top: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 50px;
+    border: 3px solid var(--neon-cyan);
+    border-radius: 50%;
+    pointer-events: none;
+    box-shadow: 0 0 15px var(--neon-cyan);
+}
+
+@keyframes spinDisc {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}

@@ -63,10 +63,14 @@ if(document.getElementById('btn-start-signs')) document.getElementById('btn-star
 });
 
 // Simulacro de Examen
+if(document.getElementById('btn-iniciar-simulacro')) {
+    document.getElementById('btn-iniciar-simulacro').onclick = () => iniciarTest(0, 35);
+}
+
 const btnExam = document.getElementById('btn-exam-sim');
 if (btnExam) {
     btnExam.addEventListener('click', () => {
-        iniciarTest(bancoPreguntas, 35);
+        iniciarTest(0, 35);
     });
 }
 
@@ -355,51 +359,52 @@ function resetProtocolSetup() {
     document.querySelectorAll('.status-item').forEach(el => el.classList.remove('done'));
 }
 
-// Interacciones de Etapa 1
-if(document.getElementById('action-show-id')) document.getElementById('action-show-id').onclick = () => {
-    driveState.idVerified = true;
-    document.getElementById('stat-id').classList.add('done');
-    document.getElementById('stat-id').innerText = '✓ Identificación';
-    document.getElementById('group-id').classList.add('hidden');
-    document.getElementById('group-docs').classList.remove('hidden');
-    document.getElementById('setup-instruction').innerText = 'Examinador: "Identifique el Seguro Obligatorio (SOAP) del vehículo."';
-};
-
-document.querySelectorAll('.btn-check-doc').forEach(btn => {
-    btn.onclick = () => {
-        if (btn.dataset.doc === 'soap') {
-            driveState.docsVerified = true;
-            document.getElementById('stat-docs').classList.add('done');
-            document.getElementById('stat-docs').innerText = '✓ Documentación';
-            document.getElementById('group-docs').classList.add('hidden');
-            document.getElementById('group-controls').classList.remove('hidden');
-            document.getElementById('setup-instruction').innerText = 'Examinador: "Muestre el funcionamiento de los limpiaparabrisas."';
-        } else {
-            registrarFallo("Error al identificar documento solicitado");
-            alert("Examinador: 'Ese no es el documento solicitado.'");
-        }
+// --- FASE 1: RECEPCIÓN Y DOCUMENTACIÓN ---
+function bindSetupEvents() {
+    const safeBind = (id, fn) => {
+        const el = document.getElementById(id);
+        if (el) el.onclick = fn;
     };
-});
 
-document.querySelectorAll('.btn-check-ctrl').forEach(btn => {
-    btn.onclick = () => {
-        if (btn.dataset.ctrl === 'limpia') {
-            driveState.ctrlsVerified = true;
-            document.getElementById('stat-ctrl').classList.add('done');
-            document.getElementById('stat-ctrl').innerText = '✓ Mandos';
-            document.getElementById('group-controls').classList.add('hidden');
-            document.getElementById('btn-start-drive').classList.remove('hidden');
-            document.getElementById('setup-instruction').innerText = 'Examinador: "Perfecto. Suba al vehículo y prepárese para iniciar la conducción libre."';
-        }
-    };
-});
+    safeBind('action-show-id', () => {
+        driveState.idVerified = true;
+        safeAccess('stat-id', el => { el.classList.add('done'); el.innerText = '✓ Identificación'; });
+        safeAccess('group-id', el => el.classList.add('hidden'));
+        safeAccess('group-docs', el => el.classList.remove('hidden'));
+        updateDriveUI("Examinador: 'Identifique el Seguro Obligatorio (SOAP) del vehículo.'");
+    });
 
-// Inicio de Conducción
-if(document.getElementById('btn-start-drive')) document.getElementById('btn-start-drive').onclick = () => {
-    document.getElementById('drive-setup').classList.add('hidden');
-    document.getElementById('drive-game').classList.remove('hidden');
-    iniciarExamenVirtual();
-};
+    safeBind('action-show-soap', () => {
+        driveState.docsVerified = true;
+        safeAccess('stat-docs', el => { el.classList.add('done'); el.innerText = '✓ Documentación'; });
+        updateDriveUI("Examinador: 'Perfecto, el SOAP está vigente. Ahora muestre el funcionamiento de los mandos.'");
+        safeAccess('group-docs', el => el.classList.add('hidden'));
+        safeAccess('group-controls', el => el.classList.remove('hidden'));
+    });
+
+    safeBind('action-show-padron', () => alert("Examinador: 'Correcto, pero primero necesito el SOAP.'"));
+    safeBind('action-show-rt', () => alert("Examinador: 'Correcto, pero primero necesito el SOAP.'"));
+
+    safeBind('action-ctrl-wiper', () => {
+        driveState.ctrlsVerified = true;
+        safeAccess('stat-ctrl', el => { el.classList.add('done'); el.innerText = '✓ Mandos'; });
+        updateDriveUI("Examinador: 'Los mandos funcionan. Suba al vehículo y prepárese para iniciar.'");
+        safeAccess('group-controls', el => el.classList.add('hidden'));
+        safeAccess('btn-start-drive', el => el.classList.remove('hidden'));
+    });
+
+    safeBind('action-ctrl-lights', () => alert("Examinador: 'Luces verificadas. Ahora los limpiaparabrisas.'"));
+    safeBind('action-ctrl-horn', () => alert("Examinador: 'Bocina verificada. Ahora los limpiaparabrisas.'"));
+
+    safeBind('btn-start-drive', () => {
+        safeAccess('drive-setup', el => el.classList.add('hidden'));
+        safeAccess('drive-game', el => el.classList.remove('hidden'));
+        iniciarExamenVirtual();
+    });
+}
+
+// Llamar al cargar
+bindSetupEvents();
 
 function updateDriveUI(msg) {
     document.getElementById('game-instruction').innerText = `Examinador: "${msg}"`;

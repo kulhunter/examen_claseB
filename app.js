@@ -255,7 +255,7 @@ function mostrarResultados() {
     const header = document.getElementById('main-header');
     if (header) header.style.display = '';
     
-    cambiarVista('resultados');
+    cambiarVista('resultados-container');
     const porcentaje = Math.round((aciertos / totalPreguntasTest) * 100);
     const resultElement = document.getElementById('resultado-final');
     const estadoElement = document.getElementById('estado-final');
@@ -431,6 +431,7 @@ if(document.getElementById('ctrl-handbrake')) document.getElementById('ctrl-hand
     } else {
         driveState.handbrake = false;
         document.getElementById('btn-drive-continue').classList.remove('hidden');
+        document.querySelector('.cockpit-controls').classList.add('hidden'); // Ocultar controles al iniciar
         updateDriveUI("Freno liberado. Inicie la marcha libre hacia el punto de destino.");
     }
 };
@@ -445,11 +446,9 @@ function avanzarSimulacion() {
     }
     
     document.querySelector('.road-line').classList.remove('paused');
-    const car = document.getElementById('virtual-car');
     driveState.carPos += 100;
     
-    const bottomPos = (driveState.carPos / 1000) * 450 + 20; 
-    car.style.bottom = `${bottomPos}px`;
+    // Eliminado: car.style.bottom para evitar que el volante flote hacia arriba.
     
     const scenario = driveScenarios.find(s => s.pos === driveState.carPos);
     if (scenario) {
@@ -670,6 +669,7 @@ function manejarClickPedal() {
 
 function finalizarTestPsico() {
     document.getElementById('psico-results').classList.remove('hidden');
+    document.getElementById('psico-main-hud').classList.add('hidden');
     document.getElementById('btn-psico-pedal').disabled = true;
     
     const avgTime = psicoState.times.reduce((a, b) => a + b, 0) / psicoState.times.length;

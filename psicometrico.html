@@ -24,17 +24,17 @@
     <div class="container">
         <!-- MÓDULO: MENÚ DE PRUEBAS -->
         <div id="psico-menu" class="view active">
-            <div class="brutal-nav" style="margin-top: 20px;">
-                <a href="#" onclick="cambiarPruebaPsico('reaccion')" class="brutal-link">
+            <div class="brutal-nav" style="margin-top: 20px; display: flex; flex-direction: column; gap: 20px;">
+                <button onclick="window.cambiarPruebaPsico('reaccion')" class="brutal-link" style="width: 100%; text-align: left; background: none; border: none; cursor: pointer;">
                     <span class="link-number">01</span>
                     <span class="link-text">REACCIÓN</span>
                     <span class="link-meta" style="opacity: 1;">SISTEMA DE FRENADO</span>
-                </a>
-                <a href="#" onclick="cambiarPruebaPsico('punteado')" class="brutal-link">
+                </button>
+                <button onclick="window.cambiarPruebaPsico('punteado')" class="brutal-link" style="width: 100%; text-align: left; background: none; border: none; cursor: pointer;">
                     <span class="link-number">02</span>
                     <span class="link-text">PUNTEADO</span>
                     <span class="link-meta" style="opacity: 1;">COORDINACIÓN BIMANUAL</span>
-                </a>
+                </button>
             </div>
         </div>
 

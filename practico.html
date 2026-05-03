@@ -3,101 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Examen Práctico // DRIVE</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@900&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+    <title>PRÁCTICO // Simulador Virtual Clase B</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-
-    <!-- WhatsApp & Social Media OG Tags -->
-    <meta property="og:title" content="DRIVE // Simulador Oficial Clase B">
-    <meta property="og:description" content="Practica con el simulador 100% exacto enfocado en los 8 puntos críticos de fallo. Fricción cero, sin registro.">
-    <meta property="og:image" content="https://www.munimacul.cl/portalnv/wp-content/uploads/2026/02/Recurso-44.png">
-    <meta property="og:url" content="https://examenconducir.cl">
-    <meta property="og:type" content="website">
 </head>
 <body class="brutalist-theme">
     
-    <header class="brutal-header" style="padding-bottom: 0;">
+    <header class="brutal-header">
         <div class="brand-text"><a href="index.html" style="color: inherit; text-decoration: none;">← VOLVER AL MENÚ</a></div>
-        <h1 class="massive-title">EXAMEN PRÁCTICO</h1>
+        <h1 class="massive-title" style="font-size: clamp(3rem, 10vw, 8rem); color: var(--neon);">EXAMEN PRÁCTICO.</h1>
     </header>
 
     <div class="container">
-        <!-- VISTA: RECORRIDO VIRTUAL -->
-        <div id="virtual-drive" class="view active">
-            <div id="drive-setup" class="card">
-                <div class="setup-grid">
-                    <div class="setup-info">
-                        <h3 style="font-size: 2rem; margin-bottom: 20px;">Etapa 1: Protocolo de Recepción</h3>
-                        <p id="setup-instruction" style="font-size: 1.2rem; color: #888; margin-bottom: 30px;">Examinador: "Por favor, identifíquese con su cédula."</p>
-                        
-                        <div class="check-group" id="group-id">
-                            <button class="btn-primary-large" id="action-show-id" style="width: 100%;">Entregar Cédula 🪪</button>
-                        </div>
-                        
-                        <div class="check-group hidden" id="group-docs">
-                            <p class="small-text" style="margin-bottom: 15px;">Identifique:</p>
-                            <div class="docs-btns" style="display: flex; gap: 10px;">
-                                <button class="btn-check-doc btn-primary-large" style="padding: 15px; background: #222; color: white;" data-doc="permiso">Permiso Circulación</button>
-                                <button class="btn-check-doc btn-primary-large" style="padding: 15px; background: #222; color: white;" data-doc="soap">SOAP</button>
-                            </div>
-                        </div>
+        <div id="virtual-drive-container" class="view active">
+            <div id="drive-setup" class="setup-grid card">
+                <div class="setup-header">
+                    <h2>Protocolo de Recepción</h2>
+                    <p id="setup-instruction">Examinador: "Buenos días. Por favor, identifíquese con su cédula de identidad."</p>
+                </div>
+                
+                <div class="setup-steps">
+                    <div id="stat-id" class="step-badge">Identificación</div>
+                    <div id="stat-docs" class="step-badge">Documentación</div>
+                    <div id="stat-ctrl" class="step-badge">Mandos</div>
+                </div>
 
-                        <div class="check-group hidden" id="group-controls">
-                            <p class="small-text" style="margin-bottom: 15px;">Demuestre uso de mandos:</p>
-                            <div class="docs-btns" style="display: flex; gap: 10px;">
-                                <button class="btn-check-ctrl btn-primary-large" style="padding: 15px; background: #222; color: white;" data-ctrl="luces">Luces</button>
-                                <button class="btn-check-ctrl btn-primary-large" style="padding: 15px; background: #222; color: white;" data-ctrl="limpia">Limpiaparabrisas</button>
-                            </div>
-                        </div>
-
-                        <button id="btn-start-drive" class="btn-primary-large hidden" style="width: 100%; margin-top: 20px; background: var(--success); color: #000; border: 2px solid #000;">Subir al Vehículo ➔</button>
+                <div class="setup-actions">
+                    <div id="group-id" class="action-group">
+                        <button class="btn-primary-large" id="action-show-id">Mostrar Cédula Identidad</button>
                     </div>
-                    <div class="setup-visual">
-                        <div class="protocol-status" style="background: #111; padding: 40px; border-radius: 20px; border: 1px solid #333;">
-                            <div class="status-item" id="stat-id" style="font-size: 1.5rem; margin-bottom: 20px;">○ Identificación</div>
-                            <div class="status-item" id="stat-docs" style="font-size: 1.5rem; margin-bottom: 20px;">○ Documentación</div>
-                            <div class="status-item" id="stat-ctrl" style="font-size: 1.5rem;">○ Mandos</div>
-                        </div>
+                    <div id="group-docs" class="action-group hidden">
+                        <button class="btn-dash" id="action-show-soap">SOAP</button>
+                        <button class="btn-dash" id="action-show-padron">Padrón</button>
+                        <button class="btn-dash" id="action-show-rt">Rev. Técnica</button>
                     </div>
+                    <div id="group-controls" class="action-group hidden">
+                        <button class="btn-dash" id="action-ctrl-lights">Luces</button>
+                        <button class="btn-dash" id="action-ctrl-wiper">Limpiaparabrisas</button>
+                        <button class="btn-dash" id="action-ctrl-horn">Bocina</button>
+                    </div>
+                    <button class="btn-primary-large hidden" id="btn-start-drive" style="background: var(--success); color: black;">Subir al Vehículo y Partir</button>
                 </div>
             </div>
 
             <div id="drive-game" class="hidden">
-                <div class="cockpit-container">
-                    <!-- PANEL IZQUIERDO: CONTROLES DEL VEHÍCULO -->
-                    <div class="cockpit-panel">
-                        <div class="panel-header">
-                            <span class="pulse-indicator"></span>
-                            <h3>Tablero de Control</h3>
-                        </div>
-                        
-                        <div id="game-instruction" class="system-message">Iniciando sistemas...</div>
-
-                        <div class="cockpit-controls">
-                            <div class="control-group">
-                                <h4>Sistemas de Seguridad</h4>
+                <div class="cockpit-layout">
+                    <div class="cockpit-left">
+                        <div class="dashboard-screen">
+                            <div class="screen-header">SISTEMA DE ASISTENCIA</div>
+                            <p id="game-instruction">Inicie la marcha cuando esté listo.</p>
+                            
+                            <div class="cockpit-controls">
                                 <div class="grid-2">
                                     <button class="btn-dash" id="ctrl-belt">
-                                        <span class="icon">🔒</span>
+                                        <span class="icon">🛡️</span>
                                         <span class="label">Cinturón</span>
-                                        <span class="status-dot"></span>
+                                        <div class="status-dot"></div>
                                     </button>
                                     <button class="btn-dash" id="ctrl-mirrors">
                                         <span class="icon">🪞</span>
                                         <span class="label">Espejos</span>
-                                        <span class="status-dot"></span>
+                                        <div class="status-dot"></div>
                                     </button>
                                     <button class="btn-dash" id="ctrl-doors">
                                         <span class="icon">🚪</span>
                                         <span class="label">Puertas</span>
-                                        <span class="status-dot"></span>
+                                        <div class="status-dot"></div>
                                     </button>
                                 </div>
-                            </div>
-
-                            <div class="control-group">
-                                <h4>Mecánica y Arranque</h4>
-                                <div class="grid-2">
+                                <div class="grid-2" style="margin-top: 15px;">
                                     <button class="btn-dash engine-btn" id="ctrl-start">
                                         <span class="icon">⚡</span>
                                         <span class="label">Motor</span>
@@ -122,18 +96,24 @@
                         </div>
                     </div>
 
-                    <!-- PANEL DERECHO: VISTA AÉREA (TOP-DOWN MAP) -->
                     <div class="top-down-map-view glass-panel">
                         <div class="top-down-road">
+                            <div class="td-lane-marking-left"></div>
+                            <div class="td-lane-marking-right"></div>
                             <div class="road-markings animated-markings paused"></div>
                             
-                            <!-- Intersección Dinámica -->
                             <div id="env-intersection" class="td-cross-street hidden">
                                 <div class="td-stop-line"></div>
+                                <div class="td-crosswalk"></div>
                             </div>
-                            <div id="env-crosswalk" class="td-crosswalk hidden"></div>
 
-                            <!-- Vehículo del usuario -->
+                            <div id="td-curve-road" class="td-curve-road hidden">
+                                <svg viewBox="0 0 200 500" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M 0 500 Q 100 250 200 0" fill="none" stroke="#1e293b" stroke-width="150"/>
+                                    <path d="M 0 500 Q 100 250 200 0" fill="none" stroke="white" stroke-width="4" stroke-dasharray="20 20"/>
+                                </svg>
+                            </div>
+
                             <div id="virtual-car" class="top-down-car">
                                 <svg viewBox="0 0 100 200" xmlns="http://www.w3.org/2000/svg">
                                     <rect x="15" y="10" width="70" height="180" rx="20" fill="rgba(0,0,0,0.5)" filter="blur(5px)"/>
@@ -145,12 +125,9 @@
                                     <rect class="brake-lights" x="63" y="180" width="15" height="5" rx="2" fill="#991b1b"/>
                                     <rect x="22" y="5" width="15" height="8" rx="3" fill="#fef08a"/>
                                     <rect x="63" y="5" width="15" height="8" rx="3" fill="#fef08a"/>
-                                    <rect x="15" y="70" width="5" height="15" rx="2" fill="#0f172a"/>
-                                    <rect x="80" y="70" width="5" height="15" rx="2" fill="#0f172a"/>
                                 </svg>
                             </div>
 
-                            <!-- Dynamic Vehicles -->
                             <div id="td-other-car" class="td-other-car hidden">
                                 <svg viewBox="0 0 100 200" xmlns="http://www.w3.org/2000/svg">
                                     <rect x="20" y="5" width="60" height="180" rx="15" fill="#eab308"/>
@@ -160,19 +137,10 @@
                                 </svg>
                             </div>
                             
-                            <div id="td-curve-road" class="td-curve-road hidden">
-                                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M 50 200 Q 50 100 150 100 L 200 100" fill="none" stroke="#334155" stroke-width="40"/>
-                                    <path d="M 50 200 Q 50 100 150 100 L 200 100" fill="none" stroke="white" stroke-width="2" stroke-dasharray="10 10"/>
-                                </svg>
-                            </div>
-
                             <div id="td-ambulance" class="td-ambulance hidden">
                                 <svg viewBox="0 0 100 220" xmlns="http://www.w3.org/2000/svg">
                                     <rect x="15" y="5" width="70" height="200" rx="10" fill="#f8fafc"/>
                                     <rect x="20" y="50" width="60" height="40" fill="#0f172a"/>
-                                    <rect x="40" y="100" width="20" height="60" fill="#ef4444"/>
-                                    <rect x="20" y="120" width="60" height="20" fill="#ef4444"/>
                                     <circle cx="30" cy="20" r="8" class="siren-lights"/>
                                     <circle cx="70" cy="20" r="8" class="siren-lights" style="animation-delay: 0.2s"/>
                                 </svg>
@@ -185,6 +153,7 @@
                                     <text x="50" y="35" font-size="14" font-weight="900" fill="#ef4444" text-anchor="middle">CEDA</text>
                                 </svg>
                             </div>
+
                             <div id="inter-light" class="td-map-object td-traffic-light hidden">
                                 <div class="light red active"></div>
                                 <div class="light yellow"></div>
@@ -195,7 +164,6 @@
                 </div>
             </div>
 
-            <!-- RESULTADOS DEL EXAMEN PRÁCTICO -->
             <div id="drive-results" class="hidden">
                 <div class="report-card card">
                     <div class="report-header">
@@ -227,7 +195,6 @@
 
     <script src="app.js?v=1.2"></script>
     <script>
-        // Init state for practical exam
         if(typeof resetProtocolSetup === 'function') resetProtocolSetup();
     </script>
 </body>

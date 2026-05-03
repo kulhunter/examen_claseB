@@ -452,24 +452,35 @@ body {
 }
 
 .top-down-road {
-    width: 60%;
-    max-width: 300px;
+    width: 80%;
+    max-width: 400px;
     height: 100%;
-    background: #334155; /* Asfalto premium */
+    background: #1e293b; /* Asfalto oscuro real */
     position: relative;
-    border-left: 8px solid #94a3b8; /* Cuneta izquierda */
-    border-right: 8px solid #94a3b8; /* Cuneta derecha */
-    box-shadow: 0 0 20px rgba(0,0,0,0.8);
+    border-left: 6px solid #475569;
+    border-right: 6px solid #475569;
+    box-shadow: 0 0 50px rgba(0,0,0,0.8), inset 0 0 100px rgba(0,0,0,0.5);
     display: flex;
     justify-content: center;
+    overflow: hidden;
+}
+
+.td-lane-marking-left {
+    position: absolute; left: 10px; top: -100%; width: 4px; height: 200%;
+    background: #cbd5e1; opacity: 0.3;
+}
+.td-lane-marking-right {
+    position: absolute; right: 10px; top: -100%; width: 4px; height: 200%;
+    background: #cbd5e1; opacity: 0.3;
 }
 
 .road-markings {
-    width: 10px;
-    height: 200%; /* El doble de alto para animación infinita */
+    width: 6px;
+    height: 200%;
     position: absolute;
     top: -100%;
-    background: repeating-linear-gradient(to bottom, #f8fafc, #f8fafc 40px, transparent 40px, transparent 80px);
+    background: repeating-linear-gradient(to bottom, #f1f5f9, #f1f5f9 60px, transparent 60px, transparent 120px);
+    opacity: 0.8;
 }
 
 .animated-markings {
@@ -497,56 +508,66 @@ body {
 }
 
 /* Graphic Layers (Intersecciones Top Down) */
-.td-env-layer {
-    position: absolute;
-    top: -200px; /* Inicia fuera de pantalla arriba */
-    left: 0;
-    width: 100%;
-    z-index: 3;
+.td-cross-street {
+    position: absolute; top: -200px; left: -100px; right: -100px; height: 160px;
+    background: #1e293b; border-top: 4px solid #475569; border-bottom: 4px solid #475569;
+    z-index: 5; transition: transform 0.6s linear;
+    display: flex; align-items: center; justify-content: center;
 }
 
-.td-zebra {
-    width: 100%;
-    height: 120px;
-    background: repeating-linear-gradient(to bottom, #f8fafc, #f8fafc 15px, transparent 15px, transparent 30px);
+.td-stop-line {
+    position: absolute; bottom: 0; left: 0; right: 0; height: 14px;
+    background: white; box-shadow: 0 0 15px rgba(255,255,255,0.4);
 }
 
-.td-crossroad {
-    width: 200vw;
-    height: 150px;
-    background: #334155;
-    position: relative;
-    left: -100vw;
+.td-crosswalk {
+    position: absolute; top: 100%; left: 0; right: 0; height: 70px;
+    background: repeating-linear-gradient(to right, white, white 20px, transparent 20px, transparent 40px);
+    opacity: 0.8;
+}
+
+.td-curve-road {
+    position: absolute; top: -400px; width: 100%; height: 500px;
+    z-index: 4; transition: transform 0.8s linear;
 }
 
 .td-map-object {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    font-weight: 900;
-    padding: 10px;
-    border-radius: 8px;
-    z-index: 15;
-    color: white;
+    position: absolute; top: 20px; left: 50%; transform: translateX(-50%);
+    z-index: 20;
 }
 
-.td-stop { background: var(--danger); right: -60px; border: 2px solid white; }
-.td-yield { 
-    right: -70px; 
-    width: 50px; 
-    height: 50px; 
-    background: transparent;
+.td-stop {
+    background: #ef4444; color: white; padding: 12px 25px; border-radius: 8px;
+    font-weight: 900; border: 5px solid white; box-shadow: 0 10px 20px rgba(0,0,0,0.6);
+    font-size: 1.5rem;
 }
-.td-cross-street {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    width: 100%;
-    height: 140px;
-    background: #334155;
-    transform: translateY(-50%);
-    z-index: 1;
+
+.td-yield { width: 80px; height: 80px; }
+
+.td-other-car, .td-ambulance {
+    position: absolute; top: -250px; left: 65%; width: 70px; height: 140px;
+    transition: transform 1s ease-out, top 1.5s linear; z-index: 12;
+    filter: drop-shadow(0 10px 10px rgba(0,0,0,0.5));
 }
+
+.td-other-car.enter, .td-ambulance.enter {
+    transform: translateY(500px) translateX(-60px);
+}
+
+.td-traffic-light {
+    position: absolute; top: -50px; right: -60px; width: 40px; height: 100px;
+    background: #000; border: 3px solid #333; border-radius: 10px;
+    display: flex; flex-direction: column; align-items: center; justify-content: space-around;
+    padding: 5px;
+}
+
+.td-traffic-light .light {
+    width: 25px; height: 25px; border-radius: 50%; background: #222;
+}
+
+.td-traffic-light .light.red.active { background: #f00; box-shadow: 0 0 20px #f00; }
+.td-traffic-light .light.yellow.active { background: #ff0; box-shadow: 0 0 20px #ff0; }
+.td-traffic-light .light.green.active { background: #0f0; box-shadow: 0 0 20px #0f0; }
 .td-stop-line {
     position: absolute;
     bottom: 0;
@@ -861,17 +882,25 @@ body {
 }
 
 .error-card {
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
+    background: #0f172a;
+    border: 1px solid rgba(255,255,255,0.1);
     border-left: 5px solid var(--danger);
-    padding: 20px;
-    border-radius: 10px;
-    margin-bottom: 15px;
+    padding: 25px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
 
 .error-card p {
-    margin-bottom: 8px;
-    font-size: 0.95rem;
+    margin-bottom: 12px;
+    font-size: 1rem;
+    color: #cbd5e1;
+}
+
+.error-card strong {
+    color: white;
+    display: block;
+    margin-bottom: 10px;
 }
 
 .text-correct { color: #166534; font-weight: 600; }

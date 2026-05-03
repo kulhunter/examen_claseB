@@ -293,12 +293,7 @@ function mostrarResultados() {
         errores.forEach((err, i) => {
             const card = document.createElement('div');
             card.className = 'error-card';
-            card.style.background = '#111';
-            card.style.padding = '20px';
-            card.style.borderRadius = '12px';
-            card.style.marginBottom = '15px';
-            card.style.borderLeft = '4px solid var(--danger)';
-            card.innerHTML = `<p style="margin-bottom:10px; font-size:1.1rem;"><strong>${i + 1}. ${err.pregunta}</strong></p><p style="color:var(--danger); margin-bottom:5px;">✖ ${err.tuRespuesta}</p><p style="color:var(--success);">✔ ${err.respuestaCorrecta}</p>`;
+            card.innerHTML = `<p><strong>${i + 1}. ${err.pregunta}</strong></p><p style="color:var(--danger);">✖ ${err.tuRespuesta}</p><p style="color:var(--success);">✔ ${err.respuestaCorrecta}</p>`;
             divErrores.appendChild(card);
         });
     }
@@ -474,28 +469,29 @@ function ejecutarEscenario(s) {
     
     // Activar gráficos de entorno y dinámicos
     if (s.q && s.q.includes('cruce') || s.action === 'Detenerse' || s.action === 'Frenar totalmente' || s.action === 'Ceder el paso') {
-        document.getElementById('env-intersection').classList.remove('hidden');
+        safeAccess('env-intersection', el => el.classList.remove('hidden'));
         if (s.pos === 200) {
-            const otherCar = document.getElementById('td-other-car');
-            otherCar.classList.remove('hidden');
-            setTimeout(() => otherCar.classList.add('enter'), 100);
+            safeAccess('td-other-car', el => {
+                el.classList.remove('hidden');
+                setTimeout(() => el.classList.add('enter'), 100);
+            });
         }
     }
-    if (s.q && s.q.includes('peatón') || s.action === 'Dar preferencia') {
-        document.getElementById('env-crosswalk').classList.remove('hidden');
-    }
+    
     if (s.pos === 500) { // Ambulancia
-        const amb = document.getElementById('td-ambulance');
-        amb.classList.remove('hidden');
-        setTimeout(() => amb.classList.add('enter'), 100);
+        safeAccess('td-ambulance', el => {
+            el.classList.remove('hidden');
+            setTimeout(() => el.classList.add('enter'), 100);
+        });
     }
     if (s.pos === 600) { // Curva
-        const curve = document.getElementById('td-curve-road');
-        curve.classList.remove('hidden');
-        setTimeout(() => curve.classList.add('enter'), 100);
+        safeAccess('td-curve-road', el => {
+            el.classList.remove('hidden');
+            setTimeout(() => el.classList.add('enter'), 100);
+        });
     }
     if (s.pos === 300) { // Ceda el paso
-        document.getElementById('inter-yield').classList.remove('hidden');
+        safeAccess('inter-yield', el => el.classList.remove('hidden'));
     }
     
     if (s.type === 'action') {
@@ -551,16 +547,17 @@ function ejecutarEscenario(s) {
                     updateDriveUI("Decisión Incorrecta. Tenga precaución.");
                 }
                 qBox.classList.add('hidden');
-                document.getElementById('env-intersection').classList.add('hidden');
-                document.getElementById('env-crosswalk').classList.add('hidden');
-                document.getElementById('td-other-car').classList.add('hidden');
-                document.getElementById('td-other-car').classList.remove('enter');
-                document.getElementById('td-ambulance').classList.add('hidden');
-                document.getElementById('td-ambulance').classList.remove('enter');
-                document.getElementById('td-curve-road').classList.add('hidden');
-                document.getElementById('td-curve-road').classList.remove('enter');
-                document.getElementById('inter-yield').classList.add('hidden');
-                document.getElementById('btn-drive-continue').classList.remove('hidden');
+                const clearAll = () => {
+                    safeAccess('env-intersection', el => el.classList.add('hidden'));
+                    safeAccess('td-other-car', el => { el.classList.add('hidden'); el.classList.remove('enter'); });
+                    safeAccess('td-ambulance', el => { el.classList.add('hidden'); el.classList.remove('enter'); });
+                    safeAccess('td-curve-road', el => { el.classList.add('hidden'); el.classList.remove('enter'); });
+                    safeAccess('inter-yield', el => el.classList.add('hidden'));
+                    safeAccess('inter-stop', el => el.classList.add('hidden'));
+                    safeAccess('inter-light', el => el.classList.add('hidden'));
+                };
+                clearAll();
+                safeAccess('btn-drive-continue', el => el.classList.remove('hidden'));
             };
             qOptions.appendChild(btn);
         });
@@ -654,18 +651,25 @@ let punteadoState = {
     startTime: 0
 };
 
-function cambiarPruebaPsico(prueba) {
-    document.getElementById('psico-menu').classList.add('hidden');
-    document.querySelectorAll('.view').forEach(v => v.classList.add('hidden'));
+// Exponer al scope global para onclick en HTML
+window.cambiarPruebaPsico = function(prueba) {
+    const menu = document.getElementById('psico-menu');
+    if (menu) menu.classList.add('hidden');
+    
+    document.querySelectorAll('.view').forEach(v => {
+        if (v.id !== 'psico-menu') v.classList.add('hidden');
+    });
     
     if (prueba === 'reaccion') {
-        document.getElementById('psico-reaccion-view').classList.remove('hidden');
+        const view = document.getElementById('psico-reaccion-view');
+        if (view) view.classList.remove('hidden');
         resetPsicoReaccion();
-    } else {
-        document.getElementById('psico-punteado-view').classList.remove('hidden');
+    } else if (prueba === 'punteado') {
+        const view = document.getElementById('psico-punteado-view');
+        if (view) view.classList.remove('hidden');
         resetPunteado();
     }
-}
+};
 
 // --- TEST REACCIÓN ---
 function resetPsicoReaccion() {

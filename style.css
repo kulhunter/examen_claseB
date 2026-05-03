@@ -18,7 +18,7 @@ body {
     overflow-x: hidden;
 }
 
-.container { max-width: 1400px; margin: 0 auto; padding: 40px; }
+.container { width: 100%; max-width: 1400px; margin: 0 auto; padding: 40px; }
 
 /* ==========================================
    BRUTALIST INDEX (ANTI-AI)
@@ -633,7 +633,7 @@ body {
 
 /* QUIZ & UTILS */
 .view { display: none; }
-.view.active { display: block; }
+.view.active { display: block; width: 100%; }
 .hidden { display: none !important; }
 .btn { padding: 12px 24px; border-radius: 8px; font-weight: 700; cursor: pointer; border: none; }
 .btn-primary { background: var(--primary); color: white; }

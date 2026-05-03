@@ -953,122 +953,135 @@ body {
    ========================================================= */
 @media (max-width: 768px) {
     :root {
-        --container-padding: 20px;
+        --container-padding: 15px;
     }
 
     .container {
-        padding: 15px;
+        padding: 0 15px 40px 15px;
+        width: 100%;
+        box-sizing: border-box;
     }
 
     .massive-title {
-        font-size: 3rem !important;
-        line-height: 1;
-        margin-bottom: 20px;
+        font-size: 2.8rem !important;
+        line-height: 1.1;
+        margin-bottom: 15px;
         word-wrap: break-word;
+        padding: 0 15px;
     }
 
-    /* Index */
+    .brutal-header {
+        padding: 30px 15px 10px 15px;
+    }
+
+    /* Index & Nav */
     .brutal-link {
         grid-template-columns: 40px 1fr;
-        padding: 20px 10px;
+        padding: 25px 15px;
         gap: 15px;
+        border-top-width: 1px;
     }
-    .link-text { font-size: 1.4rem; }
+    .link-text { font-size: 1.3rem; }
     .link-meta { display: none; }
-    .brutal-nav { padding: 0 15px; }
+    .brutal-nav { padding: 0; margin-top: 30px; }
 
     /* Examen Teórico */
     .quiz-container {
-        padding: 20px;
+        padding: 15px;
+        margin-top: 10px;
     }
-    .pregunta-card h2 { font-size: 1.4rem; }
-    .opcion { padding: 15px 18px; font-size: 1rem; }
+    .pregunta-card h2 { font-size: 1.25rem; }
+    .opcion { padding: 14px 16px; font-size: 0.95rem; }
+    .opcion:hover { transform: none; } /* Disable hover lift on touch */
 
     /* Examen Práctico */
     .cockpit-container {
         grid-template-columns: 1fr;
-        gap: 20px;
+        gap: 15px;
     }
 
     .setup-grid {
         grid-template-columns: 1fr;
-    }
-
-    .top-down-map-view {
-        height: 300px;
-        order: -1; /* Mapa arriba en mobile */
-    }
-
-    .cockpit-panel {
-        padding: 20px;
-    }
-
-    .pedal-giant {
-        padding: 30px;
-        font-size: 1.5rem;
-    }
-
-    .btn-pedal {
-        font-size: 0.95rem;
-        padding: 18px;
-        width: 100%;
-        margin-bottom: 10px;
-    }
-
-    .hud-container {
-        padding: 25px 15px;
-        margin: 10px auto;
-    }
-
-    .check-group {
-        width: 100%;
+        gap: 20px;
         display: flex;
         flex-direction: column;
     }
 
+    .setup-visual {
+        order: -1; /* Ver estado arriba */
+        width: 100%;
+    }
+
+    .protocol-status {
+        padding: 20px !important;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+    }
+
+    .status-item {
+        font-size: 0.9rem !important;
+        margin-bottom: 0 !important;
+        padding: 8px 12px;
+        background: #222;
+        border-radius: 10px;
+    }
+
+    .top-down-map-view {
+        height: 280px;
+        order: -1;
+    }
+
+    .cockpit-panel {
+        padding: 15px;
+    }
+
+    .pedal-giant {
+        padding: 25px;
+        font-size: 1.3rem;
+    }
+
     /* Gabinete Psicotécnico */
     #psico-punteado {
-        width: 280px;
-        height: 280px;
+        width: 260px;
+        height: 260px;
     }
 
     .punteado-disc {
-        width: 240px;
-        height: 240px;
+        width: 220px;
+        height: 220px;
     }
 
     .hud-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
+        padding: 15px;
     }
-
-    .hud-target { font-size: 1.2rem; }
     
     .report-card {
-        padding: 20px;
+        padding: 15px;
     }
 }
 
 @media (max-width: 480px) {
-    .massive-title { font-size: 2.2rem !important; }
+    .massive-title { font-size: 2rem !important; }
     
     .punteado-disc {
-        width: 200px;
-        height: 200px;
+        width: 180px;
+        height: 180px;
     }
     
     #psico-punteado {
-        width: 240px;
-        height: 240px;
+        width: 220px;
+        height: 220px;
     }
 
     .pedal-giant {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
         padding: 20px;
     }
 
-    .brutal-header {
-        padding: 20px 15px;
+    .docs-btns {
+        flex-direction: column;
     }
 }

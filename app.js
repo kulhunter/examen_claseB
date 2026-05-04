@@ -333,7 +333,7 @@ let driveState = {
 
 const driveScenarios = [
     { pos: 100, type: 'action', id: 'inter-stop', msg: "Se aproxima a una señal PARE. ¿Qué debe hacer?", action: "Frenar totalmente" },
-    { pos: 200, type: 'question', q: "¿Quién tiene la preferencia en este cruce sin señalizar?", options: ["Usted", "El vehículo que viene por la derecha", "El vehículo que viene por la izquierda", "El más rápido"], correct: 1 },
+    { pos: 200, type: 'question', q: "¿Quién tiene la preferencia en un cruce sin señalizar?", options: ["Usted", "El vehículo que viene por la derecha", "El vehículo que viene por la izquierda", "El más rápido"], correct: 1 },
     { pos: 300, type: 'action', id: 'inter-yield', msg: "Señal CEDA EL PASO detectada. Evalúe el tráfico.", action: "Ceder el paso" },
     { pos: 400, type: 'action', id: 'inter-light', msg: "Semáforo en ROJO. Detenga el vehículo.", action: "Detenerse" },
     { pos: 500, type: 'question', q: "Si un vehículo de emergencia viene con sirenas detrás de usted, ¿qué debe hacer?", options: ["Aumentar la velocidad", "Frenar en seco", "Desviarse a la derecha y detenerse", "Ignorarlo"], correct: 2 },
@@ -612,9 +612,9 @@ function finalizarExamenVirtual() {
         scoreCircle.className = "circle-chart pass";
         
         feedback.innerHTML = `
-            <div class="eval-item success">
-                <span class="icon">✅</span>
-                <div><strong>Conducción Segura</strong><br>Ha completado todas las etapas del protocolo de evaluación oficial satisfactoriamente.</div>
+            <div class="eval-item success" style="background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); padding: 20px; border-radius: 15px; color: #4ade80;">
+                <span class="icon" style="font-size: 2rem;">✅</span>
+                <div><strong style="color: white; font-size: 1.2rem;">Conducción Segura</strong><br><span style="opacity: 0.9;">Ha completado todas las etapas del protocolo de evaluación satisfactoriamente.</span></div>
             </div>
         `;
     }
@@ -658,30 +658,42 @@ let punteadoState = {
 
 // Exponer al scope global para onclick en HTML
 window.cambiarPruebaPsico = function(prueba) {
-    const menu = document.getElementById('psico-menu');
-    if (menu) menu.classList.add('hidden');
-    
+    // Ocultar todas las vistas y quitar 'active' de todas
     document.querySelectorAll('.view').forEach(v => {
-        if (v.id !== 'psico-menu') v.classList.add('hidden');
+        v.classList.add('hidden');
+        v.classList.remove('active');
     });
     
     if (prueba === 'reaccion') {
         const view = document.getElementById('psico-reaccion-view');
-        if (view) view.classList.remove('hidden');
+        if (view) {
+            view.classList.remove('hidden');
+            view.classList.add('active');
+        }
         resetPsicoReaccion();
     } else if (prueba === 'punteado') {
         const view = document.getElementById('psico-punteado-view');
-        if (view) view.classList.remove('hidden');
+        if (view) {
+            view.classList.remove('hidden');
+            view.classList.add('active');
+        }
         resetPunteado();
     }
 };
 
 // --- TEST REACCIÓN ---
 function resetPsicoReaccion() {
+    if (psicoState && psicoState.timeoutId) clearTimeout(psicoState.timeoutId);
     psicoState = { attempts: 0, maxAttempts: 3, startTime: 0, waitingForGreen: false, times: [], timeoutId: null };
-    document.getElementById('psico-instructions').classList.remove('hidden');
-    document.getElementById('psico-results').classList.add('hidden');
-    document.getElementById('btn-psico-pedal').disabled = true;
+    safeAccess('psico-instructions', el => el.classList.remove('hidden'));
+    safeAccess('psico-results', el => el.classList.add('hidden'));
+    safeAccess('psico-attempt-counter', el => el.innerText = 'INTENTO 1/3');
+    safeAccess('psico-time-last', el => el.innerText = 'ÚLTIMO: -- ms');
+    safeAccess('psico-feedback-msg', el => { el.classList.add('hidden'); el.innerText = ''; });
+    safeAccess('btn-psico-pedal', el => el.disabled = true);
+    // Apagar luz si estaba activa
+    const light = document.querySelector('.hud-light');
+    if (light) light.classList.remove('active');
 }
 
 if(document.getElementById('btn-start-psico-sequence')) {
@@ -717,7 +729,7 @@ if(pedalReaccion) {
         if (!psicoState.waitingForGreen) {
             clearTimeout(psicoState.timeoutId);
             msg.innerText = "¡FALSO ARRANQUE!";
-            msg.style.color = "var(--danger)";
+            msg.className = "hud-message danger-msg";
             setTimeout(iniciarIntentoPsico, 1500);
             return;
         }
@@ -730,7 +742,7 @@ if(pedalReaccion) {
         
         document.getElementById('psico-time-last').innerText = `ÚLTIMO: ${reactionTime.toFixed(0)} ms`;
         msg.innerText = `${(reactionTime / 1000).toFixed(3)}s`;
-        msg.style.color = "var(--success)";
+        msg.className = "hud-message success-msg";
         
         if (psicoState.attempts < psicoState.maxAttempts) {
             document.getElementById('psico-attempt-counter').innerText = `INTENTO ${psicoState.attempts + 1}/3`;
@@ -745,12 +757,18 @@ if(pedalReaccion) {
 
 // --- TEST PUNTEADO ---
 function resetPunteado() {
-    punteadoState = { hits: 0, needed: 35, timeLeft: 45, timerId: null, active: false, startTime: 0 };
-    document.getElementById('punteado-instructions').classList.remove('hidden');
-    document.getElementById('psico-punteado-box').classList.add('hidden');
-    document.getElementById('btn-punteado-pedal').disabled = true;
-    document.getElementById('punteado-hits').innerText = "ACIERTOS: 0/35";
-    document.getElementById('punteado-timer').innerText = "TIEMPO: 45s";
+    if (punteadoState && punteadoState.timerId) clearInterval(punteadoState.timerId);
+    punteadoState = { hits: 0, needed: 35, timeLeft: 45, timerId: null, active: false, startTime: 0, currentSpeed: 4 };
+    safeAccess('punteado-instructions', el => el.classList.remove('hidden'));
+    safeAccess('psico-punteado-box', el => el.classList.add('hidden'));
+    safeAccess('btn-punteado-pedal', el => el.disabled = true);
+    safeAccess('punteado-hits', el => el.innerText = 'ACIERTOS: 0/35');
+    safeAccess('punteado-timer', el => el.innerText = 'TIEMPO: 45s');
+    safeAccess('punteado-msg', el => { el.classList.add('hidden'); el.innerText = ''; });
+    
+    // Reset speed visual
+    const disc = document.querySelector('.punteado-disc');
+    if (disc) disc.style.setProperty('--punteado-speed', '4s');
 }
 
 if(document.getElementById('btn-start-punteado')) {
@@ -780,9 +798,23 @@ if(pedalPunteado) {
     pedalPunteado.ontouchstart = fn;
 }
 
+// También permitir click en el área de la máquina
+const machinePunteado = document.getElementById('psico-punteado');
+if(machinePunteado) {
+    machinePunteado.onclick = () => manejarAccionPunteado();
+}
+
 function manejarAccionPunteado() {
     if (!punteadoState.active) return;
     
+    // Animación de "dip" del stylus
+    const dot = document.querySelector('.target-dot');
+    if (dot) {
+        dot.classList.remove('dipping');
+        void dot.offsetWidth; // Trigger reflow
+        dot.classList.add('dipping');
+    }
+
     const target = document.querySelector('.target-zone');
     const rect = target.getBoundingClientRect();
     const cx = rect.left + rect.width / 2;
@@ -798,45 +830,68 @@ function manejarAccionPunteado() {
         punteadoState.hits++;
         document.getElementById('punteado-hits').innerText = `ACIERTOS: ${punteadoState.hits}/35`;
         msg.innerText = "¡ACIERTO!";
-        msg.style.color = "var(--success)";
+        msg.className = "hud-message success-msg";
+        
+        // Aumentar velocidad cada 5 aciertos
+        if (punteadoState.hits % 5 === 0 && punteadoState.currentSpeed > 1.5) {
+            punteadoState.currentSpeed -= 0.5;
+            const disc = document.querySelector('.punteado-disc');
+            if (disc) disc.style.setProperty('--punteado-speed', `${punteadoState.currentSpeed}s`);
+        }
+
+        // Efecto visual en el hoyo
+        hole.classList.add('hit');
+        setTimeout(() => hole.classList.remove('hit'), 300);
+
         if (punteadoState.hits >= punteadoState.needed) {
             finalizarPunteado(true);
         }
     } else {
         msg.innerText = "FALLO";
-        msg.style.color = "var(--danger)";
+        msg.className = "hud-message danger-msg";
     }
 }
 
 function finalizarPunteado(exito) {
     punteadoState.active = false;
     clearInterval(punteadoState.timerId);
-    document.getElementById('btn-punteado-pedal').disabled = true;
+    safeAccess('btn-punteado-pedal', el => el.disabled = true);
     
-    const msg = document.getElementById('punteado-msg');
-    msg.innerText = exito ? "¡META ALCANZADA!" : "TIEMPO AGOTADO";
-    msg.style.color = exito ? "var(--success)" : "var(--danger)";
+    safeAccess('punteado-msg', el => {
+        el.classList.remove('hidden');
+        el.innerText = exito ? '¡META ALCANZADA!' : 'TIEMPO AGOTADO';
+        el.style.color = exito ? 'var(--success)' : 'var(--danger)';
+    });
     
     setTimeout(() => finalizarTestGabinete('punteado'), 1500);
 }
 
 function finalizarTestGabinete(tipo) {
-    document.querySelectorAll('.view').forEach(v => v.classList.add('hidden'));
-    document.getElementById('psico-results').classList.remove('hidden');
+    // Ocultar todas las vistas
+    document.querySelectorAll('.view').forEach(v => {
+        v.classList.add('hidden');
+        v.classList.remove('active');
+    });
+    // Mostrar resultados
+    const resultsEl = document.getElementById('psico-results');
+    if (resultsEl) {
+        resultsEl.classList.remove('hidden');
+        resultsEl.classList.add('active');
+    }
     
     const statusEl = document.getElementById('psico-final-status');
     const timeEl = document.getElementById('psico-avg-time');
     const nameEl = document.getElementById('psico-test-name');
 
     if (tipo === 'reaccion') {
-        nameEl.innerText = "Prueba de Reacción";
+        nameEl.innerText = "Reacción de Frenado";
         const avg = psicoState.times.reduce((a, b) => a + b, 0) / 3 / 1000;
         timeEl.innerText = `Promedio: ${avg.toFixed(3)}s`;
         if (avg <= 0.45) { statusEl.innerText = "ÓPTIMO"; statusEl.style.color = "var(--neon-cyan)"; }
         else if (avg <= 0.60) { statusEl.innerText = "NORMAL"; statusEl.style.color = "var(--success)"; }
         else { statusEl.innerText = "DEFICIENTE"; statusEl.style.color = "var(--danger)"; }
     } else {
-        nameEl.innerText = "Prueba de Punteado";
+        nameEl.innerText = "Coordinación Visomotriz";
         timeEl.innerText = `Aciertos: ${punteadoState.hits}/35`;
         if (punteadoState.hits >= 35) { statusEl.innerText = "ÓPTIMO"; statusEl.style.color = "var(--neon-cyan)"; }
         else if (punteadoState.hits >= 25) { statusEl.innerText = "NORMAL"; statusEl.style.color = "var(--success)"; }

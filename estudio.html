@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Centro de Estudios // Preparación Clase B Chile</title>
+    <meta name="description" content="Aprende y practica por temas: señales de tránsito, mecánica básica, seguridad vial y normativa. Todo lo necesario para tu licencia Clase B.">
+    <meta name="keywords" content="estudio conducir, señales transito chile, mecanica basica, seguridad vial, normativa transito">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@900&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
+    <!-- SEO -->
+    <meta property="og:title" content="Centro de Estudios // Dominio Clase B">
+    <meta property="og:description" content="Practica por módulos temáticos y mejora tus puntos débiles.">
+</head>
+<body class="brutalist-theme">
+    
+    <header class="brutal-header">
+        <div class="brand-text">
+            <!-- Link dinámico: Vuelve al dashboard si está en test, o al home si está en dashboard -->
+            <a href="javascript:void(0)" onclick="manejarBotonVolver()" style="color: inherit; text-decoration: none;" id="btn-back-header">← VOLVER AL MENÚ PRINCIPAL</a>
+        </div>
+        <h1 class="massive-title">ESTUDIO.</h1>
+    </header>
+
+    <div class="container">
+        <!-- Dashboard de Módulos (Exactamente igual al Home) -->
+        <nav id="study-dashboard" class="brutal-nav view active">
+            <div class="card-action brutal-link" id="btn-start-signs-local" style="cursor: pointer;">
+                <span class="link-number">01</span>
+                <span class="link-text">SEÑALIZACIÓN</span>
+                <span class="link-meta">REGLAMENTARIAS Y ADVERTENCIA</span>
+            </div>
+
+            <div class="card-action brutal-link" data-start="1" data-end="45" style="cursor: pointer;">
+                <span class="link-number">02</span>
+                <span class="link-text">MECÁNICA BÁSICA</span>
+                <span class="link-meta">SISTEMAS Y MANTENIMIENTO</span>
+            </div>
+
+            <div class="card-action brutal-link" data-start="46" data-end="100" style="cursor: pointer;">
+                <span class="link-number">03</span>
+                <span class="link-text">SEGURIDAD VIAL</span>
+                <span class="link-meta">FACTORES HUMANOS Y RIESGO</span>
+            </div>
+
+            <div class="card-action brutal-link" data-start="200" data-end="280" style="cursor: pointer;">
+                <span class="link-number">04</span>
+                <span class="link-text">NORMATIVA</span>
+                <span class="link-meta">LEYES Y REGLAMENTOS</span>
+            </div>
+        </nav>
+
+        <!-- VISTA: QUIZ -->
+        <main id="quiz-container" class="view hidden">
+            <div class="card">
+                <div class="quiz-header">
+                    <span id="pregunta-counter">Pregunta 1</span>
+                    <span id="timer-counter" style="color: var(--danger); font-weight: 900; letter-spacing: 0.1em; font-variant-numeric: tabular-nums;">⏱ 20:00</span>
+                    <span id="score-counter">Aciertos: 0</span>
+                </div>
+                <div class="progress-container">
+                    <div id="progress-bar" class="progress-bar"></div>
+                </div>
+                
+                <h2 id="pregunta-text" class="pregunta-title">Cargando...</h2>
+                <p id="pregunta-instruction" class="hidden text-muted"></p>
+
+                <div id="pregunta-image-container" class="hidden">
+                    <img id="pregunta-image" src="" alt="Pregunta" style="max-width: 100%; border-radius: 8px;">
+                </div>
+
+                <div id="opciones-container" class="opciones-grid"></div>
+
+                <div class="quiz-footer">
+                    <button id="btn-confirmar" class="btn btn-primary hidden">Confirmar</button>
+                    <button id="btn-siguiente" class="btn btn-primary hidden">Siguiente</button>
+                </div>
+            </div>
+        </main>
+
+        <!-- RESULTADOS -->
+        <div id="resultados-container" class="view hidden">
+            <div class="card text-center">
+                <h2 style="font-size: 3rem; margin-bottom: 20px;">Modulo Completado</h2>
+                <div id="score-circle" class="score-circle">
+                    <span id="resultado-final">0%</span>
+                </div>
+                <div id="estado-final" class="score-label" style="font-size: 2rem; font-weight: 900;">REPROBADO</div>
+                <div id="mensaje-final" class="margin-v-20" style="margin: 20px 0; font-size: 1.2rem;"></div>
+                <div id="revision-errores" class="revision-container" style="text-align: left; margin-top: 40px;"></div>
+                <div style="display: flex; gap: 20px; justify-content: center; margin-top: 30px; flex-wrap: wrap;">
+                    <button onclick="volverAlCentro()" class="btn-primary-large" style="background: var(--neon); color: black;">Otro Módulo</button>
+                    <button onclick="window.location.href='index.html'" class="btn-primary-large" style="background: var(--gray-dark); color: white;">Volver al Inicio</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="brutal-footer">
+        <div class="footer-links">
+            <a href="https://www.conaset.cl/" target="_blank">CONASET</a>
+            <a href="https://www.munimacul.cl/" target="_blank">MACUL</a>
+        </div>
+        <div class="footer-credit">DEV BY <a href="https://dantagle.cl" target="_blank">DANTAGLE.CL</a></div>
+    </footer>
+
+    <script src="preguntas.js"></script>
+    <script src="senales_data.js"></script>
+    <script src="app.js?v=1.3"></script>
+    <script>
+        function manejarBotonVolver() {
+            const dashboard = document.getElementById('study-dashboard');
+            const quiz = document.getElementById('quiz-container');
+            const results = document.getElementById('resultados-container');
+
+            if (!quiz.classList.contains('hidden') || !results.classList.contains('hidden')) {
+                volverAlCentro();
+            } else {
+                window.location.href = 'index.html';
+            }
+        }
+
+        function volverAlCentro() {
+            document.querySelectorAll('.view').forEach(v => {
+                v.classList.remove('active');
+                v.classList.add('hidden');
+            });
+            const dashboard = document.getElementById('study-dashboard');
+            dashboard.classList.remove('hidden');
+            dashboard.classList.add('active');
+            document.getElementById('btn-back-header').innerText = "← VOLVER AL MENÚ PRINCIPAL";
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Señales logic
+        document.querySelectorAll('.card-action').forEach(card => {
+            card.addEventListener('click', () => {
+                if(card.id === 'btn-start-signs-local') {
+                    iniciarTest(bancoSenales, 20);
+                }
+                document.getElementById('study-dashboard').classList.add('hidden');
+                document.getElementById('quiz-container').classList.remove('hidden');
+                document.getElementById('quiz-container').classList.add('active');
+                document.getElementById('btn-back-header').innerText = "← VOLVER AL CENTRO DE ESTUDIOS";
+            });
+        });
+    </script>
+</body>
+</html>

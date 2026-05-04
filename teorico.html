@@ -3,22 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Examen Teórico // DRIVE</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@900&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+    <title>Examen Teórico Clase B // Simulador Oficial 2026</title>
+    <meta name="description" content="Simulador oficial de examen teórico de conducir Clase B en Chile. 35 preguntas exactas del Libro del Nuevo Conductor. Practica gratis y aprueba.">
+    <meta name="keywords" content="examen teorico conducir, clase b, chile, preguntas examen conducir, conaset, libro nuevo conductor">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-
-    <!-- WhatsApp & Social Media OG Tags -->
-    <meta property="og:title" content="DRIVE // Simulador Oficial Clase B">
-    <meta property="og:description" content="Practica con el simulador 100% exacto enfocado en los 8 puntos críticos de fallo. Fricción cero, sin registro.">
-    <meta property="og:image" content="https://www.munimacul.cl/portalnv/wp-content/uploads/2026/02/Recurso-44.png">
-    <meta property="og:url" content="https://examenconducir.cl">
-    <meta property="og:type" content="website">
+    
+    <!-- SEO -->
+    <meta property="og:title" content="Examen Teórico Clase B // Simulador Oficial">
+    <meta property="og:description" content="Ensayo municipal de 35 preguntas con 100% de exactitud.">
 </head>
 <body class="brutalist-theme">
     
-    <header class="brutal-header" style="padding-bottom: 0;">
-        <div class="brand-text"><a href="index.html" style="color: inherit; text-decoration: none;">← VOLVER AL MENÚ</a></div>
-        <h1 class="massive-title" style="font-size: clamp(3rem, 8vw, 6rem);">EXAMEN TEÓRICO</h1>
+    <header class="brutal-header">
+        <div class="brand-text">
+            <a href="javascript:void(0)" onclick="manejarBotonVolverTeorico()" style="color: inherit; text-decoration: none;" id="btn-back-teorico">← VOLVER AL MENÚ</a>
+        </div>
+        <h1 class="massive-title" style="color: var(--neon);">TEÓRICO.</h1>
     </header>
 
     <div class="container">
@@ -34,25 +35,23 @@
                     <div id="progress-bar" class="progress-bar"></div>
                 </div>
                 
-                <h2 id="pregunta-text" class="pregunta-title">Haz clic en Iniciar para comenzar...</h2>
+                <h2 id="pregunta-text" class="pregunta-title">Cargando examen...</h2>
                 <p id="pregunta-instruction" class="hidden text-muted"></p>
 
                 <div id="pregunta-image-container" class="hidden">
-                    <img id="pregunta-image" src="" alt="Imagen de la pregunta" style="max-width: 100%; border-radius: 8px;">
+                    <img id="pregunta-image" src="" alt="Situación de Tránsito" style="max-width: 100%; border-radius: 8px;">
                 </div>
 
-                <div id="opciones-container" class="opciones-grid">
-                    <button id="btn-iniciar-simulacro" class="btn-primary-large" style="width: 100%; text-align: center; padding: 30px;">INICIAR SIMULACRO OFICIAL (35 PREGUNTAS)</button>
-                </div>
+                <div id="opciones-container" class="opciones-grid"></div>
 
                 <div class="quiz-footer">
-                    <button id="btn-confirmar" class="btn btn-primary hidden">Confirmar Respuestas</button>
+                    <button id="btn-confirmar" class="btn btn-primary hidden">Confirmar Respuesta</button>
                     <button id="btn-siguiente" class="btn btn-primary hidden">Siguiente Pregunta</button>
                 </div>
             </div>
         </main>
 
-        <!-- RESULTADOS TEÓRICO -->
+        <!-- RESULTADOS -->
         <div id="resultados-container" class="view hidden">
             <div class="card text-center">
                 <h2 style="font-size: 3rem; margin-bottom: 20px;">Resultado Final</h2>
@@ -61,27 +60,41 @@
                 </div>
                 <div id="estado-final" class="score-label" style="font-size: 2rem; font-weight: 900;">REPROBADO</div>
                 <div id="mensaje-final" class="margin-v-20" style="margin: 20px 0; font-size: 1.2rem;"></div>
+                
                 <div id="revision-errores" class="revision-container" style="text-align: left; margin-top: 40px;"></div>
-                <div style="display: flex; gap: 20px; justify-content: center; margin-top: 30px;">
-                    <button id="btn-whatsapp-share" class="btn-primary-large" style="background: #25D366; color: white; border: none;"><span style="font-size: 1.2rem; margin-right: 10px;">💬</span>Desafiar por WhatsApp</button>
-                    <button onclick="window.location.href='index.html'" class="btn-primary-large" style="background: var(--gray-dark); color: white;">Volver al Menú</button>
+                
+                <div style="display: flex; gap: 20px; justify-content: center; margin-top: 30px; flex-wrap: wrap;">
+                    <button onclick="location.reload()" class="btn-primary-large" style="background: var(--neon); color: black;">Repetir Examen</button>
+                    <button onclick="window.location.href='index.html'" class="btn-primary-large" style="background: var(--gray-dark); color: white;">Menú Principal</button>
                 </div>
             </div>
         </div>
     </div>
 
+    <footer class="brutal-footer">
+        <div class="footer-links">
+            <a href="https://www.conaset.cl/" target="_blank">CONASET</a>
+            <a href="https://www.munimacul.cl/" target="_blank">MACUL</a>
+        </div>
+        <div class="footer-credit">DEV BY <a href="https://dantagle.cl" target="_blank">DANTAGLE.CL</a></div>
+    </footer>
+
     <script src="preguntas.js"></script>
-    <script src="senales_data.js"></script>
-    <script src="app.js"></script>
+    <script src="app.js?v=1.3"></script>
     <script>
-        // Start quiz button logic
-        document.getElementById('btn-iniciar-simulacro').onclick = function() {
-            if(typeof iniciarTest === 'function' && typeof bancoPreguntas !== 'undefined') {
-                iniciarTest(bancoPreguntas, 35);
+        function manejarBotonVolverTeorico() {
+            const results = document.getElementById('resultados-container');
+            if (results.classList.contains('hidden')) {
+                if (confirm('¿Está seguro de que desea abandonar el examen? Se perderá su progreso.')) {
+                    window.location.href = 'index.html';
+                }
             } else {
-                alert("Error cargando base de datos.");
+                window.location.href = 'index.html';
             }
-        };
+        }
+        
+        // Iniciar examen de 35 preguntas automáticamente al cargar
+        if(typeof iniciarTest === 'function') iniciarTest(0, 35);
     </script>
 </body>
 </html>

@@ -3,37 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gabinete Psicotécnico // DRIVE</title>
+    <title>Gabinete Psicotécnico // Simulador Clase B 2026</title>
+    <meta name="description" content="Test de Reacción de Frenado y Coordinación Motriz (Punteado) oficial para la licencia Clase B en Chile. Practica gratis.">
+    <meta name="keywords" content="examen conducir chile, gabinete psicotecnico, test de reaccion, coordinacion motriz, punteado, clase b">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@900&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 
-    <!-- WhatsApp & Social Media OG Tags -->
-    <meta property="og:title" content="DRIVE // Simulador Oficial Clase B">
-    <meta property="og:description" content="Practica con el simulador 100% exacto enfocado en los 8 puntos críticos de fallo. Fricción cero, sin registro.">
-    <meta property="og:image" content="https://www.munimacul.cl/portalnv/wp-content/uploads/2026/02/Recurso-44.png">
-    <meta property="og:url" content="https://examenconducir.cl">
-    <meta property="og:type" content="website">
+    <!-- SEO Meta Tags -->
+    <meta property="og:title" content="Gabinete Psicotécnico // Simulador Oficial">
+    <meta property="og:description" content="Pruebas de coordinación y reacción 100% exactas al protocolo municipal.">
 </head>
 <body class="brutalist-theme">
     
     <header class="brutal-header" style="padding-bottom: 0;">
-        <div class="brand-text"><a href="index.html" style="color: inherit; text-decoration: none;">← VOLVER AL MENÚ</a></div>
-        <h1 class="massive-title" style="color: var(--neon);">GABINETE PSICOTÉCNICO</h1>
+        <div class="brand-text">
+            <a href="javascript:void(0)" onclick="manejarBotonVolverPsico()" style="color: inherit; text-decoration: none;" id="btn-back-psico">← VOLVER AL MENÚ PRINCIPAL</a>
+        </div>
+        <h1 class="massive-title" style="color: var(--neon);">GABINETE.</h1>
     </header>
 
     <div class="container">
         <!-- MÓDULO: MENÚ DE PRUEBAS -->
         <div id="psico-menu" class="view active">
-            <div class="brutal-nav" style="margin-top: 20px; display: flex; flex-direction: column; gap: 20px;">
+            <div class="brutal-nav" style="margin-top: 20px; display: flex; flex-direction: column; gap: 0;">
                 <button onclick="window.cambiarPruebaPsico('reaccion')" class="brutal-link" style="width: 100%; text-align: left; background: none; border: none; cursor: pointer;">
                     <span class="link-number">01</span>
-                    <span class="link-text">REACCIÓN</span>
-                    <span class="link-meta" style="opacity: 1;">SISTEMA DE FRENADO</span>
+                    <span class="link-text">REACCIÓN DE FRENADO</span>
+                    <span class="link-meta" style="opacity: 1;">TIEMPO DE RESPUESTA</span>
                 </button>
                 <button onclick="window.cambiarPruebaPsico('punteado')" class="brutal-link" style="width: 100%; text-align: left; background: none; border: none; cursor: pointer;">
                     <span class="link-number">02</span>
-                    <span class="link-text">PUNTEADO</span>
-                    <span class="link-meta" style="opacity: 1;">COORDINACIÓN BIMANUAL</span>
+                    <span class="link-text">COORDINACIÓN MOTRIZ</span>
+                    <span class="link-meta" style="opacity: 1;">TEST DE PUNTEADO</span>
                 </button>
             </div>
         </div>
@@ -42,7 +43,7 @@
         <div id="psico-reaccion-view" class="view hidden">
             <div class="hud-container">
                 <div class="hud-header">
-                    <div class="hud-target">TEST DE REACCIÓN SIMPLE</div>
+                    <div class="hud-target">TEST DE REACCIÓN DE FRENADO</div>
                     <div class="hud-stats">
                         <span id="psico-attempt-counter">INTENTO 1/3</span>
                         <span id="psico-time-last">ÚLTIMO: -- ms</span>
@@ -71,7 +72,7 @@
         <div id="psico-punteado-view" class="view hidden">
             <div class="hud-container">
                 <div class="hud-header">
-                    <div class="hud-target">COORDINACIÓN (PUNTEADO)</div>
+                    <div class="hud-target">COORDINACIÓN MOTRIZ (PUNTEADO)</div>
                     <div class="hud-stats">
                         <span id="punteado-timer">TIEMPO: 45s</span>
                         <span id="punteado-hits">ACIERTOS: 0/35</span>
@@ -79,7 +80,7 @@
                 </div>
                 <div class="hud-screen">
                     <div id="punteado-instructions" class="psico-overlay">
-                        <h3 style="font-size: 2rem; margin-bottom: 20px;">Punteado de Lahy</h3>
+                        <h3 style="font-size: 2rem; margin-bottom: 20px;">Coordinación Visomotriz</h3>
                         <p style="margin-bottom: 30px;">Acierte 35 puntos en los orificios mientras el disco gira. Use el botón o haga clic en los hoyos.</p>
                         <button id="btn-start-punteado" class="btn-primary-large" style="background: var(--neon-cyan); color: black;">Iniciar Prueba</button>
                     </div>
@@ -90,7 +91,9 @@
                                 <div class="hole" data-id="2"></div>
                                 <div class="hole" data-id="3"></div>
                             </div>
-                            <div class="target-zone"></div>
+                            <div class="target-zone">
+                                <div class="target-dot"></div>
+                            </div>
                         </div>
                     </div>
                     <div id="punteado-msg" class="hud-message hidden"></div>
@@ -104,7 +107,7 @@
         </div>
 
         <!-- Resultados Finales -->
-        <div id="psico-results" class="hud-container hidden" style="margin-top: 20px;">
+        <div id="psico-results" class="view hidden" style="margin-top: 20px;">
             <div class="report-card card dark-report">
                 <div class="report-header" style="border: none;">
                     <h2 style="font-size: 2.5rem; margin-bottom: 10px;">Reporte Psicotécnico</h2>
@@ -117,16 +120,50 @@
                     </div>
                 </div>
                 <div class="report-footer" style="border: none; display: flex; gap: 10px;">
-                    <button onclick="location.reload()" class="btn-primary-large" style="flex: 1; background: #222; color: white;">Repetir</button>
+                    <button onclick="volverAMenuPsico()" class="btn-primary-large" style="flex: 1; background: #222; color: white;">Otro Test</button>
                     <button onclick="window.location.href='index.html'" class="btn-primary-large" style="flex: 1;">Menú Principal</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="app.js?v=1.2"></script>
+    <footer class="brutal-footer">
+        <div class="footer-links">
+            <a href="https://www.conaset.cl/" target="_blank">CONASET</a>
+            <a href="https://www.munimacul.cl/" target="_blank">MACUL</a>
+        </div>
+        <div class="footer-credit">DEV BY <a href="https://dantagle.cl" target="_blank">DANTAGLE.CL</a></div>
+    </footer>
+
+    <script src="app.js?v=1.4"></script>
     <script>
-        if(typeof resetPsicoReaccion === 'function') resetPsicoReaccion();
+        function manejarBotonVolverPsico() {
+            const menu = document.getElementById('psico-menu');
+            if (menu.classList.contains('hidden')) {
+                volverAMenuPsico();
+            } else {
+                window.location.href = 'index.html';
+            }
+        }
+
+        function volverAMenuPsico() {
+            document.querySelectorAll('.view').forEach(v => {
+                v.classList.add('hidden');
+                v.classList.remove('active');
+            });
+            const menu = document.getElementById('psico-menu');
+            menu.classList.remove('hidden');
+            menu.classList.add('active');
+            document.getElementById('btn-back-psico').innerText = "← VOLVER AL MENÚ PRINCIPAL";
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        // Al entrar a una prueba, cambiar el label del back button
+        const originalCambiar = window.cambiarPruebaPsico;
+        window.cambiarPruebaPsico = function(id) {
+            originalCambiar(id);
+            document.getElementById('btn-back-psico').innerText = "← VOLVER AL GABINETE";
+        }
     </script>
 </body>
 </html>

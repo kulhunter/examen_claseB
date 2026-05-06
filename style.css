@@ -339,6 +339,31 @@ body {
 /* =========================================================
    VIRTUAL DRIVE COCKPIT (AWWWARDS LEVEL)
    ========================================================= */
+
+/* Layout principal del juego: tablero izquierdo + mapa derecho */
+.cockpit-layout {
+    display: grid;
+    grid-template-columns: 380px 1fr;
+    gap: 20px;
+    align-items: stretch;
+    margin-top: 20px;
+    margin-bottom: 40px;
+    width: 100%;
+}
+
+/* Panel izquierdo: pantalla de sistema + controles + botón */
+.cockpit-left {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* El action-footer (botones) empuja al fondo del panel izquierdo */
+.cockpit-left .action-footer {
+    margin-top: auto;
+}
+
+/* Mantener la clase legacy por si se usa en otra vista */
 .cockpit-container {
     display: grid;
     grid-template-columns: 400px 1fr;
@@ -351,6 +376,7 @@ body {
 @media (max-width: 950px) {
     .cockpit-container { grid-template-columns: 1fr; }
 }
+
 
 /* Panel Izquierdo: Tablero Bespoke */
 .cockpit-panel {

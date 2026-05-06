@@ -94,7 +94,9 @@
         }
         
         // Iniciar examen de 35 preguntas automáticamente al cargar
-        if(typeof iniciarTest === 'function') iniciarTest(0, 35);
+        if(typeof iniciarTest === 'function' && typeof bancoPreguntas !== 'undefined') {
+            iniciarTest(bancoPreguntas, 35);
+        }
     </script>
 </body>
 </html>

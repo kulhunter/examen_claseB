@@ -407,12 +407,19 @@ function bindSetupEvents() {
 bindSetupEvents();
 
 function updateDriveUI(msg) {
-    document.getElementById('game-instruction').innerText = `Examinador: "${msg}"`;
-    document.getElementById('ctrl-belt').classList.toggle('active', driveState.belt);
-    document.getElementById('ctrl-mirrors').classList.toggle('active', driveState.mirrors);
-    document.getElementById('ctrl-doors').classList.toggle('active', driveState.doors);
-    document.getElementById('ctrl-start').classList.toggle('active', driveState.engine);
-    document.getElementById('ctrl-handbrake').classList.toggle('active', driveState.handbrake);
+    const fullMsg = `Examinador: "${msg}"`;
+    // Actualizar panel del protocolo de recepción (visible antes de subir al vehículo)
+    const setupInstr = document.getElementById('setup-instruction');
+    if (setupInstr) setupInstr.innerText = fullMsg;
+    // Actualizar panel del juego de conducción (visible después)
+    const gameInstr = document.getElementById('game-instruction');
+    if (gameInstr) gameInstr.innerText = fullMsg;
+    // Sincronizar estado visual de controles
+    document.getElementById('ctrl-belt')?.classList.toggle('active', driveState.belt);
+    document.getElementById('ctrl-mirrors')?.classList.toggle('active', driveState.mirrors);
+    document.getElementById('ctrl-doors')?.classList.toggle('active', driveState.doors);
+    document.getElementById('ctrl-start')?.classList.toggle('active', driveState.engine);
+    document.getElementById('ctrl-handbrake')?.classList.toggle('active', driveState.handbrake);
 }
 
 function iniciarExamenVirtual() {
